@@ -24,7 +24,7 @@ TODOS
 deepwild
 
 ## By year
-| Year | Shorthand | Topic | Animal | Open Model? | Open dataset? | Image Count | 
+| Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----------|-------|---------|------------|---------------|-------------|
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
 | 2023 | [DeepWild](https://besjournals-onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1111/1365-2656.13932) | 2D BPE | Chimp, Bonobo | [Yes](https://github.com/Wild-Minds/DeepWild) | [Upon request](https://doi-org.proxy.library.upenn.edu/10.5281/zenodo.5600472) | N/A |
