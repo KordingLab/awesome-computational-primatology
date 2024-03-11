@@ -1,7 +1,14 @@
 # Awesome Computational Primatology
 List of projects, model applications, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals).
 
-**Legend**
+TODOS
+- [ ] Update list
+- [ ] Incorporate audio stuff
+- [ ] Sort by modality (cv, audio, other...)
+- [ ] Sort by tasks
+- [ ] Write review
+
+**Topic Legend**
 - PD = Primate detection
 - BPE = Body pose estimation
 - FD = Face detection
@@ -47,13 +54,8 @@ deepwild
 - Computer vision
 - Audio
 - Behavioral Modeling
-
-## Area of interest
-- Body posture
-- Faces
-- Hands
-
-## Similar
+  
+## Related
 - Macaque Face Avatars
   - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
   - [Murphy & Leopold 2019](https://www.sciencedirect.com/science/article/pii/S0165027019301591#sec0160)
