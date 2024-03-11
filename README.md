@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-List of projects, model applicatinos, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals).
+List of projects, model applications, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals).
 
 **Legend**
 - BPE = Body pose estimation
