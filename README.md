@@ -35,6 +35,7 @@ deepwild
 | 2020 | [Sanakoyeu et al.](https://openaccess.thecvf.com/content_CVPR_2020/papers/Sanakoyeu_Transferring_Dense_Pose_to_Proximal_Animal_Classes_CVPR_2020_paper.pdf) | AM | Chimp | [Kind of](https://github.com/asanakoy/densepose-evolution) | No | N/A
 | 2019 | [Schofield et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.aaw0736) | FD, FR | Chimp | No | No | N/A |
 | 2019 | Yang et al. | PD | Chimp | No | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
+| 2018 | [Deb et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/8698538/authors) | FR | Cross-species | No | No | N/A |
 | 2018 | Witham | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
 | 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
