@@ -30,6 +30,7 @@ List of projects, model applications, and datasets at the intersection of deep l
 | 2020 | OpenMonkeyStudio | 3D BPE | Macaque | No | [Yes](https://github.com/OpenMonkeyStudio/OMS_Data) | 195,228 |
 | 2020 | [Tri-A](https://www.sciencedirect.com/science/article/pii/S2589004220306027#mmc1) | FD, FR, ReID | 41 species | No | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 102,399 |
 | 2018 | Witham | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
+| 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
 | 2016 | Freytag et al. | FLE | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
 | 2013 | Loos & Ernst | FD | Chimp | No | [For purchase](http://www.saisbeco.com/) | 6,522 |
