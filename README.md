@@ -19,7 +19,7 @@ deepwild
 | Year | Shorthand | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----------|-------|---------|------------|---------------|-------------|
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
-| 2023 | [Kaneko et al.](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | 3D BM | Marmoset | No | No | N/A |
+| 2023 | [Kaneko et al.](https://www.biorxiv.org/content/10.1101/2023.10.16.561623v1.full.pdf) | 3D BM | Marmoset | No | No | N/A |
 | 2023 | [Matsumoto et al.](https://www.biorxiv.org/content/10.1101/2023.09.13.556332v1.full.pdf) | 3D BM | Macaque | No | No | N/A |
 | 2023 | [ChimpAct](https://proceedings.neurips.cc/paper_files/paper/2023/file/57a95cd3898bf4912269848a01f53620-Paper-Datasets_and_Benchmarks.pdf) | 2D BPE, FR, BR | Yes | Yes | 160,500 |
 | 2023 | OpenMonkeyChallenge | 2D BPE | Cross-species | No | [Yes](http://openmonkeychallenge.com/) | 111,529 |
