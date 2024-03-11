@@ -26,6 +26,7 @@ deepwild
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
 | 2021 | MacaquePose | 2D BPE | Macaque | Yes | Yes | 13,000 |
+| 2020 | | Sakib & Burghardt | BR | Chimp | [Yes](https://github.com/fznsakib/great-ape-behaviour-detector) | [Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
 | 2020 | OpenMonkeyStudio | 3D BPE | Macaque | No | [Yes](https://github.com/OpenMonkeyStudio/OMS_Data) | 195,228 |
 | 2020 | [Tri-A](https://www.sciencedirect.com/science/article/pii/S2589004220306027#mmc1) | FD, FR | 41 species | No | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 102,399 |
