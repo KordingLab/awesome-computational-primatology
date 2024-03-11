@@ -3,6 +3,7 @@ List of projects, model applications, and datasets at the intersection of deep l
 
 TODOS
 - [ ] Update list
+  - [ ] other bala, deepwild, hobaiter etc
 - [ ] Incorporate audio stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
