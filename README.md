@@ -12,6 +12,7 @@ List of projects, model applicatinos, and datasets at the intersection of deep l
 - HD = Hand detection
 - HPE = Hand pose estimation
 - AM = Avatar/Mesh
+- SI = Species Identification
 
 ## By year
 | Year | Shorthand | Topic | Animal | Open Model? | Open dataset? | Image Count | 
@@ -27,7 +28,7 @@ List of projects, model applicatinos, and datasets at the intersection of deep l
 | 2021 | MacaquePose | 2D BPE | Macaque | Yes | Yes | 13,000 |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
 | 2020 | OpenMonkeyStudio | 3D BPE | Macaque | No | [Yes](https://github.com/OpenMonkeyStudio/OMS_Data) | 195,228 |
-| 2020 | Animal Face Data (AFD) | FD, FR | Cross-species | No | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 1,032 |
+| 2020 | [Tri-A](https://www.sciencedirect.com/science/article/pii/S2589004220306027#mmc1) | FD, FR, ReID | 41 species | No | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 102,399 |
 | 2018 | Witham | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
 | 2016 | Freytag et al. | FLE | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
