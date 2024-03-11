@@ -1,20 +1,21 @@
 # Awesome Computational Primatology
 List of projects, model applicatinos, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals).
 
-Legend
-BPE = Body pose estimation
-FD = Face detection
-FLE = Facial landmark estimation
-FR = Face recognition
-ReID = Re-Identification 
-Behavior modeling = BM
-HD = Hand detection
-HPE = Hand pose estimation
+**Legend**
+- BPE = Body pose estimation
+- FD = Face detection
+- FLE = Facial landmark estimation
+- FR = Face recognition
+- ReID = Re-Identification 
+- Behavior modeling = BM
+- HD = Hand detection
+- HPE = Hand pose estimation
+- AM = Avatar/Mesh
 
 ## By year
 | Year | Shorthand | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----------|-------|---------|------------|---------------|-------------|
-| 2024 | [MacAction]([url](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf)) | Avatar | Macaque | No | No | N/A |
+| 2024 | [MacAction]([url](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf)) | AM | Macaque | No | No | N/A |
 | 2022 | SIPEC | 2D BPE, ReID, BM | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
