@@ -21,8 +21,6 @@ TODOS
 - AM = Avatar/Mesh
 - SI = Species Identification
 
-deepwild
-
 ## By year
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----------|-------|---------|------------|---------------|-------------|
