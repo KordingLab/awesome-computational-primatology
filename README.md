@@ -9,6 +9,7 @@ TODOS
 - [ ] Sort by tasks
 - [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data
 - [ ] fix links so that they work without proxy (incognito)
+- [ ] [paper](https://docs.google.com/document/d/1iHPGRqvuzA7DmYoUyQYIDHl33RC8j2sJ-DF1_aK9tRk/edit)
 
 **Topic Legend**
 - PD = Primate detection
@@ -39,6 +40,7 @@ TODOS
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
 | 2021 | MacaquePose | 2D BPE | Macaque | Yes | Yes | 13,000 |
+| 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | Data | Chimp, Bonobo | No | Upon request | N/A |
 | 2020 | Sakib & Burghardt | BR | Chimp | [Yes](https://github.com/fznsakib/great-ape-behaviour-detector) | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
 | 2020 | OpenMonkeyStudio | 3D BPE | Macaque | Upon request | [Yes](https://github.com/OpenMonkeyStudio/OMS_Data) | 195,228 |
