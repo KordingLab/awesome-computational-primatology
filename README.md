@@ -59,6 +59,7 @@ TODOS
   
 ## Reviews
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
+|------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All | No | No | N/A |
 ## Related
 - Macaque Face Avatars
