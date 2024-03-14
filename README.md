@@ -25,6 +25,7 @@ TODOS
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
+| 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A
 | 2023 | [Yang et al.](https://arxiv.org/pdf/2205.00275.pdf) | PD | Great Ape | No | No | N/A |
 | 2023 | [ASBAR](https://www.biorxiv.org/content/10.1101/2023.09.24.559236v1.full.pdf) | BR | Chimp, Gorilla | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
 | 2023 | [DeepWild](https://besjournals-onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1111/1365-2656.13932) | 2D BPE | Chimp, Bonobo | [Yes](https://github.com/Wild-Minds/DeepWild) | [Upon request](https://doi-org.proxy.library.upenn.edu/10.5281/zenodo.5600472) | N/A |
