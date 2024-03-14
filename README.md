@@ -46,6 +46,7 @@ TODOS
 | 2019 | [Bain et al.](https://arxiv.org/pdf/1909.08950.pdf) | PD, FD, FR | Chimp | No | No | N/A |
 | 2019 | [Schofield et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.aaw0736) | FD, FR | Chimp | No | No | N/A |
 | 2019 | Yang et al. | PD | Chimp | No | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
+| 2018 | [Sinha, Agarwal et al.](https://openaccess.thecvf.com/content_ECCVW_2018/papers/11129/Sinha_Exploring_Bias_in_Primate_Face_Detection_and_Recognition_ECCVW_2018_paper.pdf) | PD | Cross-species | No | No | N/A |
 | 2018 | [Deb et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/8698538/authors) | FR | Cross-species | No | No | N/A |
 | 2018 | [Witham](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5909037/) | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
 | 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
