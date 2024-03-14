@@ -66,6 +66,8 @@ TODOS
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All | No | No | N/A |
+| 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All | No | No | N/A |
+
 ## Related
 - Macaque Face Avatars
   - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
