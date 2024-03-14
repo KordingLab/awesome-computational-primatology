@@ -63,10 +63,10 @@ TODOS
 | 2011 | [Ernst & Küblbeck](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6027337) | FD, SI | Chimp, Gorilla | No | No | N/A |
   
 ## Reviews
-| Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
-|------|-----|-------|---------|------------|---------------|-------------|
-| 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All | No | No | N/A |
-| 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All | No | No | N/A |
+| Year | Tag | Topic | Animal |
+|------|-----|-------|--------|
+| 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All |
+| 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All |
 
 ## Related
 - Macaque Face Avatars
