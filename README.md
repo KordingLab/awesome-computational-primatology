@@ -43,6 +43,8 @@ TODOS
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
 | 2021 | MacaquePose | 2D BPE | Macaque | Yes | Yes | 13,000 |
 | 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | Data | Chimp | No | Upon request | N/A |
+| 2021 | [Negrete et al.](https://www.biorxiv.org/content/10.1101/2021.01.28.428726v1.full.pdf) | 2D BPE | Macaque | No | No | N/A |
+| 2021 | [LiftPose3D](https://www-nature-com.proxy.library.upenn.edu/articles/s41592-021-01226-z) | 3D BPE | Cross-species | Yes | No | N/A |
 | 2020 | [Kumar & Shingala](https://link-springer-com.proxy.library.upenn.edu/chapter/10.1007/978-981-15-3383-9_34) | PD | Langur | No | No | N/A | 
 | 2020 | Sakib & Burghardt | BR | Chimp | [Yes](https://github.com/fznsakib/great-ape-behaviour-detector) | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
@@ -52,9 +54,11 @@ TODOS
 | 2019 | [Bain et al.](https://arxiv.org/pdf/1909.08950.pdf) | PD, FD, FR | Chimp | No | No | N/A |
 | 2019 | [Schofield et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.aaw0736) | FD, FR | Chimp | No | No | N/A |
 | 2019 | Yang et al. | PD | Chimp | No | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
+| 2019 | Labuguen et al. | 2D BPE | Macaque | No | No | N/A |
 | 2018 | [Sinha, Agarwal et al.](https://openaccess.thecvf.com/content_ECCVW_2018/papers/11129/Sinha_Exploring_Bias_in_Primate_Face_Detection_and_Recognition_ECCVW_2018_paper.pdf) | PD | Cross-species | No | No | N/A |
 | 2018 | [Deb et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/8698538/authors) | FR | Cross-species | No | No | N/A |
 | 2018 | [Witham](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5909037/) | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
+| 2018 | [Labuguen et al.](https://www.biorxiv.org/content/10.1101/377895v1.full.pdf) | PD | Macaque | No | No | N/A |
 | 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
 | 2016 | [Crunchant et al.](https://onlinelibrary.wiley.com/doi/epdf/10.1002/ajp.22627) | FD | Chimp | No | No | N/A |
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
