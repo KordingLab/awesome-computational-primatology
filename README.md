@@ -23,9 +23,10 @@ TODOS
 
 ## By year
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
-|------|-----------|-------|---------|------------|---------------|-------------|
+|------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
-| 2023 | [ASBAR](https://www.biorxiv.org/content/10.1101/2023.09.24.559236v1.full.pdf) | BR | Great Ape | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
+| 2023 | [Yang et al.](https://arxiv.org/pdf/2205.00275.pdf) | PD | Great Ape | No | No | N/A |
+| 2023 | [ASBAR](https://www.biorxiv.org/content/10.1101/2023.09.24.559236v1.full.pdf) | BR | Chimp, Gorilla | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
 | 2023 | [DeepWild](https://besjournals-onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1111/1365-2656.13932) | 2D BPE | Chimp, Bonobo | [Yes](https://github.com/Wild-Minds/DeepWild) | [Upon request](https://doi-org.proxy.library.upenn.edu/10.5281/zenodo.5600472) | N/A |
 | 2023 | [Kaneko et al.](https://www.biorxiv.org/content/10.1101/2023.10.16.561623v1.full.pdf) | 3D BM | Marmoset | No | No | N/A |
 | 2023 | [Matsumoto et al.](https://www.biorxiv.org/content/10.1101/2023.09.13.556332v1.full.pdf) | 3D BM | Macaque | No | No | N/A |
@@ -56,6 +57,9 @@ TODOS
 - Audio
 - Behavioral Modeling
   
+## Reviews
+| Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
+| 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All | No | No | N/A |
 ## Related
 - Macaque Face Avatars
   - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
