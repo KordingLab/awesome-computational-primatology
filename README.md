@@ -8,6 +8,7 @@ TODOS
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
 - [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data
+- [ ] fix links so that they work without proxy (incognito)
 
 **Topic Legend**
 - PD = Primate detection
