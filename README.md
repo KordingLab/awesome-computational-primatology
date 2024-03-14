@@ -36,6 +36,7 @@ TODOS
 | 2023 | [ChimpAct](https://proceedings.neurips.cc/paper_files/paper/2023/file/57a95cd3898bf4912269848a01f53620-Paper-Datasets_and_Benchmarks.pdf) | 2D BPE, FR, BR | Yes | Yes | 160,500 |
 | 2023 | OpenMonkeyChallenge | 2D BPE | Cross-species | No | [Yes](http://openmonkeychallenge.com/) | 111,529 |
 | 2023 | [Pillai et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10199762&tag=1) | PD | Cross-Species | No | No | N/A |
+| 2023 | [Reddy et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10276306) | PD | Cross-species | No | No | N/A |
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
 | 2021| [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | [Some](https://datadryad.org/stash/share/UUfSTzsL9eTbAo-78pdaXPdaIUJmdJzSuqhXcb48vHM) | N/A |
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
