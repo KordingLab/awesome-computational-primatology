@@ -4,7 +4,7 @@ List of projects, model applications, and datasets at the intersection of deep l
 TODOS
 - [ ] Update list
   - [ ] other bala, deepwild, hobaiter etc, marmoset, that one matlab facs one
-- [ ] Incorporate audio stuff
+- [ ] Incorporate audio, LLM, etc. stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
 - [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data
@@ -51,11 +51,6 @@ TODOS
 | 2016 | [Freytag et al.](https://link-springer-com.proxy.library.upenn.edu/chapter/10.1007/978-3-319-45886-1_5) | FR | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
 | 2013 | [Loos & Ernst](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/1687-5281-2013-49) | FD, FR | Chimp | No | [For purchase](http://www.saisbeco.com/) | 6,522 |
 | 2011 | Ernst & Küblbeck | FD | Chimp, Gorilla | No | No | N/A |
-
-## Modality
-- Computer vision
-- Audio
-- Behavioral Modeling
   
 ## Reviews
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
