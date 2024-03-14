@@ -42,6 +42,7 @@ TODOS
 | 2020 | OpenMonkeyStudio | 3D BPE | Macaque | Upon request | [Yes](https://github.com/OpenMonkeyStudio/OMS_Data) | 195,228 |
 | 2020 | [Tri-A](https://www.sciencedirect.com/science/article/pii/S2589004220306027#mmc1) | FD, FR | 41 species | No | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 102,399 |
 | 2020 | [Sanakoyeu et al.](https://openaccess.thecvf.com/content_CVPR_2020/papers/Sanakoyeu_Transferring_Dense_Pose_to_Proximal_Animal_Classes_CVPR_2020_paper.pdf) | AM | Chimp | [Kind of](https://github.com/asanakoy/densepose-evolution) | No | N/A
+| 2019 | [Bain et al.](https://arxiv.org/pdf/1909.08950.pdf) | PD, FD, FR | Chimp | No | No | N/A |
 | 2019 | [Schofield et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.aaw0736) | FD, FR | Chimp | No | No | N/A |
 | 2019 | Yang et al. | PD | Chimp | No | [Yes: Labeled Pan African](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2018 | [Deb et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/8698538/authors) | FR | Cross-species | No | No | N/A |
