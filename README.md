@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-List of projects, model applications, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals).
+This repository and website contains the corpus of projects, model applications, and datasets at the intersection of deep learning and (non-human) primatology (and occasionally other animals). This does not include papers in which these tools were used for biomedical research.
 
 TODOS
 - [ ] Update list
