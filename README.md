@@ -4,6 +4,7 @@ This repository and website contains the corpus of projects, model applications,
 TODOS
 - [ ] Update list
   - [ ] other bala, hobaiter etc, marmoset, that one matlab facs one, RL gibbon one
+  - [ ] https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.full.pdf
 - [ ] Incorporate audio, LLM, etc. stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
