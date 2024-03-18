@@ -3,7 +3,7 @@ List of projects, model applications, and datasets at the intersection of deep l
 
 TODOS
 - [ ] Update list
-  - [ ] other bala, deepwild, hobaiter etc, marmoset, that one matlab facs one
+  - [ ] other bala, hobaiter etc, marmoset, that one matlab facs one, RL gibbon one
 - [ ] Incorporate audio, LLM, etc. stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
