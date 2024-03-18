@@ -7,7 +7,7 @@ TODOS
 - [ ] Incorporate audio, LLM, etc. stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
-- [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data
+- [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data, yann lecun? bengio?
 - [ ] fix links so that they work without proxy (incognito)
 - [ ] [paper](https://docs.google.com/document/d/1iHPGRqvuzA7DmYoUyQYIDHl33RC8j2sJ-DF1_aK9tRk/edit)
 
