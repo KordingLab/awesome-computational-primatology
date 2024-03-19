@@ -77,7 +77,7 @@ TODOS
 | 2016 | [Crunchant et al.](https://onlinelibrary.wiley.com/doi/epdf/10.1002/ajp.22627) | FD | Chimp | No | No | N/A |
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
 | 2016 | [Freytag et al.](https://link-springer-com.proxy.library.upenn.edu/chapter/10.1007/978-3-319-45886-1_5) | FR | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
-| 2014 | [Ballesta et al.](https://www-sciencedirect-com.proxy.library.upenn.edu/science/article/pii/S0165027014001848?via%3Dihub) | ... | Macaque | No | No | N/A |
+| 2014 | [Ballesta et al.](https://www-sciencedirect-com.proxy.library.upenn.edu/science/article/pii/S0165027014001848?via%3Dihub) | 3D, O | Macaque | No | No | N/A |
 | 2013 | [Loos & Ernst](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/1687-5281-2013-49) | FD, FR | Chimp | No | [For purchase](http://www.saisbeco.com/) | 6,522 |
 | 2012 | [Loos & Pfitzer](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6208167) | FR | Chimp | No | No | N/A |
 | 2012 | [Loos & Ernst](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6424643) | FD, Fr | Chimp | No | No | N/A |
