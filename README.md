@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-This repository contains the corpus of projects at the intersection of deep learning and (non-human) primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This does not include papers in which these tools were used for biomedical research.
+This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This does not include papers in which these tools were used for biomedical research.
 
 Quick breakdown:
 - 80% of these projects **do not** contribute a model or a dataset.
@@ -36,6 +36,7 @@ TODOS
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
+| 2023 | [Mimura et al.](https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.abstract) | BR | Macaque, Marmoset | No | No | N/A |
 | 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A
 | 2023 | [Yang et al.](https://arxiv.org/pdf/2205.00275.pdf) | PD | Great Ape | No | No | N/A |
 | 2023 | [ASBAR](https://www.biorxiv.org/content/10.1101/2023.09.24.559236v1.full.pdf) | BR | Chimp, Gorilla | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
