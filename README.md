@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This repo is not intended for papers in which these tools were used for biomedical research; rather, it is for papers that provide novel applications or methods in computational primatology.
+This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This repo is intended for papers that provide novel approaches or applications in computational primatology.
 
 Quick breakdown:
 - 80% of these projects **do not** contribute a model or a dataset.
