@@ -25,7 +25,7 @@ TODOS
 - FR = Face recognition and/or Re-Identification
 - HD = Hand detection
 - HPE = Hand pose estimation
-- BR = Behavior recognition and/or modeling
+- BR = Behavior recognition / understanding / modeling 
 - AM = Avatar/Mesh
 - SI = Species Identification
 - RL = Reinforcement learning
@@ -37,6 +37,7 @@ TODOS
 | 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
+| 2023 | [MammalNet](https://arxiv.org/pdf/2306.00576.pdf) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
 | 2023 | [Abbaspoor, Rahman et al.](https://www.biorxiv.org/content/10.1101/2023.12.11.571113v1.abstract) | 3D BPE | Macaque | No | No | N/A |
 | 2023 | [Mimura et al.](https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.abstract) | BR | Macaque, Marmoset | No | No | N/A |
 | 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A
@@ -96,6 +97,9 @@ TODOS
 |------|-----|-------|--------|
 | 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All |
 | 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All |
+
+## Datasets that contain non-human primate data with other animal data
+...
 
 ## Related
 - Macaque Face Avatars
