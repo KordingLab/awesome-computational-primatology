@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology since around the time AlexNet was published (~2012). This repo is intended for papers that provide novel approaches or applications in computational primatology. We occasionally include datasets which contain both primate and non-primate animals.
+This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology since around the time AlexNet was published (~2012). This repo is intended for papers that provide novel approaches or applications in computational primatology. We occasionally include datasets which contain both primate and non-primate animals. Contributions and edits welcome!
 
 By compiling and highlighting this growing literature, we hope it will inspire future researchers to open-source their own models and data to advance the field.
 
@@ -80,6 +80,7 @@ TODOS
 | 2018 | [Witham](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5909037/) | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
 | 2018 | [Labuguen et al.](https://www.biorxiv.org/content/10.1101/377895v1.full.pdf) | PD | Macaque | No | No | N/A |
 | 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
+| 2017 | [Brust et al.](https://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w41/Brust_Towards_Automated_Visual_ICCV_2017_paper.pdf) | FD, FR | Gorilla | No | No | N/A |
 | 2016 | [Crunchant et al.](https://onlinelibrary.wiley.com/doi/epdf/10.1002/ajp.22627) | FD | Chimp | No | No | N/A |
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
 | 2016 | [Freytag et al.](https://link-springer-com.proxy.library.upenn.edu/chapter/10.1007/978-3-319-45886-1_5) | FR | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
