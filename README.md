@@ -9,15 +9,11 @@ Quick breakdown:
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
 
 TODOS
-- [ ] Update list
-  - [ ] marmoset, that one matlab facs one, that one metal cage which uses WM cameras
-- [ ] Incorporate audio, LLM, etc. stuff
-- [ ] Sort by modality (cv, audio, other...)
-- [ ] Sort by tasks
-- [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data, yann lecun? bengio?
+- [ ] Update list: marmoset, that one matlab facs one
+- [ ] Sort by modality (cv, audio, MM...) and tasks
 - [ ] fix links so that they work without proxy (incognito)
 - [ ] [paper](https://docs.google.com/document/d/1iHPGRqvuzA7DmYoUyQYIDHl33RC8j2sJ-DF1_aK9tRk/edit)
-- [ ] add DOI and pdf in g-drive? paper link to open-pub or arxiv or just proivde gdrive pdf
+- [ ] add DOI and pdf in g-drive folder
 
 **Topic Legend**
 - PD = Primate detection
