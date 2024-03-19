@@ -50,6 +50,7 @@ TODOS
 | 2023 | [Pillai et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10199762&tag=1) | PD | Cross-Species | No | No | N/A |
 | 2023 | [Reddy et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10276306) | PD | Cross-species | No | No | N/A | 
 | 2023 | [Bala et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-023-01804-y) | 3D BPE | Cross-species | No | No | N/A |
+| 2023 | [Brookes et al.](https://arxiv.org/pdf/2301.02642.pdf) | Apes | No | No | N/A |
 | 2022 | [Animal Kingdom](https://arxiv.org/pdf/2204.08129.pdf) | 2D BPE, BR | Cross-species | No | [Yes](https://github.com/sutdcv/Animal-Kingdom) | N/A |
 | 2022 | [APT-36K](https://arxiv.org/pdf/2206.05683.pdf) | 2D BPE | Cross-species | No | [Yes](https://github.com/pandorgan/APT-36K) | < 36K |
 | 2022 | [Ngo et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10203885/) | BR | Marmoset | No | No | N/A |
