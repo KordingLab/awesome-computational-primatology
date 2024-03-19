@@ -4,6 +4,7 @@ This repository contains the corpus of projects at the intersection of deep lear
 Quick breakdown:
 - 80% of these projects **do not** contribute a model or a dataset.
 - Of the projects that do contribute to OSS, less than 5% contribute a dataset.
+- Most projects have focused on tools for either chimps or macaques.
 
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
 
