@@ -9,9 +9,7 @@ Consider contributing to this community by curating a dataset or training OSS mo
 
 TODOS
 - [ ] Update list
-  - [ ] hobaiter etc, marmoset, that one matlab facs one
-  - [ ] https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.full.pdf
-  - [ ] that one metal cage which uses WM cameras
+  - [ ] marmoset, that one matlab facs one, that one metal cage which uses WM cameras
 - [ ] Incorporate audio, LLM, etc. stuff
 - [ ] Sort by modality (cv, audio, other...)
 - [ ] Sort by tasks
