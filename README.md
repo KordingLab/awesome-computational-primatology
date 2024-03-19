@@ -1,9 +1,15 @@
 # Awesome Computational Primatology
 This repository contains the corpus of projects at the intersection of deep learning and (non-human) primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This does not include papers in which these tools were used for biomedical research.
 
+Quick breakdown:
+- 80% of these projects **do not** contribute a model or a dataset.
+- Of the projects that do contribute to OSS, less than 5% contribute a dataset.
+
+Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
+
 TODOS
 - [ ] Update list
-  - [ ] other bala, hobaiter etc, marmoset, that one matlab facs one
+  - [ ] hobaiter etc, marmoset, that one matlab facs one
   - [ ] https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.full.pdf
   - [ ] that one metal cage which uses WM cameras
 - [ ] Incorporate audio, LLM, etc. stuff
