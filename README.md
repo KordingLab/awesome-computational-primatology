@@ -1,5 +1,5 @@
 # Awesome Computational Primatology
-This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This does not include papers in which these tools were used for biomedical research.
+This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology (and occasionally other animals) since around the time AlexNet was published (~2012). This repo is not intended for papers in which these tools were used for biomedical research; rather, it is for papers that provide novel applications or methods in computational primatology.
 
 Quick breakdown:
 - 80% of these projects **do not** contribute a model or a dataset.
@@ -46,6 +46,7 @@ TODOS
 | 2023 | [Pillai et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10199762&tag=1) | PD | Cross-Species | No | No | N/A |
 | 2023 | [Reddy et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10276306) | PD | Cross-species | No | No | N/A | 
 | 2023 | [Bala et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-023-01804-y) | 3D BPE | Cross-species | No | No | N/A |
+| 2022 | [Ngo et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10203885/) | ... | Marmoset | No | No | N/A |
 | 2022 | [Brachiation](https://arxiv.org/pdf/2205.03943.pdf) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | No | N/A |
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
 | 2021| [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | [Some](https://datadryad.org/stash/share/UUfSTzsL9eTbAo-78pdaXPdaIUJmdJzSuqhXcb48vHM) | N/A |
