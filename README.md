@@ -30,8 +30,9 @@ TODOS
 - O = Other
 
 ## By year
-| Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
+| Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
 | 2023 | [Abbaspoor, Rahman et al.](https://www.biorxiv.org/content/10.1101/2023.12.11.571113v1.abstract) | 3D BPE | Macaque | No | No | N/A |
@@ -52,6 +53,7 @@ TODOS
 | 2022 | [Ngo et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10203885/) | BR | Marmoset | No | No | N/A |
 | 2022 | [Brachiation](https://arxiv.org/pdf/2205.03943.pdf) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | No | N/A |
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
+| 2021 | [Brookes & Burghardt](https://arxiv.org/pdf/2012.04689.pdf) | FR |Gorilla | Yes | Yes | >5,000 |
 | 2021| [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | [Some](https://datadryad.org/stash/share/UUfSTzsL9eTbAo-78pdaXPdaIUJmdJzSuqhXcb48vHM) | N/A |
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
