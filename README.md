@@ -16,6 +16,7 @@ TODOS
 - [ ] Write review with talmo, dave, seyfarth, cory, david rolnick: 2d/3d, dangers, etc., open-data, yann lecun? bengio?
 - [ ] fix links so that they work without proxy (incognito)
 - [ ] [paper](https://docs.google.com/document/d/1iHPGRqvuzA7DmYoUyQYIDHl33RC8j2sJ-DF1_aK9tRk/edit)
+- [ ] add DOI and pdf in g-drive?
 
 **Topic Legend**
 - PD = Primate detection
@@ -29,10 +30,12 @@ TODOS
 - AM = Avatar/Mesh
 - SI = Species Identification
 - RL = Reinforcement learning
+- O = Other
 
 ## By year
 | Year | Tag | Topic | Animal | Open Model? | Open dataset? | Image Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
 | 2023 | [Mimura et al.](https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.abstract) | BR | Macaque, Marmoset | No | No | N/A |
 | 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A
