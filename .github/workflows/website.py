@@ -8,7 +8,7 @@ def to_link_if_markdown(cell_text: str) -> str:
     cell_text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', cell_text)
     return cell_text
 
-text = open("../../README.md", "r").readlines()
+text = open("/home/runner/work/awesome-computational-primatology/awesome-computational-primatology/README.md", "r").readlines()
 table = []
 # | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 for line in text:
@@ -22,7 +22,7 @@ table = table.applymap(to_link_if_markdown)
 
 
 # %%
-with open("index.html", "w") as f:
+with open("/home/runner/work/awesome-computational-primatology/awesome-computational-primatology/index.html", "w") as f:
     f.write("""<html>
     <head>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
