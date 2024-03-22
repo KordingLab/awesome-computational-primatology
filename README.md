@@ -1,4 +1,4 @@
-# Awesome Computational Primatology
+# [Awesome Computational Primatology](http://kordinglab.com/awesome-computational-primatology/)
 This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology since around the time AlexNet was published (~2012). This repo is intended for papers that provide novel approaches or applications in computational primatology. We occasionally include datasets which contain both primate and non-primate animals. Contributions and edits welcome!
 
 By compiling and highlighting this growing literature, we hope it will inspire future researchers to open-source their own models and data to advance the field.
