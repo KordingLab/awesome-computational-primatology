@@ -3,19 +3,7 @@ This repository contains the corpus of projects at the intersection of deep lear
 
 By compiling and highlighting this growing literature, we hope it will inspire future researchers to open-source their own models and data to advance the field.
 
-Quick breakdown:
-- 80% of these projects **do not** contribute a model or a dataset.
-- Of the projects that do contribute to OSS, less than 5% contribute a dataset.
-- Most projects have focused on tools for either chimps or macaques.
-
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
-
-TODOS
-- [ ] Update list: marmoset, that one matlab facs one
-- [ ] Sort by modality (cv, audio, MM...) and tasks
-- [ ] fix links so that they work without proxy (incognito)
-- [ ] [paper](https://docs.google.com/document/d/1iHPGRqvuzA7DmYoUyQYIDHl33RC8j2sJ-DF1_aK9tRk/edit)
-- [ ] add DOI and pdf in g-drive folder
 
 **Topic Legend**
 - PD = Primate detection
