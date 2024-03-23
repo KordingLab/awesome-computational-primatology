@@ -6,7 +6,7 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
 
 ### Topic Legend
-| Label | Title | 
+| Label | Topic | 
 |-------|-------|
 | PD | Primate Detection |
 | BPE | Body Pose Estimation | 
@@ -85,7 +85,7 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | 2022 | [APT-36K](https://arxiv.org/pdf/2206.05683.pdf) | 2D BPE | Cross-species | No | [Yes](https://github.com/pandorgan/APT-36K) | < 36K |
 | 2021 | AP10k | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | Yes | 10,015 (675 primates) |
 | 2021 | [LiftPose3D](https://www-nature-com.proxy.library.upenn.edu/articles/s41592-021-01226-z) | 3D BPE | Cross-species | Yes | No | N/A |
-| 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
+| 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 |
 
 #### Reviews
 | Year | Tag | Topic | Animal |
