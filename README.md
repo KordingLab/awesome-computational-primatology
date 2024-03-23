@@ -5,7 +5,7 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
 
-**Topic Legend**
+### Topic Legend
 | Label | Title | 
 |-------|-------|
 | PD | Primate Detection |
@@ -21,22 +21,7 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | RL | Reinforcement Learning | 
 | O | Other|
 
-
-**Topic Legend**
-- PD = Primate detection
-- BPE = Body pose estimation
-- FD = Face detection
-- FLE = Facial landmark estimation
-- FR = Face recognition and/or Re-Identification
-- HD = Hand detection
-- HPE = Hand pose estimation
-- BR = Behavior recognition / understanding / modeling 
-- AM = Avatar/Mesh
-- SI = Species Identification
-- RL = Reinforcement learning
-- O = Other
-
-## By year
+### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
@@ -92,7 +77,7 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | 2011 | [Loos et al.](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7074032) | FR | Chimp | No | No | N/A | 
 | 2011 | [Ernst & Küblbeck](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6027337) | FD, SI | Chimp, Gorilla | No | No | N/A |
 
-## Datasets that contain non-human primate data with other animal data
+### Datasets that contain non-human primate data with other animal data
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2023 | [MammalNet](https://arxiv.org/pdf/2306.00576.pdf) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
@@ -102,13 +87,13 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | 2021 | [LiftPose3D](https://www-nature-com.proxy.library.upenn.edu/articles/s41592-021-01226-z) | 3D BPE | Cross-species | Yes | No | N/A |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | No | Yes | 21,921 (not all prims) |
 
-## Reviews
+### Reviews
 | Year | Tag | Topic | Animal |
 |------|-----|-------|--------|
 | 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All |
 | 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All |
 
-## Related projects
+### Related projects
 - Macaque Face Avatars
   - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
   - [Murphy & Leopold 2019](https://www.sciencedirect.com/science/article/pii/S0165027019301591#sec0160)
