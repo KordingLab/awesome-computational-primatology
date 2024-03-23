@@ -6,6 +6,23 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
 
 **Topic Legend**
+| Label | Title | 
+|-------|-------|
+| PD | Primate Detection |
+| BPE | Body Pose Estimation | 
+| FD | Face Detection |
+| FLE | Facial Landmark Estimation |
+| FR | Face Recognition and/or Re-Identification | 
+| HD | Hand Detection | 
+| HPE | Hand Pose Estimation | 
+| BR | Behavior Recognition / Understanding / Modeling |
+| AM | Avatar / Mesh | 
+| SI | Species Identification | 
+| RL | Reinforcement Learning | 
+| O | Other|
+
+
+**Topic Legend**
 - PD = Primate detection
 - BPE = Body pose estimation
 - FD = Face detection
