@@ -46,6 +46,7 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | 2022 | [Ngo et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10203885/) | BR | Marmoset | No | No | N/A |
 | 2022 | [Brachiation](https://arxiv.org/pdf/2205.03943.pdf) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | No | N/A |
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
+| 2022 | [Ueno et al.](https://onlinelibrary.wiley.com/doi/full/10.1111/eth.13277) | FR | Macaque | No | No | N/A |
 | 2021 | [Brookes & Burghardt](https://arxiv.org/pdf/2012.04689.pdf) | FR | Gorilla | No | [Yes](https://data.bris.ac.uk/data/dataset/jf0859kboy8k2ufv60dqeb2t8) | >5,000 |
 | 2021 | [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | [Some](https://datadryad.org/stash/share/UUfSTzsL9eTbAo-78pdaXPdaIUJmdJzSuqhXcb48vHM) | N/A |
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
