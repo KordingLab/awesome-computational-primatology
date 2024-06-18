@@ -99,3 +99,5 @@ Consider contributing to this community by curating a dataset or training OSS mo
 - Macaque Face Avatars
   - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
   - [Murphy & Leopold 2019](https://www.sciencedirect.com/science/article/pii/S0165027019301591#sec0160)
+ 
+- Comparing macaque face tracking to mice [Tlaie et al., 2024](https://www.biorxiv.org/content/10.1101/2024.01.24.577055v1.full.pdf)
