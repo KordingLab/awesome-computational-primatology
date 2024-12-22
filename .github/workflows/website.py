@@ -32,7 +32,6 @@ with open("/home/runner/work/awesome-computational-primatology/awesome-computati
     </head>
     <body>
     <h1>Awesome Computational Primatology</h1>
-    <h3>Parodi et al., 2024</h3>
     """)
     f.write(table.to_html(table_id="table", escape=False, index=False))
     f.write("""<script>$(document).ready( function () {
