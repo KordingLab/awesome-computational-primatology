@@ -14,3 +14,7 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Personal notes
+TODO.md
+NOTES.md
