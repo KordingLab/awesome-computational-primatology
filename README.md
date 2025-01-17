@@ -3,7 +3,11 @@ This repository contains the corpus of projects at the intersection of deep lear
 
 By compiling and highlighting this growing literature, we hope it will inspire future researchers to open-source their own models and data to advance the field.
 
-Consider contributing to this community by curating a dataset or training OSS models on any of these datasets!
+## Contribute to the List!
+We welcome contributions from the community. If you know of a relevant paper or project, please read our [Contributing Guidelines](CONTRIBUTING.md) and submit a pull request! 
+
+By sharing your datasets and models, you contribute to advancing computational primatology and enable reproducible research. Open-source your work today!
+
 
 ### Topic Legend
 | Label | Topic | 
@@ -20,6 +24,12 @@ Consider contributing to this community by curating a dataset or training OSS mo
 | SI | Species Identification | 
 | RL | Reinforcement Learning | 
 | O | Other|
+
+### Legend for "Model?" Column
+- `[Yes](link)`: Code + models available
+- `[Code only](link)`: Repository available, but no pre-trained models
+- `[No](link)`: Repository with general information, but no functional code or models
+- "No": No repository or models provided
 
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
