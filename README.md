@@ -1,7 +1,7 @@
 # [Awesome Computational Primatology](http://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-80+-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-50+-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -12,7 +12,7 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 ## Contribute to the List!
 We welcome contributions from the community. If you know of a relevant paper or project, please read our [Contributing Guidelines](CONTRIBUTING.md) and submit a pull request! 
 
-By sharing your datasets and models, you contribute to advancing computational primatology and enable reproducible research. Open-source your work today!
+By sharing your datasets and models, you contribute to advancing primatology and enable reproducible research.
 
 
 ### Topic Legend

@@ -1,8 +1,6 @@
-# Contributing to Awesome Computational Primatology
+# Contribution Workflow for Awesome Computational Primatology
 
-Thank you for your interest in contributing! This guide explains how to add papers and projects to our repository.
-
-## Contribution Workflow
+Thank you for your interest in contributing!
 
 ### 1. Branch Protocol
 - Fork the repository
