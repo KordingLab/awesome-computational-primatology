@@ -1,6 +1,31 @@
-# Contribution Workflow for Awesome Computational Primatology
+# Contributing to Awesome Computational Primatology
 
-Thank you for your interest in contributing!
+Thank you for your interest in contributing! This document explains how to add papers and improve the project.
+
+## 🚀 Quick Start
+
+### Preview Your Changes Locally
+```bash
+# 1. Fork and clone the repository
+git clone https://github.com/YOUR-USERNAME/awesome-computational-primatology.git
+cd awesome-computational-primatology
+
+# 2. Make your changes to README.md
+
+# 3. Generate and preview the website
+python .github/workflows/website.py
+python -m http.server 8000
+# Visit: http://localhost:8000
+
+# 4. Create a pull request
+```
+
+### Automatic PR Previews
+When you submit a PR, our automation will:
+- ✅ Generate a preview website with your changes
+- ✅ Post a comment with the preview link
+- ✅ Validate table formatting and links
+- ✅ Update the website automatically when merged
 
 ### 1. Branch Protocol
 - Fork the repository
@@ -57,6 +82,7 @@ Use these abbreviations for the Topic column:
 - FD: Face Detection
 - FLE: Facial Landmark Estimation
 - FR: Face Recognition and/or Re-Identification
+- FAC: Facial Action Coding / Units
 - HD: Hand Detection
 - HPE: Hand Pose Estimation
 - BR: Behavior Recognition / Understanding / Modeling

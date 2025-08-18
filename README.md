@@ -1,7 +1,7 @@
-# [Awesome Computational Primatology](http://kordinglab.com/awesome-computational-primatology/)
+# 🐒 [Awesome Computational Primatology](http://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-50+-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-58+-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -10,7 +10,20 @@ This repository contains the corpus of projects at the intersection of deep lear
 By compiling and highlighting this growing literature, we hope it will inspire future researchers to open-source their own models and data to advance the field.
 
 ## Contribute to the List!
-We welcome contributions from the community. If you know of a relevant paper or project, please read our [Contributing Guidelines](CONTRIBUTING.md) and submit a pull request! 
+We welcome contributions from the community! If you know of a relevant paper or project:
+
+1. **🍴 Fork** this repository
+2. **✏️ Add** your paper to the table in chronological order
+3. **🔍 Preview** your changes: `python scripts/dev-preview.py`
+4. **📤 Submit** a pull request
+
+**Features for contributors:**
+- 🔗 Automatic link checking
+- 🌐 Live preview of your changes
+- 📊 Auto-generated website updates
+- ✅ Format validation
+
+Read our [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions!
 
 By sharing your datasets and models, you contribute to advancing primatology and enable reproducible research.
 
@@ -22,7 +35,8 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | BPE | Body Pose Estimation | 
 | FD | Face Detection |
 | FLE | Facial Landmark Estimation |
-| FR | Face Recognition and/or Re-Identification | 
+| FR | Face Recognition and/or Re-Identification |
+| FAC | Facial Action Coding / Units | 
 | HD | Hand Detection | 
 | HPE | Hand Pose Estimation | 
 | BR | Behavior Recognition / Understanding / Modeling |
@@ -40,14 +54,20 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-species | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
 | 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
 | 2024 | [LabGym](https://link-springer-com.proxy.library.upenn.edu/epdf/10.1007/s10329-024-01123-x?sharing_token=_ApwJ7je3dmaWjW7cYNbUPe4RwlQNchNByi7wbcMAY4h1wHpdNqXXEnVHidjh8t56BEMyNJkqC8xIJ-ZpXK78qFoYXZ7oq8pYO62wVWzEHVj6fEbKl9wvAlIYBLr4-giBZwcMH2HZvRPiyRk4I1-_3hbhgnYy_ZtE0jBSB4UJo4=) | BR | Macaque | [Yes](https://github.com/umyelab/LabGym) | Yes | N/A |
+| 2024 | [Cheng et al.](https://www.biorxiv.org/content/10.1101/2024.02.27.582429v3.full.pdf) | BR | Macaque | No | No | N/A |
+| 2024 | [PRIMAT (Vogg et al.)](https://www.biorxiv.org/content/10.1101/2024.08.21.607881v1.full.pdf) | 2D BPE | Cross-species | No | No | N/A |
+| 2024 | [Franch et al.](https://www-nature-com.proxy.library.upenn.edu/articles/s41586-024-07084-x) | BR | Macaque | No | No | N/A |
+| 2024 | [Xing et al.](https://www.biorxiv.org/content/10.1101/2024.02.16.580693v1.full.pdf) | O | Marmoset | No | No | N/A |
+| 2024 | [Menegas et al.](https://www.biorxiv.org/content/10.1101/2024.08.30.610159v1.full.pdf) | BR | Marmoset | No | No | N/A |
 | 2023 | [GorillaVision](https://inf-cv.uni-jena.de/wordpress/wp-content/uploads/2023/09/Talk-12-Maximilian-Schall.pdf) | FD, FR | Gorilla | [Yes](https://github.com/Lasklu/gorillavision) | No | 832 |
 | 2023 | [Abbaspoor, Rahman et al.](https://www.biorxiv.org/content/10.1101/2023.12.11.571113v1.abstract) | 3D BPE | Macaque | No | No | N/A |
 | 2023 | [Mimura et al.](https://www.biorxiv.org/content/10.1101/2023.03.04.531044v3.abstract) | BR | Macaque, Marmoset | No | No | N/A |
-| 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A
+| 2023 | [Schofield et al.](https://besjournals.onlinelibrary.wiley.com/doi/epdf/10.1111/2041-210X.14181) | FD, FR | Chimp | No | No | N/A |
 | 2023 | [Yang et al.](https://arxiv.org/pdf/2205.00275.pdf) | PD | Great Ape | No | No | N/A |
 | 2023 | [ASBAR](https://www.biorxiv.org/content/10.1101/2023.09.24.559236v1.full.pdf) | BR | Chimp, Gorilla | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
 | 2023 | [DeepWild](https://besjournals-onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1111/1365-2656.13932) | 2D BPE | Chimp, Bonobo | [Yes](https://github.com/Wild-Minds/DeepWild) | [Upon request](https://doi-org.proxy.library.upenn.edu/10.5281/zenodo.5600472) | N/A |
@@ -95,7 +115,24 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2011 | [Loos et al.](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7074032) | FR | Chimp | No | No | N/A | 
 | 2011 | [Ernst & Küblbeck](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6027337) | FD, SI | Chimp, Gorilla | No | No | N/A |
 
-#### Datasets with both primate and non-primate data
+### Datasets
+
+#### Primate-Specific Datasets
+| Year | Dataset Name | Description | Species | Size | Availability |
+|------|-------------|-------------|---------|------|--------------|
+| 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | Face analysis | Cross-species | 200K+ images | Public |
+| 2024 | [PanAf20K](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | Detection and behavior | Apes | 20,000 videos | Public |
+| 2023 | [OpenMonkeyChallenge](http://openmonkeychallenge.com/) | 2D pose estimation | Cross-species | 111,529 images | Public |
+| 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | Behavioral annotations | Chimps | N/A | Upon request |
+| 2021 | [MacaquePose](https://github.com/MacaquePose/MacaquePose) | 2D pose estimation | Macaque | 13,000 images | Public |
+| 2021 | [OpenApePose](https://github.com/OpenApePose/OpenApePose) | 2D pose estimation | Cross-species | 71,868 images | Public |
+| 2020 | [OpenMonkeyStudio](https://github.com/OpenMonkeyStudio/OMS_Data) | 3D pose estimation | Macaque | 195,228 frames | Public |
+| 2020 | [Tri-A](https://data.mendeley.com/datasets/z3x59pv4bz/2) | Face detection/recognition | 41 species | 102,399 images | Public |
+| 2018 | [Macaque Faces](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | Facial landmarks | Macaque | 4,000 images | Public |
+| 2017 | [LemurFaceID](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | Face recognition | Lemur | 462 images | Public |
+| 2016 | [Chimpanzee Faces](https://github.com/cvjena/chimpanzee_faces) | Face recognition | Chimp | 6,486 images | Public |
+
+#### Dataset with both primate and non-primate data
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2023 | [MammalNet](https://arxiv.org/pdf/2306.00576.pdf) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |

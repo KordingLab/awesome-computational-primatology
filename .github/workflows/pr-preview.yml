@@ -1,0 +1,79 @@
+name: PR Preview
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths: [ 'README.md' ]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pandas
+
+      - name: Generate preview website
+        run: python .github/workflows/website.py
+
+      - name: Upload preview as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-preview
+          path: index.html
+          retention-days: 7
+
+      - name: Deploy to temporary GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          destination_dir: pr-${{ github.event.number }}
+          keep_files: false
+
+      - name: Comment PR with preview link
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const repoOwner = context.repo.owner;
+            const repoName = context.repo.repo;
+            const previewUrl = `https://${repoOwner}.github.io/${repoName}/pr-${prNumber}/`;
+            
+            const comment = `## 🔍 Website Preview
+            
+            Your changes have been deployed to a preview site!
+            
+            **Preview URL:** ${previewUrl}
+            
+            This preview will be automatically updated when you push new commits to this PR.
+            
+            ---
+            
+            ### How to test locally:
+            \`\`\`bash
+            # Clone and test your changes
+            git checkout ${{ github.head_ref }}
+            python .github/workflows/website.py
+            python -m http.server 8000
+            # Visit: http://localhost:8000
+            \`\`\`
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: repoOwner,
+              repo: repoName,
+              body: comment
+            });
