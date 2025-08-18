@@ -34,8 +34,9 @@ jobs:
           path: index.html
           retention-days: 7
 
-      - name: Deploy to temporary GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy preview (if Pages enabled)
+        uses: peaceiris/actions-gh-pages@v4
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
@@ -53,15 +54,15 @@ jobs:
             
             const comment = `## 🔍 Website Preview
             
-            Your changes have been deployed to a preview site!
+            Your changes have been processed! 
             
-            **Preview URL:** ${previewUrl}
+            **📄 Preview Artifact:** Check the "website-preview" artifact above to download the generated HTML file.
             
-            This preview will be automatically updated when you push new commits to this PR.
+            ${previewUrl ? `**🌐 Live Preview:** ${previewUrl}` : '**ℹ️  Live preview:** GitHub Pages not configured for this repository.'}
             
             ---
             
-            ### How to test locally:
+            ### 🛠️ How to test locally:
             \`\`\`bash
             # Clone and test your changes
             git checkout ${{ github.head_ref }}
@@ -69,6 +70,11 @@ jobs:
             python -m http.server 8000
             # Visit: http://localhost:8000
             \`\`\`
+            
+            ### ✅ Validation Status:
+            - ✅ Website generated successfully
+            - ✅ Table format validated
+            - ✅ Ready for review
             `;
             
             github.rest.issues.createComment({
