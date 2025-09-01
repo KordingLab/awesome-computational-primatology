@@ -54,14 +54,15 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
-| 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-species | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
+| 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
+| 2025 | [Iashina et al.](https://arxiv.org/abs/2507.10552) | FD,FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | No | N/A |
+| 2024 | [Paulet et al.](https://link.springer.com/article/10.1007/s10329-024-01137-5) | FR | Macaque | No | No | N/A |
 | 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
 | 2024 | [MacAction](https://www.biorxiv.org/content/10.1101/2024.01.29.577734v1.full.pdf) | AM | Macaque | No | No | N/A |
 | 2024 | [LabGym](https://link-springer-com.proxy.library.upenn.edu/epdf/10.1007/s10329-024-01123-x?sharing_token=_ApwJ7je3dmaWjW7cYNbUPe4RwlQNchNByi7wbcMAY4h1wHpdNqXXEnVHidjh8t56BEMyNJkqC8xIJ-ZpXK78qFoYXZ7oq8pYO62wVWzEHVj6fEbKl9wvAlIYBLr4-giBZwcMH2HZvRPiyRk4I1-_3hbhgnYy_ZtE0jBSB4UJo4=) | BR | Macaque | [Yes](https://github.com/umyelab/LabGym) | Yes | N/A |
 | 2024 | [Cheng et al.](https://www.biorxiv.org/content/10.1101/2024.02.27.582429v3.full.pdf) | BR | Macaque | No | No | N/A |
 | 2024 | [PRIMAT (Vogg et al.)](https://www.biorxiv.org/content/10.1101/2024.08.21.607881v1.full.pdf) | 2D BPE | Cross-species | No | No | N/A |
-| 2024 | [Franch et al.](https://www-nature-com.proxy.library.upenn.edu/articles/s41586-024-07084-x) | BR | Macaque | No | No | N/A |
 | 2024 | [Xing et al.](https://www.biorxiv.org/content/10.1101/2024.02.16.580693v1.full.pdf) | O | Marmoset | No | No | N/A |
 | 2024 | [Menegas et al.](https://www.biorxiv.org/content/10.1101/2024.08.30.610159v1.full.pdf) | BR | Marmoset | No | No | N/A |
 | 2023 | [GorillaVision](https://inf-cv.uni-jena.de/wordpress/wp-content/uploads/2023/09/Talk-12-Maximilian-Schall.pdf) | FD, FR | Gorilla | [Yes](https://github.com/Lasklu/gorillavision) | No | 832 |
