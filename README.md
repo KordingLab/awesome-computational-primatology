@@ -55,7 +55,8 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
-| 2025 | [Iashina et al.](https://arxiv.org/abs/2507.10552) | FD,FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | No | N/A |
+| 2025 | [Iashin et al.](https://arxiv.org/abs/2507.10552) | FD,FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | No | N/A |
+| 2025 | [Fuchs et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-025-02484-6) | BR | Chimp | [Yes](https://github.com/MitchFuchs/ChimpBehave) | Yes | 215,000 |
 | 2024 | [Paulet et al.](https://link.springer.com/article/10.1007/s10329-024-01137-5) | FR | Macaque | No | No | N/A |
 | 2024 | [PanAf20K](https://link.springer.com/article/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://docserver.ingentaconnect.com/deliver/fasttrack/aalas/15596109/jaalas_23000056.pdf?expires=1710859610&id=pennsylvaniapa&checksum=13D04EE26CE4C36535F9651507F83EDC) | FD, O | Macaque | No | No | N/A |
