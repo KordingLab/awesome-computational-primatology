@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@.0.2
+        uses: lycheeverse/lychee-action@2.0.2
         with:
           args: --verbose --no-progress --exclude-mail README.md
           fail: false
