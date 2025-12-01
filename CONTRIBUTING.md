@@ -12,20 +12,20 @@ cd awesome-computational-primatology
 
 # 2. Make your changes to README.md
 
-# 3. Generate and preview the website
-python .github/workflows/website.py
-python -m http.server 8000
-# Visit: http://localhost:8000
+# 3. Preview the website (auto-generates index.html and opens browser)
+python scripts/dev-preview.py
 
-# 4. Create a pull request
+# 4. Commit BOTH README.md and index.html, then create a pull request
 ```
+
+**Important:** Always commit `index.html` along with your `README.md` changes. The CI will fail if they're out of sync.
 
 ### Automatic PR Previews
 When you submit a PR, our automation will:
 - ✅ Generate a preview website with your changes
 - ✅ Post a comment with the preview link
 - ✅ Validate table formatting and links
-- ✅ Update the website automatically when merged
+- ✅ Check that `index.html` is in sync with `README.md`
 
 ### 1. Branch Protocol
 - Fork the repository
@@ -64,15 +64,15 @@ Where:
 - **Paper**: `[Title](link)` or just Title if preprint
 - **Topic**: Use abbreviations from Topic Legend (PD, BPE, FD, etc.)
 - **Animal**: Specific primate species or "Cross-species"
-- **Model?**: 
+- **Model?**:
   - `[Yes](link)` if code + pretrained models available
   - `[Code only](link)` if repository available but no pretrained models
   - `[No](link)` if repository with information but no functional code
-  - "No" if neither available
-- **Data?**: 
+  - "N/A" if neither available
+- **Data?**:
   - `[Yes](link)` if publicly available
   - "Upon request" if available through contact
-  - "No" if not available
+  - "N/A" if not available
 - **Image/Video Count**: Number or "N/A" if not applicable
 
 ### Topic Legend
