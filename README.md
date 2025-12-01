@@ -56,9 +56,10 @@ By sharing your datasets and models, you contribute to advancing primatology and
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
 | 2025 | [PriVi](https://arxiv.org/pdf/2511.09675) | PD, BR | Apes | N/A | Multiple | N/A |
-| 2025 | [Igaue et al.](https://arxiv.org/pdf/2511.16711) | FD, FAC | Macaque | [TBD](https://github.com/tigaue/maqface-stylegan2) | N/A | N/A |
+| 2025 | [Igaue et al.](https://arxiv.org/pdf/2511.16711) | FD, FAC | Macaque | TBD | N/A | N/A |
 | 2025 | [Iashin et al.](https://arxiv.org/abs/2507.10552) | FD,FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | No | N/A |
 | 2025 | [Fuchs et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-025-02484-6) | BR | Chimp | [Yes](https://github.com/MitchFuchs/ChimpBehave) | Yes | 215,000 |
+| 2024 | [Scott et al.](https://arxiv.org/pdf/2412.15966) | PE | Macaque | N/A | N/A | N/A |
 | 2024 | [ChimpVLM](https://arxiv.org/pdf/2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
 | 2024 | [AlphaChimp](https://arxiv.org/pdf/2410.17136) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A | 
 | 2024 | [Paulet et al.](https://link.springer.com/article/10.1007/s10329-024-01137-5) | FR | Macaque | No | No | N/A |
@@ -80,7 +81,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2023 | [Kaneko et al.](https://www.biorxiv.org/content/10.1101/2023.10.16.561623v1.full.pdf) | 3D BM | Marmoset | No | No | N/A |
 | 2023 | [Matsumoto et al.](https://www.biorxiv.org/content/10.1101/2023.09.13.556332v1.full.pdf) | 3D BM | Macaque | No | No | N/A |
 | 2023 | [ChimpAct](https://proceedings.neurips.cc/paper_files/paper/2023/file/57a95cd3898bf4912269848a01f53620-Paper-Datasets_and_Benchmarks.pdf) | 2D BPE, FR, BR | Chimp | Yes | Yes | 160,500 |
-| 2023 | OpenMonkeyChallenge | 2D BPE | Cross-species | No | [Yes](http://openmonkeychallenge.com/) | 111,529 |
+| 2023 | OpenMonkeyChallenge | 2D BPE | Cross-species | No | [Yes](https://competitions.codalab.org/competitions/34342) | 111,529 |
 | 2023 | [Pillai et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10199762&tag=1) | PD | Cross-Species | No | No | N/A |
 | 2023 | [Reddy et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10276306) | PD | Cross-species | No | No | N/A | 
 | 2023 | [Bala et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-023-01804-y) | 3D BPE | Cross-species | No | No | N/A |
@@ -90,7 +91,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
 | 2022 | [Ueno et al.](https://onlinelibrary.wiley.com/doi/full/10.1111/eth.13277) | FR | Macaque | No | No | N/A |
 | 2021 | [Brookes & Burghardt](https://arxiv.org/pdf/2012.04689.pdf) | FR | Gorilla | No | [Yes](https://data.bris.ac.uk/data/dataset/jf0859kboy8k2ufv60dqeb2t8) | >5,000 |
-| 2021 | [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | [Some](https://datadryad.org/stash/share/UUfSTzsL9eTbAo-78pdaXPdaIUJmdJzSuqhXcb48vHM) | N/A |
+| 2021 | [Bain et al.](https://www-science-org.proxy.library.upenn.edu/doi/full/10.1126/sciadv.abi4883) | BR | Chimp | No | TBD | N/A |
 | 2021 | OpenApePose | 2D BPE | Cross-species | No | Yes | 71,868 |
 | 2021 | MacaquePose | 2D BPE | Macaque | Yes | Yes | 13,000 |
 | 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | Data | Chimp | No | Upon request | N/A |
@@ -107,7 +108,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2019 | Labuguen et al. | 2D BPE | Macaque | No | No | N/A |
 | 2018 | [Sinha, Agarwal et al.](https://openaccess.thecvf.com/content_ECCVW_2018/papers/11129/Sinha_Exploring_Bias_in_Primate_Face_Detection_and_Recognition_ECCVW_2018_paper.pdf) | PD | Cross-species | No | No | N/A |
 | 2018 | [Deb et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/8698538/authors) | FR | Cross-species | No | No | N/A |
-| 2018 | [Witham](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5909037/) | FLE | Macaque | [Yes](http://www.mackenziemathislab.org/dlc-modelzoo) | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
+| 2018 | [Witham](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5909037/) | FLE | Macaque | TBD | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
 | 2018 | [Labuguen et al.](https://www.biorxiv.org/content/10.1101/377895v1.full.pdf) | PD | Macaque | No | No | N/A |
 | 2017 | [LemurFaceID](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/s40850-016-0011-9) | FD, FR | Lemur | No | [Yes](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | 462
 | 2017 | [Brust et al.](https://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w41/Brust_Towards_Automated_Visual_ICCV_2017_paper.pdf) | FD, FR | Gorilla | No | No | N/A |
@@ -115,7 +116,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2016 | [Nakamura et al.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166154) | 3D BM | Macaque | No | No | N/A |
 | 2016 | [Freytag et al.](https://link-springer-com.proxy.library.upenn.edu/chapter/10.1007/978-3-319-45886-1_5) | FR | Chimp | No | [Yes](https://github.com/cvjena/chimpanzee_faces) | 6,486 |
 | 2014 | [Ballesta et al.](https://www-sciencedirect-com.proxy.library.upenn.edu/science/article/pii/S0165027014001848?via%3Dihub) | 3D, O | Macaque | No | No | N/A |
-| 2013 | [Loos & Ernst](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/1687-5281-2013-49) | FD, FR | Chimp | No | [For purchase](http://www.saisbeco.com/) | 6,522 |
+| 2013 | [Loos & Ernst](https://link-springer-com.proxy.library.upenn.edu/article/10.1186/1687-5281-2013-49) | FD, FR | Chimp | No | N/A | 6,522 |
 | 2012 | [Loos & Pfitzer](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6208167) | FR | Chimp | No | No | N/A |
 | 2012 | [Loos & Ernst](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6424643) | FD, Fr | Chimp | No | No | N/A |
 | 2011 | [Loos et al.](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7074032) | FR | Chimp | No | No | N/A | 
@@ -128,10 +129,10 @@ By sharing your datasets and models, you contribute to advancing primatology and
 |------|-------------|-------------|---------|------|--------------|
 | 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | Face analysis | Cross-species | 200K+ images | Public |
 | 2024 | [PanAf20K](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | Detection and behavior | Apes | 20,000 videos | Public |
-| 2023 | [OpenMonkeyChallenge](http://openmonkeychallenge.com/) | 2D pose estimation | Cross-species | 111,529 images | Public |
+| 2023 | [OpenMonkeyChallenge](https://competitions.codalab.org/competitions/34342) | 2D pose estimation | Cross-species | 111,529 images | Public |
 | 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | Behavioral annotations | Chimps | N/A | Upon request |
-| 2021 | [MacaquePose](https://github.com/MacaquePose/MacaquePose) | 2D pose estimation | Macaque | 13,000 images | Public |
-| 2021 | [OpenApePose](https://github.com/OpenApePose/OpenApePose) | 2D pose estimation | Cross-species | 71,868 images | Public |
+| 2021 | [MacaquePose](https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html) | 2D pose estimation | Macaque | 13,000 images | Public |
+| 2021 | [OpenApePose](https://github.com/desai-nisarg/OpenApePose) | 2D pose estimation | Cross-species | 71,868 images | Public |
 | 2020 | [OpenMonkeyStudio](https://github.com/OpenMonkeyStudio/OMS_Data) | 3D pose estimation | Macaque | 195,228 frames | Public |
 | 2020 | [Tri-A](https://data.mendeley.com/datasets/z3x59pv4bz/2) | Face detection/recognition | 41 species | 102,399 images | Public |
 | 2018 | [Macaque Faces](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | Facial landmarks | Macaque | 4,000 images | Public |

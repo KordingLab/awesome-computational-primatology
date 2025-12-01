@@ -1,0 +1,22 @@
+# Lychee link checker configuration
+# https://lychee.cli.rs/configuration/
+
+# Exclude domains that block bots but work fine in browsers
+exclude = [
+    "biorxiv.org",
+    "onlinelibrary.wiley.com",
+    "besjournals.onlinelibrary.wiley.com",
+    "docserver.ingentaconnect.com",
+    "link-springer-com.proxy.library.upenn.edu",
+    "www-nature-com.proxy.library.upenn.edu",
+    "www-science-org.proxy.library.upenn.edu",
+    "www-sciencedirect-com.proxy.library.upenn.edu",
+    "ieeexplore-ieee-org.proxy.library.upenn.edu",
+    "onlinelibrary-wiley-com.proxy.library.upenn.edu"
+]
+
+# Accept 403 status codes (some sites return this for valid pages)
+accept = [200, 204, 301, 302, 403]
+
+# Exclude email addresses
+exclude_mail = true
