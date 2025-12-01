@@ -59,7 +59,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2025 | [Igaue et al.](https://arxiv.org/pdf/2511.16711) | FD, FAC | Macaque | TBD | N/A | N/A |
 | 2025 | [Iashin et al.](https://arxiv.org/abs/2507.10552) | FD,FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | No | N/A |
 | 2025 | [Fuchs et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-025-02484-6) | BR | Chimp | [Yes](https://github.com/MitchFuchs/ChimpBehave) | Yes | 215,000 |
-| 2024 | [Scott et al.](https://arxiv.org/pdf/2412.15966) | PE | Macaque | N/A | N/A | N/A |
+| 2024 | [Scott et al.](https://arxiv.org/pdf/2412.15966) | PE | Macaque | N/A | N/A | N/A |ca
 | 2024 | [ChimpVLM](https://arxiv.org/pdf/2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
 | 2024 | [AlphaChimp](https://arxiv.org/pdf/2410.17136) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A | 
 | 2024 | [Paulet et al.](https://link.springer.com/article/10.1007/s10329-024-01137-5) | FR | Macaque | No | No | N/A |

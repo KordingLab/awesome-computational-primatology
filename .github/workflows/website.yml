@@ -4,21 +4,47 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'README.md'
+      - 'index.html'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'index.html'
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-            python-version: 3.x
+          python-version: '3.x'
+
       - name: Install dependencies
         run: pip install pandas
-      - name: Run website.py
+
+      - name: Build website
         run: python .github/workflows/website.py
-      - uses: stefanzweifel/git-auto-commit-action@v5
+
+      - name: Check if index.html is up to date
+        run: |
+          if git diff --quiet index.html; then
+            echo "✅ index.html is up to date with README.md"
+          else
+            echo "❌ index.html is out of sync with README.md!"
+            echo ""
+            echo "Please run locally:"
+            echo "  python .github/workflows/website.py"
+            echo ""
+            echo "Then commit the updated index.html"
+            echo ""
+            echo "Diff:"
+            git diff index.html | head -50
+            exit 1
+          fi
