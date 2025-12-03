@@ -4,10 +4,10 @@ on:
   push:
     branches: [main]
     paths: [README.md]
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
 
 concurrency:
-  group: "huggingface-sync"
+  group: huggingface-sync
   cancel-in-progress: true
 
 jobs:
@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      issues: write  # For creating failure notification issues
+      issues: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history needed for git push
+          fetch-depth: 0
 
       - name: Push to HuggingFace
         run: |
@@ -32,25 +32,10 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const date = new Date().toISOString().split('T')[0];
-            const body = [
-              'The automatic sync to HuggingFace failed.',
-              '',
-              '**Commit:** ' + context.sha,
-              '**Run:** ' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId,
-              '',
-              'Please check the workflow logs and manually sync if needed:',
-              '```bash',
-              'git push --force https://fparodi:YOUR_HF_TOKEN@huggingface.co/datasets/fparodi/awesome-computational-primatology main',
-              '```',
-              '',
-              '---',
-              '*This issue was automatically created by the HuggingFace sync workflow.*'
-            ].join('\n');
             github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '🤗 HuggingFace Sync Failed - ' + date,
-              body: body,
-              labels: ['maintenance', 'huggingface']
+              title: 'HuggingFace Sync Failed - ' + new Date().toISOString().slice(0, 10),
+              body: 'The automatic sync to HuggingFace failed.\n\nSee: ' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId,
+              labels: ['maintenance']
             });
