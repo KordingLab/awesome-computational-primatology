@@ -33,21 +33,24 @@ jobs:
         with:
           script: |
             const date = new Date().toISOString().split('T')[0];
+            const body = [
+              'The automatic sync to HuggingFace failed.',
+              '',
+              '**Commit:** ' + context.sha,
+              '**Run:** ' + context.serverUrl + '/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId,
+              '',
+              'Please check the workflow logs and manually sync if needed:',
+              '```bash',
+              'git push --force https://fparodi:YOUR_HF_TOKEN@huggingface.co/datasets/fparodi/awesome-computational-primatology main',
+              '```',
+              '',
+              '---',
+              '*This issue was automatically created by the HuggingFace sync workflow.*'
+            ].join('\n');
             github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🤗 HuggingFace Sync Failed - ${date}`,
-              body: `The automatic sync to HuggingFace failed.
-
-**Commit:** ${context.sha}
-**Run:** ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}
-
-Please check the workflow logs and manually sync if needed:
-\`\`\`bash
-git push --force https://fparodi:YOUR_HF_TOKEN@huggingface.co/datasets/fparodi/awesome-computational-primatology main
-\`\`\`
-
----
-*This issue was automatically created by the HuggingFace sync workflow.*`,
+              title: '🤗 HuggingFace Sync Failed - ' + date,
+              body: body,
               labels: ['maintenance', 'huggingface']
             });
