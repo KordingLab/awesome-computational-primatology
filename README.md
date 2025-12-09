@@ -54,6 +54,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2025 | [Luetkin et al.](https://dl-acm-org.proxy.library.upenn.edu/doi/10.1145/3768539.3768558) | FD, FR | Chimp | TBD | TBD | TBD |
 | 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
 | 2025 | [PriVi](https://arxiv.org/pdf/2511.09675) | PD, BR | Apes | N/A | Multiple | N/A |
 | 2025 | [Igaue et al.](https://arxiv.org/pdf/2511.16711) | FD, FAC | Macaque | N/A | N/A | N/A |
