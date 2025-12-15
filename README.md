@@ -1,7 +1,7 @@
 # 🐒 [Awesome Computational Primatology](http://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-65+-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-74-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -54,12 +54,17 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2025 | [Mueller et al.](https://arxiv.org/pdf/2509.12193) | BR | Ape | [Yes](https://github.com/ecker-lab/dap-behavior) | N/A | N/A |
+| 2025 | [SILVI](https://arxiv.org/pdf/2511.03819) | PD, BR | Any | N/A | N/A | N/A |
+| 2025 | [Luo et al.](https://www-tandfonline-com.proxy.library.upenn.edu/doi/full/10.1080/10888705.2025.2542844#abstract) | PD, BR | Gibbon | N/A | N/A | N/A |
 | 2025 | [Luetkin et al.](https://dl-acm-org.proxy.library.upenn.edu/doi/10.1145/3768539.3768558) | FD, FR | Chimp | TBD | TBD | TBD |
 | 2025 | [PrimateFace](https://www.biorxiv.org/content/10.1101/2025.08.12.669927v1) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
+| 2025 | [PanAf-FGBG](https://arxiv.org/abs/2502.21201) | PD, BR | Chimp | N/A | [Yes](https://obrookes.github.io/panaf-fgbg.github.io/) | TBD |
 | 2025 | [PriVi](https://arxiv.org/pdf/2511.09675) | PD, BR | Apes | N/A | Multiple | N/A |
 | 2025 | [Igaue et al.](https://arxiv.org/pdf/2511.16711) | FD, FAC | Macaque | N/A | N/A | N/A |
 | 2025 | [Iashin et al.](https://arxiv.org/abs/2507.10552) | FD, FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | N/A | N/A |
 | 2025 | [Fuchs et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-025-02484-6) | BR | Chimp | [Yes](https://github.com/MitchFuchs/ChimpBehave) | Yes | 215,000 |
+| 2024 | [BaboonLand](https://arxiv.org/abs/2405.17698) | PD, BR | Baboons | N/A | [Yes](https://baboonland.xyz/) | TBD |
 | 2024 | [Scott et al.](https://arxiv.org/pdf/2412.15966) | BPE | Macaque | N/A | N/A | N/A |
 | 2024 | [ChimpVLM](https://arxiv.org/pdf/2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
 | 2024 | [AlphaChimp](https://arxiv.org/pdf/2410.17136) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A | 
@@ -87,6 +92,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2023 | [Reddy et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/stamp/stamp.jsp?tp=&arnumber=10276306) | PD | Cross-species | N/A | N/A | N/A | 
 | 2023 | [Bala et al.](https://link-springer-com.proxy.library.upenn.edu/article/10.1007/s11263-023-01804-y) | 3D BPE | Cross-species | N/A | N/A | N/A |
 | 2023 | [Brookes et al.](https://arxiv.org/pdf/2301.02642.pdf) | BR | Apes | N/A | N/A | N/A |
+| 2022 | [Lei et al.](https://pubmed.ncbi.nlm.nih.gov/35545645/) | BPE | Loris | N/A | N/A | N/A |
 | 2022 | [Ngo et al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10203885/) | BR | Marmoset | N/A | N/A | N/A |
 | 2022 | [Brachiation](https://arxiv.org/pdf/2205.03943.pdf) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | N/A | N/A |
 | 2022 | [SIPEC](https://www-nature-com.proxy.library.upenn.edu/articles/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
@@ -123,7 +129,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2011 | [Loos et al.](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7074032) | FR | Chimp | N/A | N/A | N/A | 
 | 2011 | [Ernst & Küblbeck](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6027337) | FD, SI | Chimp, Gorilla | N/A | N/A | N/A |
 
-### Datasets
+<!-- ### Datasets
 
 #### Primate-Specific Datasets
 | Year | Dataset Name | Description | Species | Size | Availability |
@@ -138,7 +144,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2020 | [Tri-A](https://data.mendeley.com/datasets/z3x59pv4bz/2) | Face detection/recognition | 41 species | 102,399 images | Public |
 | 2018 | [Macaque Faces](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | Facial landmarks | Macaque | 4,000 images | Public |
 | 2017 | [LemurFaceID](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | Face recognition | Lemur | 462 images | Public |
-| 2016 | [Chimpanzee Faces](https://github.com/cvjena/chimpanzee_faces) | Face recognition | Chimp | 6,486 images | Public |
+| 2016 | [Chimpanzee Faces](https://github.com/cvjena/chimpanzee_faces) | Face recognition | Chimp | 6,486 images | Public | -->
 
 #### Dataset with both primate and non-primate data
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
