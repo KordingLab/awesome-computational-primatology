@@ -146,7 +146,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2017 | [LemurFaceID](http://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/) | Face recognition | Lemur | 462 images | Public |
 | 2016 | [Chimpanzee Faces](https://github.com/cvjena/chimpanzee_faces) | Face recognition | Chimp | 6,486 images | Public | -->
 
-#### Dataset with both primate and non-primate data
+#### Dataset with both primate and non-primate data (needs to be updated)
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
 | 2023 | [MammalNet](https://arxiv.org/pdf/2306.00576.pdf) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
@@ -156,15 +156,12 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2021 | [LiftPose3D](https://www-nature-com.proxy.library.upenn.edu/articles/s41592-021-01226-z) | 3D BPE | Cross-species | Yes | N/A | N/A |
 | 2020 | AnimalWeb | FD, FLE | Cross-species | N/A | Yes | 21,921 |
 
-#### Reviews
+#### Reviews & Related
 | Year | Tag | Topic | Animal |
 |------|-----|-------|--------|
-| 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | Review | All |
+| 2025 | [Parodi et al.](https://pubmed.ncbi.nlm.nih.gov/41015681/) | Primate neuroethology review | All |
+| 2024 | [Vogg et al.](https://arxiv.org/pdf/2401.16424.pdf) | CV for primates Review | All |
+| 2024 | [Tlaie et al., 2024](https://www.biorxiv.org/content/10.1101/2024.01.24.577055v1.full.pdf) | Neuro | Macaque, mice |
 | 2021 | [Hayden et al.](https://onlinelibrary-wiley-com.proxy.library.upenn.edu/doi/full/10.1002/ajp.23348) | Review | All |
-
-#### Related projects
-- Macaque Face Avatars
-  - [Siebert et al., 2020](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf)
-  - [Murphy & Leopold 2019](https://www.sciencedirect.com/science/article/pii/S0165027019301591#sec0160)
- 
-- Comparing macaque face tracking to mice [Tlaie et al., 2024](https://www.biorxiv.org/content/10.1101/2024.01.24.577055v1.full.pdf)
+| 2020 | [Siebert et al.](https://www.eneuro.org/content/eneuro/7/4/ENEURO.0524-19.2020.full.pdf) | Face avatar | Macaque |
+| 2019 | [Murphy & Leopold](https://www.sciencedirect.com/science/article/pii/S0165027019301591#sec0160) | Face avatar | Macaque |
