@@ -54,6 +54,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count | 
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2025 | [Huang et al.](https://ieeexplore-ieee-org.proxy.library.upenn.edu/abstract/document/10887625) | BR | Macaque | N/A | Macaque-Motion-Monitor | N/A |
 | 2025 | [Mueller et al.](https://arxiv.org/pdf/2509.12193) | BR | Ape | [Yes](https://github.com/ecker-lab/dap-behavior) | N/A | N/A |
 | 2025 | [SILVI](https://arxiv.org/pdf/2511.03819) | PD, BR | Any | N/A | N/A | N/A |
 | 2025 | [Luo et al.](https://www-tandfonline-com.proxy.library.upenn.edu/doi/full/10.1080/10888705.2025.2542844#abstract) | PD, BR | Gibbon | N/A | N/A | N/A |
