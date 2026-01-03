@@ -3,8 +3,33 @@ __pycache__/
 *.py[cod]
 *$py.class
 .env
+.env.local
 .venv/
 venv/
+
+# GCP credentials (NEVER commit these)
+service-account*.json
+credentials*.json
+*-key.json
+
+# JSON files (default ignore, with exceptions)
+*.json
+!package.json
+!package-lock.json
+# Keep source data
+!data/papers_with_abstracts.json
+# Backend data is synced from data/ during deployment
+!backend/data/*.json
+
+# Large binary/generated data (regenerate with scripts/rag/)
+data/
+data/pdfs/
+data/extracted/
+data/embeddings.json
+data/chunks.json
+data/chunk_embeddings.json
+
+docs/PAPERS_TO_DOWNLOAD.md
 
 # IDEs
 .vscode/
@@ -15,9 +40,20 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Personal notes
-TODO.md
+# Personal notes (not tracked)
 NOTES.md
+TODO.md
+CLAUDE.md
+
+# Old/intermediate README versions
+README_old.md
+README_updated.md
 
 # Claude Desktop
 .claude/
+
+# Local trash (deleted files kept locally)
+trash/
+
+# Local development scripts with hardcoded paths
+scripts/run_local.sh

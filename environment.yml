@@ -1,0 +1,21 @@
+name: primatology-rag
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - scikit-learn
+  - pip:
+    # FastAPI backend
+    - fastapi>=0.109.0
+    - uvicorn[standard]>=0.27.0
+    - pydantic>=2.6.0
+    # Google Cloud (for production)
+    - google-cloud-aiplatform>=1.38.0
+    # Embeddings
+    - sentence-transformers>=2.2.0
+    # Utilities
+    - python-dotenv>=1.0.0
+    - httpx>=0.26.0

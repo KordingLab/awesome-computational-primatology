@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+.env
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+
+# Docs and misc
+*.md
+docs/
+papers/
+scripts/
+.github/
+
+# Large files not needed for backend
+*.pdf

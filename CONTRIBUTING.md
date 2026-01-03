@@ -76,20 +76,7 @@ Where:
 - **Image/Video Count**: Number or "N/A" if not applicable
 
 ### Topic Legend
-Use these abbreviations for the Topic column:
-- PD: Primate Detection
-- BPE: Body Pose Estimation
-- FD: Face Detection
-- FLE: Facial Landmark Estimation
-- FR: Face Recognition and/or Re-Identification
-- FAC: Facial Action Coding / Units
-- HD: Hand Detection
-- HPE: Hand Pose Estimation
-- BR: Behavior Recognition / Understanding / Modeling
-- AM: Avatar / Mesh
-- SI: Species Identification
-- RL: Reinforcement Learning
-- O: Other
+See the full [Topic Categories](docs/TOPIC_LEGEND.md) for abbreviations (PD, BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O).
 
 ## Verification Steps
 Before submitting your PR:

@@ -1,4 +1,57 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Generate enhanced HTML website from README.md table
+"""
+import pandas as pd
+import re
+import os
+
+def to_link_if_markdown(cell_text: str) -> str:
+    """Convert markdown links [text](url) to HTML <a> tags"""
+    if not isinstance(cell_text, str):
+        return str(cell_text)
+    cell_text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', cell_text)
+    return cell_text.strip()
+
+def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
+    """Extract the main projects table from README.md"""
+    with open(readme_path, "r", encoding='utf-8') as f:
+        text = f.readlines()
+    
+    table = []
+    in_projects_section = False
+    
+    for line in text:
+        # Check if we're in the Projects section
+        if line.strip() == "### Projects":
+            in_projects_section = True
+            continue
+        
+        # Stop if we hit another section
+        if in_projects_section and line.startswith("### ") and "Projects" not in line:
+            break
+            
+        # Extract table rows (has 8 | characters for 7 columns)
+        if in_projects_section and len(re.findall(r"\|", line)) == 8:
+            row = [cell.strip() for cell in line.split("|")[1:-1]]
+            table.append(row)
+    
+    if len(table) < 2:
+        raise ValueError("Could not find valid table in README.md")
+    
+    # First row is header, second row is separator, rest is data
+    header = table[0]
+    data = table[2:] if len(table) > 2 else []
+    
+    df = pd.DataFrame(data, columns=header)
+    # Apply markdown to HTML conversion
+    df = df.applymap(to_link_if_markdown)
+    
+    return df
+
+def get_enhanced_html_template() -> str:
+    """Return the enhanced HTML template"""
+    return '''<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -650,19 +703,19 @@
                 
                 <div class="stats">
                     <div class="stat-item">
-                        <span class="stat-number" id="total-papers">92</span>
+                        <span class="stat-number" id="total-papers">{total_papers}</span>
                         <span class="stat-label">Papers</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" id="years-span">14</span>
+                        <span class="stat-number" id="years-span">{years_span}</span>
                         <span class="stat-label">Years</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" id="with-code">19</span>
+                        <span class="stat-number" id="with-code">{with_code}</span>
                         <span class="stat-label">With Code</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" id="with-data">24</span>
+                        <span class="stat-number" id="with-data">{with_data}</span>
                         <span class="stat-label">With Data</span>
                     </div>
                 </div>
@@ -731,849 +784,7 @@
             </div>
             
             <div class="table-container">
-                <table border="1" class="dataframe display" id="table">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Year</th>
-      <th>Paper</th>
-      <th>Topic</th>
-      <th>Animal</th>
-      <th>Model?</th>
-      <th>Data?</th>
-      <th>Image/Video Count</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1109/ICASSP49660.2025.10887625">Huang et al.</a></td>
-      <td>BR</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>Macaque-Motion-Monitor</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2509.12193">Mueller et al.</a></td>
-      <td>BR</td>
-      <td>Ape</td>
-      <td><a href="https://github.com/ecker-lab/dap-behavior">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2511.03819">SILVI</a></td>
-      <td>PD, BR</td>
-      <td>Any</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1080/10888705.2025.2542844">Luo et al.</a></td>
-      <td>PD, BR</td>
-      <td>Gibbon</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1145/3768539.3768558">Luetkin et al.</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td>TBD</td>
-      <td>TBD</td>
-      <td>TBD</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1101/2025.08.12.669927">PrimateFace</a></td>
-      <td>FD, FLE, FR, FAC</td>
-      <td>Cross-genus</td>
-      <td><a href="https://github.com/KordingLab/PrimateFace">Yes</a></td>
-      <td><a href="https://github.com/KordingLab/PrimateFace">Yes</a></td>
-      <td>200K+ images</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2502.21201">PanAf-FGBG</a></td>
-      <td>PD, BR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td><a href="https://obrookes.github.io/panaf-fgbg.github.io/">Yes</a></td>
-      <td>TBD</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2511.09675">PriVi</a></td>
-      <td>PD, BR</td>
-      <td>Apes</td>
-      <td>N/A</td>
-      <td>Multiple</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2511.16711">Igaue et al.</a></td>
-      <td>FD, FAC</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2507.10552">Iashin et al.</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td><a href="https://github.com/v-iashin/ChimpUFE">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1007/s11263-025-02484-6">Fuchs et al.</a></td>
-      <td>BR</td>
-      <td>Chimp</td>
-      <td><a href="https://github.com/MitchFuchs/ChimpBehave">Yes</a></td>
-      <td>Yes</td>
-      <td>215,000</td>
-    </tr>
-    <tr>
-      <td>2025</td>
-      <td><a href="https://doi.org/10.1002/ece3.71678">Clink et al.</a></td>
-      <td>AV</td>
-      <td>Gibbon</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2405.17698">BaboonLand</a></td>
-      <td>PD, BR</td>
-      <td>Baboons</td>
-      <td>N/A</td>
-      <td><a href="https://baboonland.xyz/">Yes</a></td>
-      <td>TBD</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2412.15966">Scott et al.</a></td>
-      <td>BPE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2404.08937">ChimpVLM</a></td>
-      <td>BR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>Used PanAf20k</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2410.17136">AlphaChimp</a></td>
-      <td>PD, BR</td>
-      <td>Chimp</td>
-      <td><a href="https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file">Yes</a></td>
-      <td><a href="https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data">ChimpAct</a></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1007/s10329-024-01137-5">Paulet et al.</a></td>
-      <td>FR</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1007/s11263-024-02003-z">PanAf20K</a></td>
-      <td>PD, BR</td>
-      <td>Apes</td>
-      <td><a href="https://github.com/obrookes/panaf.github.io">No</a></td>
-      <td><a href="https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt">Yes</a></td>
-      <td>20k</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.30802/AALAS-JAALAS-23-000056">Gris et al.</a></td>
-      <td>FD, O</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1101/2024.01.29.577734">MacAction</a></td>
-      <td>AM</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1007/s10329-024-01123-x">LabGym</a></td>
-      <td>BR</td>
-      <td>Macaque</td>
-      <td><a href="https://github.com/umyelab/LabGym">Yes</a></td>
-      <td>Yes</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1101/2024.02.27.582429">Cheng et al.</a></td>
-      <td>BR</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1101/2024.08.21.607881">PRIMAT (Vogg et al.)</a></td>
-      <td>2D BPE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1101/2024.02.16.580693">Xing et al.</a></td>
-      <td>O</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1101/2024.08.30.610159">Menegas et al.</a></td>
-      <td>BR</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2410.23279">Wu et al.</a></td>
-      <td>AV</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2024</td>
-      <td><a href="https://doi.org/10.1002/ajp.23599">Batist et al.</a></td>
-      <td>AV</td>
-      <td>Lemur</td>
-      <td><a href="https://github.com/emmanueldufourq/PAM_TransferLearning">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://inf-cv.uni-jena.de/wordpress/wp-content/uploads/2023/09/Talk-12-Maximilian-Schall.pdf">GorillaVision</a></td>
-      <td>FD, FR</td>
-      <td>Gorilla</td>
-      <td><a href="https://github.com/Lasklu/gorillavision">Yes</a></td>
-      <td>N/A</td>
-      <td>832</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1101/2023.12.11.571113">Abbaspoor, Rahman et al.</a></td>
-      <td>3D BPE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1101/2023.03.04.531044">Mimura et al.</a></td>
-      <td>BR</td>
-      <td>Macaque, Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1111/2041-210X.14181">Schofield et al.</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2205.00275">Yang et al.</a></td>
-      <td>PD</td>
-      <td>Great Ape</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1101/2023.09.24.559236">ASBAR</a></td>
-      <td>BR</td>
-      <td>Chimp, Gorilla</td>
-      <td>Yes</td>
-      <td><a href="https://github.com/MitchFuchs/asbar">Yes</a></td>
-      <td>5,440 labels</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1111/1365-2656.13932">DeepWild</a></td>
-      <td>2D BPE</td>
-      <td>Chimp, Bonobo</td>
-      <td><a href="https://github.com/Wild-Minds/DeepWild">Yes</a></td>
-      <td><a href="https://doi.org/10.5281/zenodo.5600472">Upon request</a></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1101/2023.10.16.561623">Kaneko et al.</a></td>
-      <td>3D BPE</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1101/2023.09.13.556332">Matsumoto et al.</a></td>
-      <td>3D BPE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2310.16447">ChimpAct</a></td>
-      <td>2D BPE, FR, BR</td>
-      <td>Chimp</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>160,500</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1007/s11263-022-01698-2">OpenMonkeyChallenge</a></td>
-      <td>2D BPE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td><a href="https://competitions.codalab.org/competitions/34342">Yes</a></td>
-      <td>111,529</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1109/icsses58299.2023.10199762">Pillai et al.</a></td>
-      <td>PD</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1109/NMITCON58196.2023.10276306">Reddy et al.</a></td>
-      <td>PD</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.1007/s11263-023-01804-y">Bala et al.</a></td>
-      <td>3D BPE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2301.02642">Brookes et al.</a></td>
-      <td>BR</td>
-      <td>Apes</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2301.02214">Jiang et al.</a></td>
-      <td>AV</td>
-      <td>Great Apes</td>
-      <td><a href="https://github.com/J22Melody/sed_great_ape">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.1038/s41598-022-11842-0">Lei et al.</a></td>
-      <td>BPE</td>
-      <td>Loris</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.1016/j.cub.2022.06.028">Ngo et al.</a></td>
-      <td>BR</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2205.03943">Brachiation</a></td>
-      <td>RL</td>
-      <td>Gibbon</td>
-      <td><a href="https://github.com/brachiation-rl/brachiation">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.1038/s42256-022-00477-5">SIPEC</a></td>
-      <td>2D BPE, FR, BR</td>
-      <td>Macaque</td>
-      <td><a href="https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0">Some</a></td>
-      <td>Upon request</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.1111/eth.13277">Ueno et al.</a></td>
-      <td>FR</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2012.04689">Brookes & Burghardt</a></td>
-      <td>FR</td>
-      <td>Gorilla</td>
-      <td>N/A</td>
-      <td><a href="https://data.bris.ac.uk/data/dataset/jf0859kboy8k2ufv60dqeb2t8">Yes</a></td>
-      <td>>5,000</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1126/sciadv.abi4883">Bain et al.</a></td>
-      <td>BR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2107.03939">OpenApePose</a></td>
-      <td>2D BPE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td><a href="https://github.com/desai-nisarg/OpenApePose">Yes</a></td>
-      <td>71,868</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1038/s41598-021-92381-6">MacaquePose</a></td>
-      <td>2D BPE</td>
-      <td>Macaque</td>
-      <td><a href="https://github.com/primat-ai/MacaquePose">Yes</a></td>
-      <td><a href="https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html">Yes</a></td>
-      <td>13,000</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://zenodo.org/records/5600472#.YX1_ddbMK_J">GreatApe Dictionary</a></td>
-      <td>BR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>Upon request</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1101/2021.01.28.428726">Negrete et al.</a></td>
-      <td>2D BPE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1016/j.ecoinf.2021.101423">Müller et al.</a></td>
-      <td>AV</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1038/s41598-021-03941-1">Romero-Mujalli et al.</a></td>
-      <td>AV</td>
-      <td>Lemur</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1002/rse2.201">Dufourq et al.</a></td>
-      <td>AV</td>
-      <td>Gibbon</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1007/978-981-15-3383-9_34">Kumar & Shingala</a></td>
-      <td>PD</td>
-      <td>Langur</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2005.07815">Sakib & Burghardt</a></td>
-      <td>BR</td>
-      <td>Chimp</td>
-      <td><a href="https://github.com/fznsakib/great-ape-behaviour-detector">Yes</a></td>
-      <td><a href="https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3">Yes</a></td>
-      <td>180,000</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1038/s41467-020-18441-5">OpenMonkeyStudio</a></td>
-      <td>3D BPE</td>
-      <td>Macaque</td>
-      <td>Upon request</td>
-      <td><a href="https://github.com/OpenMonkeyStudio/OMS_Data">Yes</a></td>
-      <td>195,228</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1016/j.isci.2020.101412">Tri-A</a></td>
-      <td>FD, FR</td>
-      <td>41 species</td>
-      <td>N/A</td>
-      <td><a href="https://data.mendeley.com/datasets/z3x59pv4bz/2">Yes</a></td>
-      <td>102,399</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1109/CVPR42600.2020.00528">Sanakoyeu et al.</a></td>
-      <td>AM</td>
-      <td>Chimp</td>
-      <td><a href="https://github.com/asanakoy/densepose-evolution">Kind of</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1038/s41592-020-0961-2">EthoLoop</a></td>
-      <td>3D BPE</td>
-      <td>Lemur</td>
-      <td>N/A</td>
-      <td>Upon request</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td><a href="https://doi.org/10.48550/arXiv.1909.08950">Bain et al.</a></td>
-      <td>PD, FD, FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td><a href="https://doi.org/10.1126/sciadv.aaw0736">Schofield et al.</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td><a href="https://doi.org/10.1109/ICCVW.2019.00035">Yang et al.</a></td>
-      <td>PD</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td><a href="https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3">Yes</a></td>
-      <td>180,000</td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td><a href="https://doi.org/10.3389/fnbeh.2020.581154">Labuguen et al.</a></td>
-      <td>2D BPE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2019</td>
-      <td><a href="https://doi.org/10.1121/1.5091005">Oikarinen et al.</a></td>
-      <td>AV</td>
-      <td>Marmoset</td>
-      <td><a href="https://marmosetbehavior.mit.edu">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2018</td>
-      <td><a href="https://doi.org/10.1007/978-3-030-11009-3_33">Sinha, Agarwal et al.</a></td>
-      <td>PD</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2018</td>
-      <td><a href="https://doi.org/10.1109/BTAS.2018.8698538">Deb et al.</a></td>
-      <td>FR</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2018</td>
-      <td><a href="https://doi.org/10.1016/j.jneumeth.2017.07.020">Witham</a></td>
-      <td>FLE</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td><a href="https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749">Yes</a></td>
-      <td>4,000</td>
-    </tr>
-    <tr>
-      <td>2018</td>
-      <td><a href="https://doi.org/10.1101/377895">Labuguen et al.</a></td>
-      <td>PD</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2018</td>
-      <td><a href="https://doi.org/10.1121/1.5047743">Zhang et al.</a></td>
-      <td>AV</td>
-      <td>Marmoset</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2017</td>
-      <td><a href="https://doi.org/10.1186/s40850-016-0011-9">LemurFaceID</a></td>
-      <td>FD, FR</td>
-      <td>Lemur</td>
-      <td>N/A</td>
-      <td><a href="https://biometrics.cse.msu.edu/Publications/Databases/MSU_LemurFaceID/">Yes</a></td>
-      <td>462</td>
-    </tr>
-    <tr>
-      <td>2017</td>
-      <td><a href="https://doi.org/10.1109/ICCVW.2017.333">Brust et al.</a></td>
-      <td>FD, FR</td>
-      <td>Gorilla</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2016</td>
-      <td><a href="https://doi.org/10.1002/ajp.22627">Crunchant et al.</a></td>
-      <td>FD</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2016</td>
-      <td><a href="https://doi.org/10.1371/journal.pone.0166154">Nakamura et al.</a></td>
-      <td>AM</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2016</td>
-      <td><a href="https://doi.org/10.1007/978-3-319-45886-1_5">Freytag et al.</a></td>
-      <td>FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td><a href="https://github.com/cvjena/chimpanzee_faces">Yes</a></td>
-      <td>6,486</td>
-    </tr>
-    <tr>
-      <td>2014</td>
-      <td><a href="https://doi.org/10.1016/j.jneumeth.2014.05.022">Ballesta et al.</a></td>
-      <td>3D, O</td>
-      <td>Macaque</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2013</td>
-      <td><a href="https://doi.org/10.1186/1687-5281-2013-49">Loos & Ernst</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>6,522</td>
-    </tr>
-    <tr>
-      <td>2012</td>
-      <td><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6208167">Loos & Pfitzer</a></td>
-      <td>FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2012</td>
-      <td><a href="https://doi.org/10.1109/ISM.2012.30">Loos & Ernst</a></td>
-      <td>FD, FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2011</td>
-      <td><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7074032">Loos et al.</a></td>
-      <td>FR</td>
-      <td>Chimp</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2011</td>
-      <td><a href="https://doi.org/10.1109/AVSS.2011.6027337">Ernst & Küblbeck</a></td>
-      <td>FD, SI</td>
-      <td>Chimp, Gorilla</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>Year</td>
-      <td>Paper</td>
-      <td>Topic</td>
-      <td>Animal</td>
-      <td>Model?</td>
-      <td>Data?</td>
-      <td>Image/Video Count</td>
-    </tr>
-    <tr>
-      <td>------</td>
-      <td>-----</td>
-      <td>-------</td>
-      <td>---------</td>
-      <td>------------</td>
-      <td>---------------</td>
-      <td>-------------</td>
-    </tr>
-    <tr>
-      <td>2023</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2306.00576">MammalNet</a></td>
-      <td>BR</td>
-      <td>Cross-species</td>
-      <td><a href="https://github.com/Vision-CAIR/MammalNet">Yes</a></td>
-      <td><a href="https://mammal-net.github.io/">Yes</a></td>
-      <td>18k videos</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2204.08129">Animal Kingdom</a></td>
-      <td>2D BPE, BR</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td><a href="https://github.com/sutdcv/Animal-Kingdom">Yes</a></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2206.05683">APT-36K</a></td>
-      <td>2D BPE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td><a href="https://github.com/pandorgan/APT-36K">Yes</a></td>
-      <td>< 36K</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.48550/arXiv.2108.12617">AP10k</a></td>
-      <td>2D BPE</td>
-      <td>Cross-species</td>
-      <td><a href="https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k">Yes</a></td>
-      <td><a href="https://github.com/AlexTheBad/AP-10K">Yes</a></td>
-      <td>10,015 (675 primates)</td>
-    </tr>
-    <tr>
-      <td>2021</td>
-      <td><a href="https://doi.org/10.1038/s41592-021-01226-z">LiftPose3D</a></td>
-      <td>3D BPE</td>
-      <td>Cross-species</td>
-      <td><a href="https://github.com/NeLy-EPFL/LiftPose3D">Yes</a></td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2020</td>
-      <td><a href="https://doi.org/10.1007/s11263-020-01393-0">AnimalWeb</a></td>
-      <td>FD, FLE</td>
-      <td>Cross-species</td>
-      <td>N/A</td>
-      <td><a href="https://fdmaoz.github.io/AnimalWeb/">Yes</a></td>
-      <td>21,921</td>
-    </tr>
-  </tbody>
-</table>
+                {table_html}
             </div>
             
             <div class="footer">
@@ -1601,7 +812,7 @@
                 <i class="fas fa-robot"></i>
                 <div class="chat-header-text">
                     <h4>Paper Assistant</h4>
-                    <p>Ask questions about 92 papers</p>
+                    <p>Ask questions about {total_papers} papers</p>
                 </div>
             </div>
             <div class="chat-messages" id="chatMessages">
@@ -1823,7 +1034,7 @@
                         if (done) break;
 
                         const text = decoder.decode(value);
-                        const lines = text.split('\n');
+                        const lines = text.split('\\n');
 
                         for (const line of lines) {
                             if (line.startsWith('data: ')) {
@@ -1912,11 +1123,100 @@
             function formatMessage(text) {
                 // Basic markdown-like formatting
                 return text
-                    .replace(/\n/g, '<br>')
+                    .replace(/\\n/g, '<br>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\*(.*?)\*/g, '<em>$1</em>');
             }
         })();
         </script>
     </body>
-</html>
+</html>'''
+
+def calculate_stats(df: pd.DataFrame) -> dict:
+    """Calculate statistics from the dataframe"""
+    total_papers = len(df)
+    
+    # Count years
+    years = set()
+    for year in df.iloc[:, 0]:  # First column is year
+        if str(year).isdigit():
+            years.add(int(year))
+    years_span = len(years)
+    
+    # Count papers with code (Model column)
+    with_code = 0
+    model_col = df.iloc[:, 4] if len(df.columns) > 4 else pd.Series()  # Model column
+    for value in model_col:
+        if isinstance(value, str) and ('Yes' in value or 'Code only' in value):
+            with_code += 1
+    
+    # Count papers with data (Data column)  
+    with_data = 0
+    data_col = df.iloc[:, 5] if len(df.columns) > 5 else pd.Series()  # Data column
+    for value in data_col:
+        if isinstance(value, str) and 'Yes' in value:
+            with_data += 1
+    
+    return {
+        'total_papers': total_papers,
+        'years_span': years_span,
+        'with_code': with_code,
+        'with_data': with_data
+    }
+
+def main():
+    """Main function to generate the website"""
+    # Determine if running in GitHub Actions or locally
+    if os.path.exists("/home/runner/work"):
+        # GitHub Actions
+        base_path = "/home/runner/work/awesome-computational-primatology/awesome-computational-primatology"
+    else:
+        # Local development - go up 1 level from scripts/
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # scripts/
+        base_path = os.path.dirname(script_dir)  # repository root
+    
+    readme_path = os.path.join(base_path, "README.md")
+    output_path = os.path.join(base_path, "index.html")
+    
+    print(f"Script location: {os.path.abspath(__file__)}")
+    print(f"Base path: {base_path}")
+    print(f"README path: {readme_path}")
+    print(f"Output path: {output_path}")
+    
+    try:
+        # Extract table from README
+        df = extract_table_from_readme(readme_path)
+        print(f"Extracted table with {len(df)} rows and {len(df.columns)} columns")
+        
+        # Calculate statistics
+        stats = calculate_stats(df)
+        print(f"Statistics: {stats}")
+        
+        # Generate table HTML
+        table_html = df.to_html(
+            table_id="table",
+            escape=False,
+            index=False,
+            classes="display"
+        )
+        
+        # Get template and format with data
+        template = get_enhanced_html_template()
+        html_content = template.replace('{table_html}', table_html)
+        html_content = html_content.replace('{total_papers}', str(stats['total_papers']))
+        html_content = html_content.replace('{years_span}', str(stats['years_span']))
+        html_content = html_content.replace('{with_code}', str(stats['with_code']))
+        html_content = html_content.replace('{with_data}', str(stats['with_data']))
+        
+        # Write output
+        with open(output_path, "w", encoding='utf-8') as f:
+            f.write(html_content)
+        
+        print(f"✅ Generated enhanced website: {output_path}")
+        
+    except Exception as e:
+        print(f"❌ Error generating website: {e}")
+        raise
+
+if __name__ == "__main__":
+    main()

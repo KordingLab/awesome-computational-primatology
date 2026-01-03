@@ -1,0 +1,17 @@
+# FastAPI backend for Primatology RAG Chat
+
+# Web framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.6.0
+
+# Google Cloud
+google-cloud-aiplatform>=1.38.0
+vertexai>=1.0.0
+
+# Vector similarity
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# Rate limiting
+python-dotenv>=1.0.0

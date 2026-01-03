@@ -7,12 +7,14 @@ on:
     paths:
       - 'README.md'
       - 'index.html'
+      - 'scripts/website_generator.py'
   pull_request:
     branches:
       - main
     paths:
       - 'README.md'
       - 'index.html'
+      - 'scripts/website_generator.py'
 
 jobs:
   check:
@@ -30,7 +32,7 @@ jobs:
         run: pip install pandas
 
       - name: Build website
-        run: python .github/workflows/website.py
+        run: python scripts/website_generator.py
 
       - name: Check if index.html is up to date
         run: |
@@ -40,7 +42,7 @@ jobs:
             echo "❌ index.html is out of sync with README.md!"
             echo ""
             echo "Please run locally:"
-            echo "  python .github/workflows/website.py"
+            echo "  python scripts/website_generator.py"
             echo ""
             echo "Then commit the updated index.html"
             echo ""

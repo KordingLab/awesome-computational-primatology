@@ -29,9 +29,9 @@ def main():
     # Generate website
     print("🏗️  Generating website...")
     try:
-        # Run the website.py script directly
+        # Run the website_generator.py script
         result = subprocess.run([
-            sys.executable, ".github/workflows/website.py"
+            sys.executable, "scripts/website_generator.py"
         ], capture_output=True, text=True)
         
         if result.returncode == 0:
