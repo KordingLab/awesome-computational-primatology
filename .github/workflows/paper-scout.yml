@@ -1,0 +1,36 @@
+# Weekly autonomous paper scout: finds hyper-relevant new computational-primatology
+# papers and opens a DRAFT PR with enriched table rows. Never merges by itself.
+name: Paper Scout
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"   # Mondays 08:00 UTC
+  workflow_dispatch:        # manual "Run" button
+
+permissions:
+  contents: write          # commit scout-state.json + push the branch
+  pull-requests: write     # open the draft PR
+
+concurrency:
+  group: paper-scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install scikit-learn numpy pandas
+      - name: Configure git author
+        run: |
+          git config user.name "paper-scout[bot]"
+          git config user.email "paper-scout@users.noreply.github.com"
+      - name: Run the scout
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/scout/run.py --open
