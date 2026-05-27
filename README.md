@@ -77,7 +77,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2024 | [BaboonLand](https://doi.org/10.48550/arXiv.2405.17698) | PD, BR | Baboons | N/A | [Yes](https://baboonland.xyz/) | TBD |
 | 2024 | [Scott et al.](https://doi.org/10.48550/arXiv.2412.15966) | BPE | Macaque | N/A | N/A | N/A |
 | 2024 | [ChimpVLM](https://doi.org/10.48550/arXiv.2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
-| 2024 | [AlphaChimp](https://doi.org/10.48550/arXiv.2410.17136) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A |
+| 2026 | [AlphaChimp](https://doi.org/10.1007/s11263-026-02867-3) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A |
 | 2024 | [Paulet et al.](https://doi.org/10.1007/s10329-024-01137-5) | FR | Macaque | N/A | N/A | N/A |
 | 2024 | [PanAf20K](https://doi.org/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://doi.org/10.30802/AALAS-JAALAS-23-000056) | FD, O | Macaque | N/A | N/A | N/A |
