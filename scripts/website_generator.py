@@ -62,8 +62,9 @@ def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
         raise ValueError("Could not find valid table in README.md")
 
     df = pd.DataFrame(data, columns=header)
-    # Apply markdown to HTML conversion
-    df = df.applymap(to_link_if_markdown)
+    # Apply markdown -> HTML conversion. (applymap was removed in pandas 3.0;
+    # apply + Series.map works across all pandas versions.)
+    df = df.apply(lambda col: col.map(to_link_if_markdown))
 
     return df
 
