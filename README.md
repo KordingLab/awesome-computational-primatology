@@ -62,6 +62,12 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [BigMaQ](https://doi.org/10.48550/arXiv.2602.19874) | BPE, BR, AM | Macaque | N/A | N/A | N/A |
+| 2026 | [TMacaque-FaceNet](https://doi.org/10.3390/ani16071107) | FD, FR | Tibetan macaques | N/A | N/A | 3,385 images |
+| 2026 | [Deep in the Jungle](https://doi.org/10.48550/arXiv.2601.22917) | PD, O | Chimpanzee | N/A | N/A | N/A |
+| 2026 | [DeepForestSound](https://doi.org/10.48550/arXiv.2604.08087) | AV, O | Cross-species | N/A | N/A | N/A |
+| 2026 | [Cabrera-Moreno et al.](https://doi.org/10.64898/2026.01.18.699877) | AV | marmoset | N/A | N/A | N/A |
+| 2026 | [Clink et al.](https://doi.org/10.32942/x2dt0m) | AV, O | Tarsier | [Yes](https://github.com/DenaJGibbon/tarsier-automated-detection) | N/A | N/A |
 | 2025 | [Huang et al.](https://doi.org/10.1109/ICASSP49660.2025.10887625) | BR | Macaque | N/A | Macaque-Motion-Monitor | N/A |
 | 2025 | [Mueller et al.](https://doi.org/10.48550/arXiv.2509.12193) | BR | Ape | [Yes](https://github.com/ecker-lab/dap-behavior) | N/A | N/A |
 | 2025 | [SILVI](https://doi.org/10.48550/arXiv.2511.03819) | PD, BR | Any | N/A | N/A | N/A |
@@ -77,14 +83,14 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2024 | [BaboonLand](https://doi.org/10.48550/arXiv.2405.17698) | PD, BR | Baboons | N/A | [Yes](https://baboonland.xyz/) | TBD |
 | 2024 | [Scott et al.](https://doi.org/10.48550/arXiv.2412.15966) | BPE | Macaque | N/A | N/A | N/A |
 | 2024 | [ChimpVLM](https://doi.org/10.48550/arXiv.2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
-| 2024 | [AlphaChimp](https://doi.org/10.48550/arXiv.2410.17136) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A |
+| 2026 | [AlphaChimp](https://doi.org/10.1007/s11263-026-02867-3) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A |
 | 2024 | [Paulet et al.](https://doi.org/10.1007/s10329-024-01137-5) | FR | Macaque | N/A | N/A | N/A |
 | 2024 | [PanAf20K](https://doi.org/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://doi.org/10.30802/AALAS-JAALAS-23-000056) | FD, O | Macaque | N/A | N/A | N/A |
 | 2024 | [MacAction](https://doi.org/10.1101/2024.01.29.577734) | AM | Macaque | N/A | N/A | N/A |
 | 2024 | [LabGym](https://doi.org/10.1007/s10329-024-01123-x) | BR | Macaque | [Yes](https://github.com/umyelab/LabGym) | Yes | N/A |
 | 2024 | [Cheng et al.](https://doi.org/10.1101/2024.02.27.582429) | BR | Macaque | N/A | N/A | N/A |
-| 2024 | [PRIMAT (Vogg et al.)](https://doi.org/10.1101/2024.08.21.607881) | 2D BPE | Cross-species | N/A | N/A | N/A |
+| 2026 | [PRIMAT (Vogg et al.)](https://doi.org/10.1371/journal.pone.0347669) | 2D BPE | Cross-species | N/A | N/A | N/A |
 | 2024 | [Xing et al.](https://doi.org/10.1101/2024.02.16.580693) | O | Marmoset | N/A | N/A | N/A |
 | 2024 | [Menegas et al.](https://doi.org/10.1101/2024.08.30.610159) | BR | Marmoset | N/A | N/A | N/A |
 | 2024 | [Wu et al.](https://doi.org/10.48550/arXiv.2410.23279) | AV | Marmoset | N/A | N/A | N/A |
