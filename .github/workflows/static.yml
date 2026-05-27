@@ -1,11 +1,13 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Deploy the generated static site to GitHub Pages.
+# The public site is the self-contained index.html plus the docs/ it may link to;
+# backend/, scripts/, data/ and configs are intentionally excluded.
 name: Deploy static content to Pages
 
 on:
   workflow_run:
     workflows: ["Build Website"]
     branches: [main]
-    types: 
+    types:
       - completed
 
   # Allows you to run this workflow manually from the Actions tab
@@ -24,7 +26,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -33,13 +34,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Stage public site
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          cp -r docs _site/docs
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Only the public site, not the whole repo
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

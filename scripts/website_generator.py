@@ -14,39 +14,58 @@ def to_link_if_markdown(cell_text: str) -> str:
     return cell_text.strip()
 
 def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
-    """Extract the main projects table from README.md"""
+    """Extract the 7-column paper/dataset rows from README.md.
+
+    Captures rows under "### Projects" plus the cross-species
+    "#### Dataset ..." sub-table (same 7-column schema). Every sub-table's
+    header and separator row is skipped explicitly, so no markdown scaffolding
+    leaks in as a fake paper. The 4-column "Reviews & Related" table is
+    naturally excluded by the column-count filter.
+
+    Args:
+        readme_path: Path to README.md.
+
+    Returns:
+        DataFrame of paper/dataset rows with markdown links converted to HTML.
+
+    Raises:
+        ValueError: If no valid table is found.
+    """
     with open(readme_path, "r", encoding='utf-8') as f:
-        text = f.readlines()
-    
-    table = []
+        lines = f.readlines()
+
+    header: list[str] | None = None
+    data: list[list[str]] = []
     in_projects_section = False
-    
-    for line in text:
-        # Check if we're in the Projects section
+
+    for line in lines:
         if line.strip() == "### Projects":
             in_projects_section = True
             continue
-        
-        # Stop if we hit another section
-        if in_projects_section and line.startswith("### ") and "Projects" not in line:
-            break
-            
-        # Extract table rows (has 8 | characters for 7 columns)
-        if in_projects_section and len(re.findall(r"\|", line)) == 8:
-            row = [cell.strip() for cell in line.split("|")[1:-1]]
-            table.append(row)
-    
-    if len(table) < 2:
+        if not in_projects_section:
+            continue
+        # Only 7-column rows (8 pipe characters) are paper/dataset rows.
+        if line.count("|") != 8:
+            continue
+        cells = [cell.strip() for cell in line.split("|")[1:-1]]
+        # Skip separator rows like |---|---|...
+        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
+            continue
+        # Skip (repeated) header rows; keep the first as the column names.
+        if cells[0] == "Year":
+            if header is None:
+                header = cells
+            continue
+        data.append(cells)
+
+    if header is None or not data:
         raise ValueError("Could not find valid table in README.md")
-    
-    # First row is header, second row is separator, rest is data
-    header = table[0]
-    data = table[2:] if len(table) > 2 else []
-    
+
     df = pd.DataFrame(data, columns=header)
-    # Apply markdown to HTML conversion
-    df = df.applymap(to_link_if_markdown)
-    
+    # Apply markdown -> HTML conversion. (applymap was removed in pandas 3.0;
+    # apply + Series.map works across all pandas versions.)
+    df = df.apply(lambda col: col.map(to_link_if_markdown))
+
     return df
 
 def get_enhanced_html_template() -> str:

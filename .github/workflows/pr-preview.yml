@@ -25,7 +25,7 @@ jobs:
         run: pip install pandas
 
       - name: Generate preview website
-        run: python .github/workflows/website.py
+        run: python scripts/website_generator.py
 
       - name: Upload preview as artifact
         uses: actions/upload-artifact@v4
