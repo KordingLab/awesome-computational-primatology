@@ -16,18 +16,13 @@ credentials*.json
 *.json
 !package.json
 !package-lock.json
-# Keep source data
-!data/papers_with_abstracts.json
 # Backend data is synced from data/ during deployment
 !backend/data/*.json
 
-# Large binary/generated data (regenerate with scripts/rag/)
-data/
-data/pdfs/
-data/extracted/
-data/embeddings.json
-data/chunks.json
-data/chunk_embeddings.json
+# Large binary/generated data (regenerate with scripts/rag/).
+# Track only the small source corpus used by the backend + scout.
+data/*
+!data/papers_with_abstracts.json
 
 docs/PAPERS_TO_DOWNLOAD.md
 
