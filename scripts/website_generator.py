@@ -786,6 +786,7 @@ def get_enhanced_html_template() -> str:
                     <span><strong id="with-code">{with_code}</strong> with code</span>
                     <span><strong id="with-data">{with_data}</strong> with data</span>
                 </div>
+                <img class="growth-plot" src="https://raw.githubusercontent.com/KordingLab/awesome-computational-primatology/main/docs/assets/paper_growth_xkcd.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" style="max-width: 720px; width: 100%; margin: 1.25rem auto 0; display: block;">
             </div>
 
             <details class="legend">
