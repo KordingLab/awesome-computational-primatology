@@ -20,12 +20,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Push to HuggingFace
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Upload the README (the dataset card) via huggingface_hub instead of a raw
+      # `git push`. HuggingFace rejects binary files (e.g. the growth-plot PNG)
+      # pushed over plain git; the README references images by absolute URL, so
+      # they render on the Hub without uploading any binaries.
+      - name: Sync README to the HuggingFace dataset card
+        env:
+          HF_TOKEN: ${{ secrets.PARODI_HF_TOKEN }}
         run: |
-          git push --force https://fparodi:${{ secrets.PARODI_HF_TOKEN }}@huggingface.co/datasets/fparodi/awesome-computational-primatology main
+          pip install --quiet "huggingface_hub>=0.25"
+          python - <<'PY'
+          import os
+          from huggingface_hub import HfApi
+          HfApi(token=os.environ["HF_TOKEN"]).upload_file(
+              path_or_fileobj="README.md",
+              path_in_repo="README.md",
+              repo_id="fparodi/awesome-computational-primatology",
+              repo_type="dataset",
+              commit_message="Sync README from GitHub",
+          )
+          print("Synced README.md to the HuggingFace dataset.")
+          PY
 
       - name: Create issue on failure
         if: failure()
