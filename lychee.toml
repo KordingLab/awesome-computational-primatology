@@ -12,7 +12,14 @@ exclude = [
     "www-science-org.proxy.library.upenn.edu",
     "www-sciencedirect-com.proxy.library.upenn.edu",
     "ieeexplore-ieee-org.proxy.library.upenn.edu",
-    "onlinelibrary-wiley-com.proxy.library.upenn.edu"
+    "onlinelibrary-wiley-com.proxy.library.upenn.edu",
+    # Cert-only / flaky servers (resource exists; fails automated validation)
+    "biometrics.cse.msu.edu",
+    "competitions.codalab.org",
+    # Relocated/retired resources kept for historical record (no live replacement or archive)
+    "marmosetbehavior.mit.edu",
+    "fdmaoz.github.io",
+    "primat-ai/MacaquePose"
 ]
 
 # Accept 403 status codes (some sites return this for valid pages)

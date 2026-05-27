@@ -119,7 +119,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2021 | [Brookes & Burghardt](https://doi.org/10.48550/arXiv.2012.04689) | FR | Gorilla | N/A | [Yes](https://data.bris.ac.uk/data/dataset/jf0859kboy8k2ufv60dqeb2t8) | >5,000 |
 | 2021 | [Bain et al.](https://doi.org/10.1126/sciadv.abi4883) | BR | Chimp | N/A | N/A | N/A |
 | 2021 | [OpenApePose](https://doi.org/10.48550/arXiv.2107.03939) | 2D BPE | Cross-species | N/A | [Yes](https://github.com/desai-nisarg/OpenApePose) | 71,868 |
-| 2021 | [MacaquePose](https://doi.org/10.1038/s41598-021-92381-6) | 2D BPE | Macaque | [Yes](https://github.com/primat-ai/MacaquePose) | [Yes](https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html) | 13,000 |
+| 2021 | [MacaquePose](https://doi.org/10.3389/fnbeh.2020.581154) | 2D BPE | Macaque | [Yes](https://github.com/primat-ai/MacaquePose) | [Yes](https://www.pri.kyoto-u.ac.jp/datasets/macaquepose/index.html) | 13,000 |
 | 2021 | [GreatApe Dictionary](https://zenodo.org/records/5600472#.YX1_ddbMK_J) | BR | Chimp | N/A | Upon request | N/A |
 | 2021 | [Negrete et al.](https://doi.org/10.1101/2021.01.28.428726) | 2D BPE | Macaque | N/A | N/A | N/A |
 | 2021 | [Müller et al.](https://doi.org/10.1016/j.ecoinf.2021.101423) | AV | Chimp | N/A | N/A | N/A |
@@ -135,7 +135,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2019 | [Schofield et al.](https://doi.org/10.1126/sciadv.aaw0736) | FD, FR | Chimp | N/A | N/A | N/A |
 | 2019 | [Yang et al.](https://doi.org/10.1109/ICCVW.2019.00035) | PD | Chimp | N/A | [Yes](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2019 | [Labuguen et al.](https://doi.org/10.3389/fnbeh.2020.581154) | 2D BPE | Macaque | N/A | N/A | N/A |
-| 2019 | [Oikarinen et al.](https://doi.org/10.1121/1.5091005) | AV | Marmoset | [Yes](https://marmosetbehavior.mit.edu) | N/A | N/A |
+| 2019 | [Oikarinen et al.](https://doi.org/10.1121/1.5087827) | AV | Marmoset | [Yes](https://marmosetbehavior.mit.edu) | N/A | N/A |
 | 2018 | [Sinha, Agarwal et al.](https://doi.org/10.1007/978-3-030-11009-3_33) | PD | Cross-species | N/A | N/A | N/A |
 | 2018 | [Deb et al.](https://doi.org/10.1109/BTAS.2018.8698538) | FR | Cross-species | N/A | N/A | N/A |
 | 2018 | [Witham](https://doi.org/10.1016/j.jneumeth.2017.07.020) | FLE | Macaque | N/A | [Yes](https://figshare.com/articles/dataset/Macaque_Faces/9862586/1?file=17682749) | 4,000 |
