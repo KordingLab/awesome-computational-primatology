@@ -99,6 +99,7 @@ def main() -> None:
 
     readme = propose.README_PATH.read_text(encoding="utf-8")
     readme = propose.insert_rows(readme, [propose.make_row(c) for c in keeps])
+    readme = propose.set_badge(readme, len(index) + len(keeps))  # keep the count badge current
     by_name = {e.name: e for e in index}
     for c in updates:
         if c.update_target in by_name:

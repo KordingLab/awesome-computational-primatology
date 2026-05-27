@@ -47,6 +47,11 @@ def make_row(candidate: Candidate) -> str:
     )
 
 
+def set_badge(readme_text: str, count: int) -> str:
+    """Update the "Papers-N" shields.io badge in the README to the given count."""
+    return re.sub(r"(badge/Papers-)\d+(-blue)", rf"\g<1>{count}\g<2>", readme_text)
+
+
 def insert_rows(readme_text: str, rows: list[str]) -> str:
     """Insert new rows at the top of the Projects table (newest-first convention)."""
     if not rows:

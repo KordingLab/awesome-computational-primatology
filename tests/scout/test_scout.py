@@ -162,6 +162,12 @@ def test_make_row_format():
     assert row == "| 2026 | [X](https://doi.org/10.1/x) | FR | Macaque | N/A | N/A | 3,385 images |"
 
 
+def test_set_badge_updates_count():
+    text = "[![Papers](https://img.shields.io/badge/Papers-90-blue)](#projects)"
+    assert "Papers-96-blue" in propose.set_badge(text, 96)
+    assert "Papers-90" not in propose.set_badge(text, 96)
+
+
 def test_insert_rows_after_separator():
     readme = "### Projects\n\n| Year | Paper |\n|------|-------|\n| 2025 | old |\n"
     out = propose.insert_rows(readme, ["| 2026 | new |"])
