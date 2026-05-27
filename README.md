@@ -1,9 +1,14 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-90-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-96-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/KordingLab/awesome-computational-primatology/main/docs/assets/paper_growth_xkcd.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" width="680"><br>
+  <sub><i>Papers per year — this hand-curated list (left) vs. the raw "primate + ML" literature on OpenAlex (right).</i></sub>
+</p>
 
 This repository contains the corpus of projects at the intersection of deep learning and **non-human** primatology since around the time AlexNet was published (~2012). This repo is intended for papers that provide novel approaches or applications in computational primatology. We occasionally include datasets which contain both primate and non-primate animals. Contributions and edits welcome!
 
