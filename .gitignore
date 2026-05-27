@@ -18,6 +18,8 @@ credentials*.json
 !package-lock.json
 # Backend data is synced from data/ during deployment
 !backend/data/*.json
+# Paper Scout state is committed by the bot
+!docs/scout-state.json
 
 # Large binary/generated data (regenerate with scripts/rag/).
 # Track only the small source corpus used by the backend + scout.

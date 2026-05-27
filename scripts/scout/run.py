@@ -35,6 +35,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--since", default=None, help="ISO date; default = last run or lookback")
     ap.add_argument("--top", type=int, default=25, help="how many ranked candidates to show")
+    ap.add_argument("--max-judge", type=int, default=50,
+                    help="safety ceiling on how many ranked candidates to LLM-judge")
     ap.add_argument("--open", action="store_true", help="open a draft PR (default: dry-run)")
     args = ap.parse_args()
 
@@ -73,7 +75,7 @@ def main() -> None:
             print(f"    {c.prefilter_score:.3f}  {c.date}  {flag:<8}  {c.title[:72]}")
         return
 
-    to_judge = survivors[: args.top]  # cap LLM calls; prefilter already ranked
+    to_judge = survivors[: args.max_judge]  # safety ceiling on LLM calls (prefilter already ranked)
     judge.judge_all(to_judge)
     keeps = [c for c in to_judge if c.decision == "KEEP"]
     reviews = [c for c in to_judge if c.decision == "REVIEW"]
@@ -104,7 +106,9 @@ def main() -> None:
     propose.README_PATH.write_text(readme, encoding="utf-8")
     propose.regenerate_index()
 
-    state_mod.mark_seen(state, [c.work_key for c in survivors + updates])
+    # Only record what we actually judged (+ updates) so any capped overflow is
+    # reconsidered next run rather than silently skipped forever.
+    state_mod.mark_seen(state, [c.work_key for c in to_judge + updates])
     state["last_run"] = dt.date.today().isoformat()
     state_mod.save_state(state)
 
