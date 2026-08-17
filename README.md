@@ -1,7 +1,7 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-96-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-101-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -67,6 +67,11 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [Beyond Humans](https://doi.org/10.48550/arXiv.2606.09353) | FD, FR | Cross-species | N/A | N/A | N/A |
+| 2026 | [The PanAf-SBR Dataset](https://doi.org/10.48550/arXiv.2607.17399) | BR, BPE, PD, O | Great Apes | N/A | N/A | 81,096 annotations |
+| 2026 | [Martini et al.](https://doi.org/10.1371/journal.pbio.3003880) | AM, BPE, BR | Macaque | [Yes](https://github.com/martinivis/MacAction) | N/A | N/A |
+| 2026 | [Murray et al.](https://doi.org/10.48550/arxiv.2607.17395) | PD, BPE, O | Chimpanzees | N/A | N/A | N/A |
+| 2026 | [Computer Vision for Wildlife Monitoring](https://doi.org/10.48550/arXiv.2607.01396) | PD | Brown Howler Monkey | N/A | N/A | 10 frame |
 | 2026 | [BigMaQ](https://doi.org/10.48550/arXiv.2602.19874) | BPE, BR, AM | Macaque | N/A | N/A | N/A |
 | 2026 | [TMacaque-FaceNet](https://doi.org/10.3390/ani16071107) | FD, FR | Tibetan macaques | N/A | N/A | 3,385 images |
 | 2026 | [Deep in the Jungle](https://doi.org/10.48550/arXiv.2601.22917) | PD, O | Chimpanzee | N/A | N/A | N/A |
