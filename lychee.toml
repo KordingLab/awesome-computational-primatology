@@ -39,5 +39,11 @@ remap = [
 # 403 because some sites return it for valid pages.
 accept = ["200..=299", "301", "302", "403"]
 
+# data.bris.ac.uk (three dataset links) drops connections when more than two arrive at
+# once from one IP, and lychee's retries fire simultaneously so they collide again.
+# Two-at-a-time costs ~20 s on the full README and keeps those links checked.
+max_concurrency = 2
+retry_wait_time = 3
+
 # Do not check mailto: links
 include_mail = false
