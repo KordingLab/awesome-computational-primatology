@@ -94,11 +94,26 @@ def _reconstruct_abstract(inverted: dict | None) -> str:
     return " ".join(w for _, w in sorted(positions))
 
 
-def _get(url: str, timeout: int = 30) -> bytes:
-    """HTTP GET with a polite User-Agent."""
+def _get(url: str, timeout: int = 30, attempts: int = 3) -> bytes:
+    """HTTP GET with a polite User-Agent; retries transient failures with backoff.
+
+    Retries on connection/read timeouts, transport errors, 429 and 5xx (the keyless
+    OpenAlex/arXiv APIs are occasionally slow or briefly unavailable). Other HTTP errors
+    (4xx) are raised immediately.
+    """
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read()
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as exc:
+            if not (exc.code == 429 or exc.code >= 500) or attempt == attempts - 1:
+                raise
+        except (urllib.error.URLError, TimeoutError, ConnectionError):
+            if attempt == attempts - 1:
+                raise
+        time.sleep(2 ** attempt)
+    raise RuntimeError("unreachable")  # pragma: no cover
 
 
 def fetch_openalex(since: str) -> list[Candidate]:
@@ -175,7 +190,7 @@ def fetch_arxiv(since: str, max_results: int = 100) -> list[Candidate]:
             "max_results": str(max_results),
         }
     )
-    raw = _get(f"http://export.arxiv.org/api/query?{params}")
+    raw = _get(f"https://export.arxiv.org/api/query?{params}")  # https: skip the 302
     ns = {"atom": "http://www.w3.org/2005/Atom", "arxiv": "http://arxiv.org/schemas/atom"}
     out: list[Candidate] = []
     for entry in ET.fromstring(raw).findall("atom:entry", ns):
@@ -227,6 +242,8 @@ def fetch_all(since: str) -> list[Candidate]:
     candidates = fetch_openalex(since)
     try:
         candidates += fetch_arxiv(since)
-    except (urllib.error.URLError, ET.ParseError) as exc:
-        print(f"  arXiv fetch failed ({exc}); continuing with OpenAlex only.")
+    except (urllib.error.URLError, TimeoutError, ConnectionError, ET.ParseError) as exc:
+        # A read timeout surfaces as a bare TimeoutError (not URLError): it killed the
+        # 2026-09-07 dry run, so it must degrade gracefully like the other failures.
+        print(f"  arXiv fetch failed ({exc!r}); continuing with OpenAlex only.")
     return _dedup_by_title(candidates)
