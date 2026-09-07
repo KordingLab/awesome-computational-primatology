@@ -14,9 +14,12 @@ WEBSITE_GENERATOR = PROJECT_ROOT / "scripts" / "website_generator.py"
 # Polite-pool contact for the keyless OpenAlex/Crossref/arXiv APIs.
 MAILTO = "parodifelipe07@gmail.com"
 
-# Free open-weight LLM judge (Groq, OpenAI-compatible). Override via env.
+# Free open-weight LLM judge (Groq, OpenAI-compatible). Override via env SCOUT_MODEL.
+# Groq retires models on a schedule (llama-3.3-70b-versatile was shut down 2026-08-16 and
+# started returning 404), so the judge walks this list until one model answers.
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-DEFAULT_MODEL = "llama-3.3-70b-versatile"
+DEFAULT_MODEL = "openai/gpt-oss-120b"
+FALLBACK_MODELS = ["openai/gpt-oss-20b", "qwen/qwen3.6-27b"]
 
 # Score thresholds for the judge (0–1).
 KEEP_THRESHOLD = 0.7      # >= → proposed as a ready row

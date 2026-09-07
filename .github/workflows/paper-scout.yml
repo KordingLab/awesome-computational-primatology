@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "0 8 * * 1"   # Mondays 08:00 UTC
   workflow_dispatch:        # manual "Run" button
+    inputs:
+      dry_run:
+        description: "Print the proposal instead of opening a PR (safe to run on any branch)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write          # commit scout-state.json + push the branch
@@ -19,8 +24,8 @@ jobs:
   scout:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install dependencies
@@ -33,4 +38,9 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/scout/run.py --open
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/scout/run.py
+          else
+            python scripts/scout/run.py --open
+          fi
