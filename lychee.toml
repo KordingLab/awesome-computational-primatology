@@ -13,6 +13,8 @@ exclude = [
     "www-sciencedirect-com.proxy.library.upenn.edu",
     "ieeexplore-ieee-org.proxy.library.upenn.edu",
     "onlinelibrary-wiley-com.proxy.library.upenn.edu",
+    # IEEE Xplore answers automated clients with 418 "I'm a teapot" (bot wall)
+    "ieeexplore.ieee.org",
     # Cert-only / flaky servers (resource exists; fails automated validation)
     "biometrics.cse.msu.edu",
     "competitions.codalab.org",
@@ -22,8 +24,20 @@ exclude = [
     "primat-ai/MacaquePose"
 ]
 
-# Accept 403 status codes (some sites return this for valid pages)
-accept = [200, 204, 301, 302, 403]
+# bioRxiv rate-limits / blocks automated clients (429, 500, 503), and lychee matches
+# `exclude` against the URL as written, so the biorxiv.org entry above never applies to
+# doi.org links that merely redirect there. Instead, check bioRxiv DOIs (legacy 10.1101
+# and, since late 2025, 10.64898) against the doi.org Handle API, which returns 200 iff
+# the DOI is registered and 404 otherwise, without redirecting to the publisher.
+remap = [
+    'https://doi\.org/(10\.1101/.+) https://doi.org/api/handles/$1',
+    'https://doi\.org/(10\.64898/.+) https://doi.org/api/handles/$1',
+]
 
-# Exclude email addresses
-exclude_mail = true
+# Success codes. The whole 2xx range is needed because IEEE Xplore (via doi.org) and
+# figshare answer automated clients with 202 bot-challenge pages for valid resources;
+# 403 because some sites return it for valid pages.
+accept = ["200..=299", "301", "302", "403"]
+
+# Do not check mailto: links
+include_mail = false
