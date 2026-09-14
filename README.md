@@ -1,7 +1,7 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-102-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-109-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -67,6 +67,13 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [Yang et al.](https://doi.org/10.7554/elife.110932.2) | FD, FR, PD | common marmoset | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Author response](https://doi.org/10.7554/elife.110932.2.sa0) | FD, FR | Common marmoset | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Reviewer #2 (Public review)](https://doi.org/10.7554/elife.110932.2.sa2) | FD, FR, PD | Common marmoset (Callithrix jacchus) | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Reviewer #1 (Public review)](https://doi.org/10.7554/elife.110932.2.sa3) | FD, FR | Common marmoset (Callithrix jacchus) | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Reviewer #3 (Public review)](https://doi.org/10.7554/elife.110932.2.sa1) | FD, FR | Common marmoset (Callithrix jacchus) | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [eLife Assessment](https://doi.org/10.7554/elife.110932.2.sa4) | FD, FR | Callithrix jacchus (common marmoset) | [Yes](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Nolting et al.](https://doi.org/10.48550/arxiv.2609.06020) | FR | Gorilla | N/A | N/A | N/A |
 | 2026 | [PanAf-SBR](https://doi.org/10.48550/arXiv.2607.17399) | PD, BR | Apes | N/A | N/A | 100 videos / 36,063 frames |
 | 2026 | [PanLep300 (Murray et al.)](https://doi.org/10.48550/arXiv.2607.17395) | PD, O | Chimp | N/A | N/A | 303 videos / 125,670 crops |
 | 2026 | [MacAction](https://doi.org/10.1371/journal.pbio.3003880) | AM, 3D BPE | Macaque | [Yes](https://github.com/martinivis/MacAction) | N/A | N/A |
