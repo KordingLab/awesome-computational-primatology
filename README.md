@@ -1,7 +1,7 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-102-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-104-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -67,6 +67,8 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [Darmawan et al.](https://doi.org/10.36456/1hrtgc63) | PD | Macaca fascicularis | N/A | N/A | 3,083 images |
+| 2026 | [Pajiyar et al.](https://doi.org/10.65091/icicset.v3i1.105) | PD | Rhesus macaque | N/A | N/A | 10,886 images |
 | 2026 | [PanAf-SBR](https://doi.org/10.48550/arXiv.2607.17399) | PD, BR | Apes | N/A | N/A | 100 videos / 36,063 frames |
 | 2026 | [PanLep300 (Murray et al.)](https://doi.org/10.48550/arXiv.2607.17395) | PD, O | Chimp | N/A | N/A | 303 videos / 125,670 crops |
 | 2026 | [MacAction](https://doi.org/10.1371/journal.pbio.3003880) | AM, 3D BPE | Macaque | [Yes](https://github.com/martinivis/MacAction) | N/A | N/A |
