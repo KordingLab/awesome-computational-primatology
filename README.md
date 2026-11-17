@@ -1,7 +1,7 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-102-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/badge/Papers-111-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
@@ -67,6 +67,15 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [Freebie](https://doi.org/10.64898/2026.11.11.765959) | HPE | NHP | N/A | N/A | N/A |
+| 2026 | [Tracking Is Not Sensing](https://doi.org/10.48550/arXiv.2610.33661) | O | Marmoset | N/A | N/A | N/A |
+| 2026 | [Lewton et al.](https://doi.org/10.6084/m9.figshare.c.8812269) | PD, FR | Chimp | N/A | N/A | 4,294 images / 383 videos |
+| 2026 | [BossouChimpanzee](https://doi.org/10.48550/arXiv.2610.05293) | BR, FR | Chimp | N/A | [Yes](https://robots.ox.ac.uk/~vgg/data/BossouChimpanzee/) | ~74 h video (23 individuals) |
+| 2026 | [Darmawan et al.](https://doi.org/10.36456/1hrtgc63) | PD | Macaque | N/A | N/A | 3,083 images |
+| 2026 | [Pajiyar et al.](https://doi.org/10.65091/icicset.v3i1.105) | PD | Macaque | N/A | N/A | 10,886 images |
+| 2026 | [Qitout et al.](https://doi.org/10.1007/978-3-032-39518-4_20) | BPE | NHP | N/A | N/A | N/A |
+| 2026 | [Yang et al.](https://doi.org/10.7554/elife.110932) | FD, FR | Marmoset | [Code only](https://github.com/Jy-Yang-bot/real-time-marmoset-recognition) | N/A | N/A |
+| 2026 | [Nolting et al.](https://doi.org/10.48550/arXiv.2609.06020) | FR | Gorilla | N/A | N/A | N/A |
 | 2026 | [PanAf-SBR](https://doi.org/10.48550/arXiv.2607.17399) | PD, BR | Apes | N/A | N/A | 100 videos / 36,063 frames |
 | 2026 | [PanLep300 (Murray et al.)](https://doi.org/10.48550/arXiv.2607.17395) | PD, O | Chimp | N/A | N/A | 303 videos / 125,670 crops |
 | 2026 | [MacAction](https://doi.org/10.1371/journal.pbio.3003880) | AM, 3D BPE | Macaque | [Yes](https://github.com/martinivis/MacAction) | N/A | N/A |
@@ -77,7 +86,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2026 | [BigMaQ](https://doi.org/10.48550/arXiv.2602.19874) | BPE, BR, AM | Macaque | N/A | N/A | N/A |
 | 2026 | [TMacaque-FaceNet](https://doi.org/10.3390/ani16071107) | FD, FR | Tibetan macaques | N/A | N/A | 3,385 images |
 | 2026 | [Deep in the Jungle](https://doi.org/10.48550/arXiv.2601.22917) | PD, O | Chimpanzee | N/A | N/A | N/A |
-| 2026 | [DeepForestSound](https://doi.org/10.48550/arXiv.2604.08087) | AV, O | Cross-species | N/A | N/A | N/A |
+| 2026 | [DeepForestSound](https://doi.org/10.1109/ijcnn69854.2026.11728993) | AV, O | Cross-species | N/A | N/A | N/A |
 | 2026 | [Cabrera-Moreno et al.](https://doi.org/10.64898/2026.01.18.699877) | AV | marmoset | N/A | N/A | N/A |
 | 2026 | [Clink et al.](https://doi.org/10.32942/x2dt0m) | AV, O | Tarsier | [Yes](https://github.com/DenaJGibbon/tarsier-automated-detection) | N/A | N/A |
 | 2025 | [Huang et al.](https://doi.org/10.1109/ICASSP49660.2025.10887625) | BR | Macaque | N/A | Macaque-Motion-Monitor | N/A |
@@ -86,13 +95,13 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2025 | [Luo et al.](https://doi.org/10.1080/10888705.2025.2542844) | PD, BR | Gibbon | N/A | N/A | N/A |
 | 2025 | [Luetkin et al.](https://doi.org/10.1145/3768539.3768558) | FD, FR | Chimp | TBD | TBD | TBD |
 | 2025 | [PrimateFace](https://doi.org/10.1101/2025.08.12.669927) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
-| 2025 | [PanAf-FGBG](https://doi.org/10.48550/arXiv.2502.21201) | PD, BR | Chimp | N/A | [Yes](https://obrookes.github.io/panaf-fgbg.github.io/) | TBD |
+| 2025 | [PanAf-FGBG](https://doi.org/10.1109/cvpr52734.2025.00511) | PD, BR | Chimp | N/A | [Yes](https://obrookes.github.io/panaf-fgbg.github.io/) | TBD |
 | 2025 | [PriVi](https://doi.org/10.48550/arXiv.2511.09675) | PD, BR | Apes | N/A | Multiple | N/A |
-| 2025 | [Igaue et al.](https://doi.org/10.48550/arXiv.2511.16711) | FD, FAC | Macaque | N/A | N/A | N/A |
-| 2025 | [Iashin et al.](https://doi.org/10.48550/arXiv.2507.10552) | FD, FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | N/A | N/A |
+| 2026 | [Igaue et al.](https://doi.org/10.1109/access.2026.3706030) | FD, FAC | Macaque | N/A | N/A | N/A |
+| 2025 | [Iashin et al.](https://doi.org/10.1109/icipw68931.2025.11386034) | FD, FR | Chimp | [Yes](https://github.com/v-iashin/ChimpUFE) | N/A | N/A |
 | 2025 | [Fuchs et al.](https://doi.org/10.1007/s11263-025-02484-6) | BR | Chimp | [Yes](https://github.com/MitchFuchs/ChimpBehave) | Yes | 215,000 |
 | 2025 | [Clink et al.](https://doi.org/10.1002/ece3.71678) | AV | Gibbon | N/A | N/A | N/A |
-| 2024 | [BaboonLand](https://doi.org/10.48550/arXiv.2405.17698) | PD, BR | Baboons | N/A | [Yes](https://baboonland.xyz/) | TBD |
+| 2025 | [BaboonLand](https://doi.org/10.1007/s11263-025-02493-5) | PD, BR | Baboons | N/A | [Yes](https://baboonland.xyz/) | TBD |
 | 2024 | [Scott et al.](https://doi.org/10.48550/arXiv.2412.15966) | BPE | Macaque | N/A | N/A | N/A |
 | 2024 | [ChimpVLM](https://doi.org/10.48550/arXiv.2404.08937) | BR | Chimp | N/A | Used PanAf20k | N/A |
 | 2026 | [AlphaChimp](https://doi.org/10.1007/s11263-026-02867-3) | PD, BR | Chimp | [Yes](https://github.com/ShirleyMaxx/AlphaChimp?tab=readme-ov-file) | [ChimpAct](https://github.com/ShirleyMaxx/ChimpACT?tab=readme-ov-file#data) | N/A |
@@ -100,21 +109,21 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2024 | [PanAf20K](https://doi.org/10.1007/s11263-024-02003-z) | PD, BR | Apes | [No](https://github.com/obrookes/panaf.github.io) | [Yes](https://data.bris.ac.uk/data/dataset/1h73erszj3ckn2qjwm4sqmr2wt) | 20k |
 | 2024 | [Gris et al.](https://doi.org/10.30802/AALAS-JAALAS-23-000056) | FD, O | Macaque | N/A | N/A | N/A |
 | 2024 | [LabGym](https://doi.org/10.1007/s10329-024-01123-x) | BR | Macaque | [Yes](https://github.com/umyelab/LabGym) | Yes | N/A |
-| 2024 | [Cheng et al.](https://doi.org/10.1101/2024.02.27.582429) | BR | Macaque | N/A | N/A | N/A |
+| 2025 | [Cheng et al.](https://doi.org/10.1016/j.crmeth.2025.100986) | BR | Macaque | N/A | N/A | N/A |
 | 2026 | [PRIMAT (Vogg et al.)](https://doi.org/10.1371/journal.pone.0347669) | 2D BPE | Cross-species | N/A | N/A | N/A |
-| 2024 | [Xing et al.](https://doi.org/10.1101/2024.02.16.580693) | O | Marmoset | N/A | N/A | N/A |
+| 2026 | [Xing et al.](https://doi.org/10.7554/elife.105034) | O | Marmoset | N/A | N/A | N/A |
 | 2024 | [Menegas et al.](https://doi.org/10.1101/2024.08.30.610159) | BR | Marmoset | N/A | N/A | N/A |
 | 2024 | [Wu et al.](https://doi.org/10.48550/arXiv.2410.23279) | AV | Marmoset | N/A | N/A | N/A |
 | 2024 | [Batist et al.](https://doi.org/10.1002/ajp.23599) | AV | Lemur | [Yes](https://github.com/emmanueldufourq/PAM_TransferLearning) | N/A | N/A |
 | 2023 | [GorillaVision](https://inf-cv.uni-jena.de/wordpress/wp-content/uploads/2023/09/Talk-12-Maximilian-Schall.pdf) | FD, FR | Gorilla | [Yes](https://github.com/Lasklu/gorillavision) | N/A | 832 |
 | 2023 | [Abbaspoor, Rahman et al.](https://doi.org/10.1101/2023.12.11.571113) | 3D BPE | Macaque | N/A | N/A | N/A |
-| 2023 | [Mimura et al.](https://doi.org/10.1101/2023.03.04.531044) | BR | Macaque, Marmoset | N/A | N/A | N/A |
+| 2024 | [Mimura et al.](https://doi.org/10.1038/s42003-024-06786-2) | BR | Macaque, Marmoset | N/A | N/A | N/A |
 | 2023 | [Schofield et al.](https://doi.org/10.1111/2041-210X.14181) | FD, FR | Chimp | N/A | N/A | N/A |
-| 2023 | [Yang et al.](https://doi.org/10.48550/arXiv.2205.00275) | PD | Great Ape | N/A | N/A | N/A |
+| 2023 | [Yang et al.](https://doi.org/10.1007/s11263-023-01748-3) | PD | Great Ape | N/A | N/A | N/A |
 | 2023 | [ASBAR](https://doi.org/10.1101/2023.09.24.559236) | BR | Chimp, Gorilla | Yes | [Yes](https://github.com/MitchFuchs/asbar) | 5,440 labels |
 | 2023 | [DeepWild](https://doi.org/10.1111/1365-2656.13932) | 2D BPE | Chimp, Bonobo | [Yes](https://github.com/Wild-Minds/DeepWild) | [Upon request](https://doi.org/10.5281/zenodo.5600472) | N/A |
-| 2023 | [Kaneko et al.](https://doi.org/10.1101/2023.10.16.561623) | 3D BPE | Marmoset | N/A | N/A | N/A |
-| 2023 | [Matsumoto et al.](https://doi.org/10.1101/2023.09.13.556332) | 3D BPE | Macaque | N/A | N/A | N/A |
+| 2024 | [Kaneko et al.](https://doi.org/10.1016/j.cub.2024.05.033) | 3D BPE | Marmoset | N/A | N/A | N/A |
+| 2025 | [Matsumoto et al.](https://doi.org/10.1126/sciadv.adn1355) | 3D BPE | Macaque | N/A | N/A | N/A |
 | 2023 | [ChimpAct](https://doi.org/10.48550/arXiv.2310.16447) | 2D BPE, FR, BR | Chimp | Yes | Yes | 160,500 |
 | 2023 | [OpenMonkeyChallenge](https://doi.org/10.1007/s11263-022-01698-2) | 2D BPE | Cross-species | N/A | [Yes](https://competitions.codalab.org/competitions/34342) | 111,529 |
 | 2023 | [Pillai et al.](https://doi.org/10.1109/icsses58299.2023.10199762) | PD | Cross-species | N/A | N/A | N/A |
@@ -124,7 +133,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2023 | [Jiang et al.](https://doi.org/10.48550/arXiv.2301.02214) | AV | Great Apes | [Yes](https://github.com/J22Melody/sed_great_ape) | N/A | N/A |
 | 2022 | [Lei et al.](https://doi.org/10.1038/s41598-022-11842-0) | BPE | Loris | N/A | N/A | N/A |
 | 2022 | [Ngo et al.](https://doi.org/10.1016/j.cub.2022.06.028) | BR | Marmoset | N/A | N/A | N/A |
-| 2022 | [Brachiation](https://doi.org/10.48550/arXiv.2205.03943) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | N/A | N/A |
+| 2022 | [Brachiation](https://doi.org/10.1145/3528233.3530728) | RL | Gibbon | [Yes](https://github.com/brachiation-rl/brachiation) | N/A | N/A |
 | 2022 | [SIPEC](https://doi.org/10.1038/s42256-022-00477-5) | 2D BPE, FR, BR | Macaque | [Some](https://www.dropbox.com/sh/y387kik9mwuszl3/AABBVWALEimW-hrbXvdfjHQSa?dl=0) | Upon request | N/A |
 | 2022 | [Ueno et al.](https://doi.org/10.1111/eth.13277) | FR | Macaque | N/A | N/A | N/A |
 | 2021 | [Brookes & Burghardt](https://doi.org/10.48550/arXiv.2012.04689) | FR | Gorilla | N/A | [Yes](https://data.bris.ac.uk/data/dataset/jf0859kboy8k2ufv60dqeb2t8) | >5,000 |
@@ -142,7 +151,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2020 | [Tri-A](https://doi.org/10.1016/j.isci.2020.101412) | FD, FR | 41 species | N/A | [Yes](https://data.mendeley.com/datasets/z3x59pv4bz/2) | 102,399 |
 | 2020 | [Sanakoyeu et al.](https://doi.org/10.1109/CVPR42600.2020.00528) | AM | Chimp | [Kind of](https://github.com/asanakoy/densepose-evolution) | N/A | N/A |
 | 2020 | [EthoLoop](https://doi.org/10.1038/s41592-020-0961-2) | 3D BPE | Lemur | N/A | Upon request | N/A |
-| 2019 | [Bain et al.](https://doi.org/10.48550/arXiv.1909.08950) | PD, FD, FR | Chimp | N/A | N/A | N/A |
+| 2019 | [Bain et al.](https://doi.org/10.1109/iccvw.2019.00032) | PD, FD, FR | Chimp | N/A | N/A | N/A |
 | 2019 | [Schofield et al.](https://doi.org/10.1126/sciadv.aaw0736) | FD, FR | Chimp | N/A | N/A | N/A |
 | 2019 | [Yang et al.](https://doi.org/10.1109/ICCVW.2019.00035) | PD | Chimp | N/A | [Yes](https://data.bris.ac.uk/data/dataset/jh6hrovynjik2ix2h7m6fdea3) | 180,000 |
 | 2019 | [Labuguen et al.](https://doi.org/10.3389/fnbeh.2020.581154) | 2D BPE | Macaque | N/A | N/A | N/A |
@@ -167,8 +176,8 @@ By sharing your datasets and models, you contribute to advancing primatology and
 #### Dataset with both primate and non-primate data
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
-| 2023 | [MammalNet](https://doi.org/10.48550/arXiv.2306.00576) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
-| 2022 | [Animal Kingdom](https://doi.org/10.48550/arXiv.2204.08129) | 2D BPE, BR | Cross-species | N/A | [Yes](https://github.com/sutdcv/Animal-Kingdom) | N/A |
+| 2023 | [MammalNet](https://doi.org/10.1109/cvpr52729.2023.01254) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
+| 2022 | [Animal Kingdom](https://doi.org/10.1109/cvpr52688.2022.01844) | 2D BPE, BR | Cross-species | N/A | [Yes](https://github.com/sutdcv/Animal-Kingdom) | N/A |
 | 2022 | [APT-36K](https://doi.org/10.48550/arXiv.2206.05683) | 2D BPE | Cross-species | N/A | [Yes](https://github.com/pandorgan/APT-36K) | < 36K |
 | 2021 | [AP10k](https://doi.org/10.48550/arXiv.2108.12617) | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | [Yes](https://github.com/AlexTheBad/AP-10K) | 10,015 (675 primates) |
 | 2021 | [LiftPose3D](https://doi.org/10.1038/s41592-021-01226-z) | 3D BPE | Cross-species | [Yes](https://github.com/NeLy-EPFL/LiftPose3D) | N/A | N/A |

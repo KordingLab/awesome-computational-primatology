@@ -24,12 +24,43 @@ jobs:
   scout:
     runs-on: ubuntu-latest
     steps:
+      # Open the draft PR as the "Paper Scout" GitHub App, not with GITHUB_TOKEN. PRs
+      # opened with GITHUB_TOKEN never get their pull_request workflows run: every scout PR
+      # from #44 to #72 showed Build Website / PR Preview / Check Links as failed with
+      # zero jobs ("workflow file issue"), while the same files pass on human PRs. An App-authored PR triggers them normally, and,
+      # because the App (not Felipe) is the author, Felipe can approve and merge it
+      # without bypassing branch protection. Setup: docs/PAPER_SCOUT_DESIGN.md.
+      - name: Mint Paper Scout App token
+        id: app-token
+        if: ${{ vars.SCOUT_APP_ID != '' }}
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.SCOUT_APP_ID }}
+          private-key: ${{ secrets.SCOUT_APP_PRIVATE_KEY }}
+      - name: Warn if PRs will be opened without the App
+        if: ${{ vars.SCOUT_APP_ID == '' && inputs.dry_run != true }}
+        run: echo "::warning::SCOUT_APP_ID is not set — the draft PR will be opened with GITHUB_TOKEN and its checks will not run."
       - uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install scikit-learn numpy pandas
+        run: pip install scikit-learn numpy pandas matplotlib
+      # Scout state (seen works + last-run date) lives on the unprotected `scout-state`
+      # branch, not in the draft PRs: drafts merge late or never, so state committed only
+      # to them never reached main, the fetch window stayed pinned at the last merge, and
+      # the same papers were re-proposed week after week (Sep–Nov 2026). Falls back to
+      # main's docs/scout-state.json if the branch does not exist yet.
+      - name: Load scout state
+        run: |
+          if git fetch --depth=1 origin scout-state 2>/dev/null; then
+            git show FETCH_HEAD:scout-state.json > docs/scout-state.json
+            echo "Loaded state from scout-state branch (last_run $(python -c 'import json;print(json.load(open("docs/scout-state.json"))["last_run"])'))"
+          else
+            echo "No scout-state branch yet; using main's docs/scout-state.json"
+          fi
       - name: Configure git author
         run: |
           git config user.name "paper-scout[bot]"
@@ -37,10 +68,18 @@ jobs:
       - name: Run the scout
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             python scripts/scout/run.py
           else
             python scripts/scout/run.py --open
           fi
+      - name: Save scout state
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git fetch --depth=1 origin scout-state 2>/dev/null && parent=(-p FETCH_HEAD) || parent=()
+          blob=$(git hash-object -w docs/scout-state.json)
+          tree=$(printf '100644 blob %s\tscout-state.json\n' "$blob" | git mktree)
+          commit=$(git commit-tree "$tree" "${parent[@]}" -m "Paper Scout state $(date -u +%F)")
+          git push origin "$commit:refs/heads/scout-state"

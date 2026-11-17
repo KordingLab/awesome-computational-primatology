@@ -33,6 +33,13 @@ def test_norm_doi_strips_scheme_and_lowercases():
     assert fetch._norm_doi(None) == ""
 
 
+def test_is_peer_review_drops_elife_review_records():
+    assert fetch._is_peer_review({"type": "peer-review", "doi": "https://doi.org/10.7554/elife.1.2.sa0"})
+    assert fetch._is_peer_review({"type": "other", "doi": "https://doi.org/10.7554/eLife.110932.2.sa4"})
+    assert not fetch._is_peer_review({"type": "preprint", "doi": "https://doi.org/10.7554/elife.110932.2"})
+    assert not fetch._is_peer_review({"type": "article", "doi": None})
+
+
 def test_work_key_prefers_arxiv_then_doi_then_title():
     assert _cand(arxiv_id="2410.17136", doi="10.1/x").work_key == "arxiv:2410.17136"
     assert _cand(doi="10.1/x").work_key == "doi:10.1/x"
@@ -188,3 +195,40 @@ def test_apply_update_swaps_link_and_year():
     assert "2026" in out and "10.1007/s11263-026-02867-3" in out
     assert "PD, BR" in out and "[Yes](g)" in out   # other cells inherited
     assert "arXiv.2410.17136" not in out           # old link replaced
+
+
+# ---- run -------------------------------------------------------------------
+
+def test_resolve_since_overlaps_last_run():
+    import run
+    assert run.resolve_since("2026-01-01", {"last_run": "2026-11-16"}) == "2026-01-01"
+    assert run.resolve_since(None, {"last_run": "2026-11-16"}) == "2026-11-02"
+
+
+# ---- preprints -------------------------------------------------------------
+
+def test_is_preprint_doi():
+    import preprints
+    assert preprints.is_preprint_doi("10.48550/arxiv.2610.05293")
+    assert preprints.is_preprint_doi("10.1101/2024.01.29.577734")
+    assert preprints.is_preprint_doi("10.64898/2026.11.11.765959")
+    assert preprints.is_preprint_doi("10.7554/elife.110932.2")      # eLife reviewed preprint
+    assert not preprints.is_preprint_doi("10.7554/elife.110932")    # eLife Version of Record
+    assert not preprints.is_preprint_doi("10.1371/journal.pbio.3003880")
+
+
+def test_author_overlap_and_title_similarity():
+    import preprints
+    a = ["Lucas M. Martini", "Anna Bognár", "Rufin Vogels", "Martin A. Giese"]
+    b = ["L. Martini", "A. Bognár", "R. Vogels", "M. Giese", "Someone Else"]
+    assert preprints.author_overlap(a, b) == 1.0
+    assert preprints.author_overlap(a, []) == 0.0
+    assert preprints.title_similarity("PanAf20K: a dataset", "PanAf20K: A Dataset") == 1.0
+    assert preprints.title_similarity("PanAf20K", "Something unrelated entirely") < 0.5
+
+
+def test_pr_body_lists_unapplied_possible_updates():
+    c = _cand(doi="10.1/pub", date="2026-05-01", update_target="Foo et al.",
+              reason="author overlap 80%")
+    body = propose.build_pr_body([], [], [], [], maybe_updates=[c])
+    assert "NOT applied" in body and "Foo et al." in body and "10.1/pub" in body

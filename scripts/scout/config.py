@@ -10,6 +10,8 @@ README_PATH = PROJECT_ROOT / "README.md"
 CORPUS_PATH = PROJECT_ROOT / "data" / "papers_with_abstracts.json"
 STATE_PATH = PROJECT_ROOT / "docs" / "scout-state.json"
 WEBSITE_GENERATOR = PROJECT_ROOT / "scripts" / "website_generator.py"
+PLOT_SCRIPT = PROJECT_ROOT / "scripts" / "plot_paper_growth.py"
+GROWTH_PLOT = PROJECT_ROOT / "docs" / "assets" / "paper_growth_xkcd.png"
 
 # Polite-pool contact for the keyless OpenAlex/Crossref/arXiv APIs.
 MAILTO = "parodifelipe07@gmail.com"
