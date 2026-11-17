@@ -106,7 +106,7 @@ def regenerate_plot() -> None:
         print(f"  growth plot not regenerated ({exc!r}); keeping the previous figure.")
 
 
-def build_pr_body(keeps, reviews, updates, rejects) -> str:
+def build_pr_body(keeps, reviews, updates, rejects, maybe_updates=()) -> str:
     """Assemble the markdown PR body from the four candidate buckets."""
     today = dt.date.today().isoformat()
     parts = [f"🐒 **Paper Scout** — week of {today}", ""]
@@ -121,7 +121,13 @@ def build_pr_body(keeps, reviews, updates, rejects) -> str:
     if updates:
         parts += ["### 🔁 Published versions of existing entries", ""]
         for c in updates:
-            parts.append(f"- **{c.update_target}** → {make_url(c)} (bump year to {c.date[:4]})")
+            why = f" — _{c.reason}_" if c.reason else ""
+            parts.append(f"- **{c.update_target}** → {make_url(c)} (bump year to {c.date[:4]}){why}")
+        parts.append("")
+    if maybe_updates:
+        parts += ["### 🔎 Possible published versions — NOT applied, check by hand", ""]
+        for c in maybe_updates:
+            parts.append(f"- **{c.update_target}** → {make_url(c)} ({c.date[:4]}) — _{c.reason}_")
         parts.append("")
     if reviews:
         parts += ["### 🔍 Borderline — needs your call", ""]

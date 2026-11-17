@@ -16,6 +16,7 @@ import enrich
 import fetch
 import judge
 import prefilter
+import preprints
 import propose
 import state as state_mod
 from config import DEFAULT_LOOKBACK_DAYS
@@ -36,6 +37,16 @@ def resolve_since(arg_since: str | None, state: dict) -> str:
     return (dt.date.today() - dt.timedelta(days=DEFAULT_LOOKBACK_DAYS)).isoformat()
 
 
+def _published_as_update(p: preprints.PublishedVersion) -> fetch.Candidate:
+    """Express a found published version as an UPDATE candidate for propose.apply_update."""
+    return fetch.Candidate(
+        source="preprint-check", title=p.title, abstract="", doi=p.doi, arxiv_id="",
+        date=p.date, venue=p.venue, authors=[], classification="UPDATE",
+        update_target=p.entry.name, match_confidence=p.confidence,
+        reason=f"{p.evidence}; {p.venue}: “{p.title[:90]}”",
+    )
+
+
 def main() -> None:
     """Run the scout pipeline and either print (dry-run) or open a draft PR."""
     ap = argparse.ArgumentParser()
@@ -50,12 +61,19 @@ def main() -> None:
     since = resolve_since(args.since, state)
     index = dedup.load_index()
 
+    # Listed preprints that now have a published version (checked every run, all entries).
+    published = preprints.find_all(index, skip_dois=set(state.get("seen", [])))
+    pub_updates = [_published_as_update(p) for p in published if p.confidence == "high"]
+    pub_maybe = [_published_as_update(p) for p in published if p.confidence != "high"]
+    pub_dois = {p.doi for p in published}
+
     raw = fetch.fetch_all(since)
-    fresh = [c for c in raw if not state_mod.is_seen(state, c.work_key)]
+    # A published version found above is an UPDATE of its listed preprint, never a NEW row.
+    fresh = [c for c in raw if not state_mod.is_seen(state, c.work_key) and c.doi not in pub_dois]
     dedup.classify_all(fresh, index)
 
     skips = [c for c in fresh if c.classification == "SKIP"]
-    updates = [c for c in fresh if c.classification == "UPDATE"]
+    updates = pub_updates + [c for c in fresh if c.classification == "UPDATE"]
     news = [c for c in fresh if c.classification == "NEW"]
     survivors = prefilter.prefilter(news)
 
@@ -64,10 +82,10 @@ def main() -> None:
     print(f"  DEDUP    SKIP={len(skips)}  UPDATE={len(updates)}  NEW={len(news)}")
     print(f"  RULES    {len(survivors)} NEW candidates passed (primate AND method)\n")
 
-    if updates:
+    if updates or pub_maybe:
         print("  UPDATE (published version of a listed entry):")
-        for c in updates:
-            print(f"    → {c.update_target}: {propose.make_url(c)}  [{c.match_confidence}]")
+        for c in updates + pub_maybe:
+            print(f"    → {c.update_target}: {propose.make_url(c)}  [{c.match_confidence}] {c.reason}")
         print()
 
     keeps: list = []
@@ -89,7 +107,7 @@ def main() -> None:
     enrich.enrich_all(keeps + reviews)
 
     print(f"  JUDGE    KEEP={len(keeps)}  REVIEW={len(reviews)}  REJECT={len(rejects)}\n")
-    body = propose.build_pr_body(keeps, reviews, updates, rejects)
+    body = propose.build_pr_body(keeps, reviews, updates, rejects, maybe_updates=pub_maybe)
 
     if not args.open:
         print("----- DRAFT PR BODY (dry-run) -----\n")
@@ -103,27 +121,33 @@ def main() -> None:
     # run neither re-judges it nor re-proposes it. Capped overflow is NOT recorded, so it
     # is reconsidered next run (the window overlap keeps it in range). The workflow
     # persists this file on the `scout-state` branch, independent of any PR.
-    state_mod.mark_seen(state, [c.work_key for c in to_judge + updates])
+    state_mod.mark_seen(state, [c.work_key for c in to_judge + updates + pub_maybe])
     state["last_run"] = dt.date.today().isoformat()
     state_mod.save_state(state)
 
-    if not (keeps or updates):
+    if not (keeps or updates or pub_maybe):
         print("Nothing to propose — no PR opened.")
         return
 
     readme = propose.README_PATH.read_text(encoding="utf-8")
     readme = propose.insert_rows(readme, [propose.make_row(c) for c in keeps])
     readme = propose.set_badge(readme, len(index) + len(keeps))  # keep the count badge current
+    # Names repeat ("Yang et al." x3), so preprint-check updates carry their exact entry.
     by_name = {e.name: e for e in index}
+    entry_for = {p.doi: p.entry for p in published}
     for c in updates:
-        if c.update_target in by_name:
-            readme = propose.apply_update(readme, by_name[c.update_target], c)
+        entry = entry_for.get(c.doi) or by_name.get(c.update_target)
+        if entry:
+            readme = propose.apply_update(readme, entry, c)
     propose.README_PATH.write_text(readme, encoding="utf-8")
     propose.regenerate_index()
     propose.regenerate_plot()
 
     branch = f"scout/{dt.date.today().isoformat()}"
-    propose.open_pr(branch, f"Paper Scout: {len(keeps)} additions, {len(updates)} updates", body)
+    title = f"Paper Scout: {len(keeps)} additions, {len(updates)} updates"
+    if pub_maybe:
+        title += f", {len(pub_maybe)} to check"
+    propose.open_pr(branch, title, body)
     print(f"Opened draft PR from branch {branch}.")
 
 

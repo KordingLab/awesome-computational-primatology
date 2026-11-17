@@ -112,7 +112,7 @@ A listed paper changes state over time. The scout (and periodic audits) must han
 
 | Event | Detection | Action |
 |---|---|---|
-| **Preprint → published** | title+author match; Crossref `is-preprint-of` | UPDATE link to version of record. **The link is canonical: year follows the link** (bump preprint year → publication year when the link is bumped). Inherit Model?/Data?/Count. |
+| **Preprint → published** | `scripts/scout/preprints.py`, every run, every listed preprint: bioRxiv publication API, Crossref `is-preprint-of`, arXiv record DOI, Semantic Scholar merged record, eLife VOR; fallback = first author's later OpenAlex works with ≥80% author overlap (title changes are common — MacAction). Verified on Crossref as a non-preprint type. | UPDATE link to version of record. **The link is canonical: year follows the link** (bump preprint year → publication year when the link is bumped). Inherit Model?/Data?/Count. |
 | **Conf → journal extension** (genuinely expanded, not just VoR) | title near-match but content/length differs | flag for human: update-in-place *or* new row — editorial call, never auto. |
 | **Retraction / withdrawal** | OpenAlex `is_retracted`; arXiv "withdrawn" | flag in PR for removal or `[RETRACTED]` annotation — don't recommend retracted work. |
 | **Code/data released later** | re-scan existing `N/A` rows' pages for new repo/dataset links | propose upgrading `N/A → [Yes](url)`. Turns a stale row fresh. |
@@ -149,7 +149,20 @@ Not usable: Google Scholar (no API, scrape-only), Consensus / Elicit (products, 
 - OpenAlex needs no key; pass `mailto=parodifelipe07@gmail.com` for the polite pool.
 - `S2_API_KEY` — optional, only if we use the Recommendations API.
 - Embeddings need **no key** — `all-MiniLM-L6-v2` runs on the CPU runner.
-- `GITHUB_TOKEN` — auto-provided by Actions; used to open the draft PR.
+- **Paper Scout GitHub App** — opens the draft PR and pushes the `scout-state` branch.
+  Not optional in practice: PRs opened with `GITHUB_TOKEN` never get their checks run
+  (#44–#72 all showed zero-job "failed" runs), and an App-authored PR is one Felipe can
+  approve normally instead of bypassing branch protection. One-time setup (org admin):
+  1. Org settings → Developer settings → GitHub Apps → **New GitHub App**. Name
+     `Paper Scout (KordingLab)`, homepage = repo URL, **untick Webhook → Active**.
+  2. Repository permissions: **Contents: Read & write**, **Pull requests: Read & write**
+     (Metadata read-only is automatic). Install on: *Only this account*. Create.
+  3. Note the **App ID**; **Generate a private key** (downloads a `.pem`).
+  4. **Install App** → KordingLab → *Only select repositories* →
+     `awesome-computational-primatology`.
+  5. Repo → Settings → Secrets and variables → Actions: variable `SCOUT_APP_ID` = the App
+     ID; secret `SCOUT_APP_PRIVATE_KEY` = the full `.pem` contents. Delete the `.pem`.
+  Without `SCOUT_APP_ID` the workflow falls back to `GITHUB_TOKEN` and emits a warning.
 
 Self-hosting a model in the runner is **not viable** (CPU-only, ~7 GB) — always call a hosted
 free API. HuggingFace's own free `hf-inference` is fine for embeddings but the weakest option
