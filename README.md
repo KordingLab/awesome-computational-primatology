@@ -176,8 +176,8 @@ By sharing your datasets and models, you contribute to advancing primatology and
 #### Dataset with both primate and non-primate data
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
-| 2023 | [MammalNet](https://doi.org/10.48550/arXiv.2306.00576) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
-| 2022 | [Animal Kingdom](https://doi.org/10.48550/arXiv.2204.08129) | 2D BPE, BR | Cross-species | N/A | [Yes](https://github.com/sutdcv/Animal-Kingdom) | N/A |
+| 2023 | [MammalNet](https://doi.org/10.1109/cvpr52729.2023.01254) | BR | Cross-species | [Yes](https://github.com/Vision-CAIR/MammalNet) | [Yes](https://mammal-net.github.io/) | 18k videos |
+| 2022 | [Animal Kingdom](https://doi.org/10.1109/cvpr52688.2022.01844) | 2D BPE, BR | Cross-species | N/A | [Yes](https://github.com/sutdcv/Animal-Kingdom) | N/A |
 | 2022 | [APT-36K](https://doi.org/10.48550/arXiv.2206.05683) | 2D BPE | Cross-species | N/A | [Yes](https://github.com/pandorgan/APT-36K) | < 36K |
 | 2021 | [AP10k](https://doi.org/10.48550/arXiv.2108.12617) | 2D BPE | Cross-species | [Yes](https://github.com/open-mmlab/mmpose/tree/main/configs/animal_2d_keypoint/topdown_heatmap/ap10k) | [Yes](https://github.com/AlexTheBad/AP-10K) | 10,015 (675 primates) |
 | 2021 | [LiftPose3D](https://doi.org/10.1038/s41592-021-01226-z) | 3D BPE | Cross-species | [Yes](https://github.com/NeLy-EPFL/LiftPose3D) | N/A | N/A |
