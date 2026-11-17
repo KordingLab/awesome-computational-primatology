@@ -20,13 +20,19 @@ import propose
 import state as state_mod
 from config import DEFAULT_LOOKBACK_DAYS
 
+# Re-fetch this many days before the last run: OpenAlex often indexes a work days or
+# weeks after its publication_date, so a window starting exactly at last_run misses
+# late-indexed papers. The seen-set keeps the overlap from being re-judged.
+WINDOW_OVERLAP_DAYS = 14
+
 
 def resolve_since(arg_since: str | None, state: dict) -> str:
-    """Pick the fetch window start: explicit arg > last run > default lookback."""
+    """Pick the fetch window start: explicit arg > last run minus overlap > default lookback."""
     if arg_since:
         return arg_since
     if state.get("last_run"):
-        return state["last_run"]
+        last = dt.date.fromisoformat(state["last_run"])
+        return (last - dt.timedelta(days=WINDOW_OVERLAP_DAYS)).isoformat()
     return (dt.date.today() - dt.timedelta(days=DEFAULT_LOOKBACK_DAYS)).isoformat()
 
 
@@ -93,6 +99,14 @@ def main() -> None:
             print(propose.make_row(c))
         return
 
+    # Record what we judged (+ updates) even when nothing is proposed, so next week's
+    # run neither re-judges it nor re-proposes it. Capped overflow is NOT recorded, so it
+    # is reconsidered next run (the window overlap keeps it in range). The workflow
+    # persists this file on the `scout-state` branch, independent of any PR.
+    state_mod.mark_seen(state, [c.work_key for c in to_judge + updates])
+    state["last_run"] = dt.date.today().isoformat()
+    state_mod.save_state(state)
+
     if not (keeps or updates):
         print("Nothing to propose — no PR opened.")
         return
@@ -106,12 +120,7 @@ def main() -> None:
             readme = propose.apply_update(readme, by_name[c.update_target], c)
     propose.README_PATH.write_text(readme, encoding="utf-8")
     propose.regenerate_index()
-
-    # Only record what we actually judged (+ updates) so any capped overflow is
-    # reconsidered next run rather than silently skipped forever.
-    state_mod.mark_seen(state, [c.work_key for c in to_judge + updates])
-    state["last_run"] = dt.date.today().isoformat()
-    state_mod.save_state(state)
+    propose.regenerate_plot()
 
     branch = f"scout/{dt.date.today().isoformat()}"
     propose.open_pr(branch, f"Paper Scout: {len(keeps)} additions, {len(updates)} updates", body)

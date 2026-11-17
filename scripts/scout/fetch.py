@@ -94,25 +94,48 @@ def _reconstruct_abstract(inverted: dict | None) -> str:
     return " ".join(w for _, w in sorted(positions))
 
 
-def _get(url: str, timeout: int = 30, attempts: int = 3) -> bytes:
+_SUBARTICLE_DOI = re.compile(r"\.sa\d+$")
+
+
+def _is_peer_review(work: dict) -> bool:
+    """True for review/assessment/author-response records attached to a paper.
+
+    eLife reviewed preprints register each public review, the eLife Assessment and
+    the author response as separate works (DOIs ending ``.sa0``–``.saN``, OpenAlex
+    type ``peer-review``) carrying the parent paper's abstract, so without this the
+    scout proposes one paper five or six times (2026-09-14 draft, #64).
+    """
+    return work.get("type") == "peer-review" or bool(_SUBARTICLE_DOI.search(_norm_doi(work.get("doi"))))
+
+
+def _retry_after(exc: urllib.error.HTTPError) -> float | None:
+    """Seconds the server asked us to wait (Retry-After, delta-seconds form), if any."""
+    value = (exc.headers or {}).get("Retry-After", "")
+    return float(value) if value.strip().isdigit() else None
+
+
+def _get(url: str, timeout: int = 30, attempts: int = 3, backoff: float = 1.0) -> bytes:
     """HTTP GET with a polite User-Agent; retries transient failures with backoff.
 
     Retries on connection/read timeouts, transport errors, 429 and 5xx (the keyless
-    OpenAlex/arXiv APIs are occasionally slow or briefly unavailable). Other HTTP errors
-    (4xx) are raised immediately.
+    OpenAlex/arXiv APIs are occasionally slow or briefly unavailable), waiting
+    ``backoff * 2**attempt`` seconds or the server's Retry-After, whichever is longer.
+    Other HTTP errors (4xx) are raised immediately.
     """
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     for attempt in range(attempts):
+        wait = backoff * 2 ** attempt
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return resp.read()
         except urllib.error.HTTPError as exc:
             if not (exc.code == 429 or exc.code >= 500) or attempt == attempts - 1:
                 raise
+            wait = max(wait, min(_retry_after(exc) or 0, 120))
         except (urllib.error.URLError, TimeoutError, ConnectionError):
             if attempt == attempts - 1:
                 raise
-        time.sleep(2 ** attempt)
+        time.sleep(wait)
     raise RuntimeError("unreachable")  # pragma: no cover
 
 
@@ -139,7 +162,7 @@ def fetch_openalex(since: str) -> list[Candidate]:
         results = json.loads(_get(f"https://api.openalex.org/works?{params}"))["results"]
         for w in results:
             wid = w["id"]
-            if wid in seen:
+            if wid in seen or _is_peer_review(w):
                 continue
             primary = w.get("primary_location") or {}
             authors = [
@@ -190,7 +213,9 @@ def fetch_arxiv(since: str, max_results: int = 100) -> list[Candidate]:
             "max_results": str(max_results),
         }
     )
-    raw = _get(f"https://export.arxiv.org/api/query?{params}")  # https: skip the 302
+    # https: skip the 302. arXiv throttles hard (3 of the 10 weekly runs to 2026-11-16 lost it
+    # to a 429, 406 or timeout; it asks for >=3 s between requests), so back off far longer.
+    raw = _get(f"https://export.arxiv.org/api/query?{params}", timeout=60, attempts=4, backoff=10)
     ns = {"atom": "http://www.w3.org/2005/Atom", "arxiv": "http://arxiv.org/schemas/atom"}
     out: list[Candidate] = []
     for entry in ET.fromstring(raw).findall("atom:entry", ns):

@@ -167,7 +167,8 @@ scripts/scout/
   propose.py      # build README rows + open draft PR (gh CLI / PyGithub)
   run.py          # orchestrator (mirrors scripts/rag/build_chunk_index.py)
 .github/workflows/paper-scout.yml   # weekly cron + workflow_dispatch
-docs/scout-state.json               # seen-ids, last-run window (committed by the bot)
+docs/scout-state.json               # seed copy only; the live seen-ids + last-run window live on the
+                                    # `scout-state` branch (read/written by paper-scout.yml, never in PRs)
 ```
 
 ## Failure modes & guardrails

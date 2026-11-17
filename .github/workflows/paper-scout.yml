@@ -29,7 +29,20 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install scikit-learn numpy pandas
+        run: pip install scikit-learn numpy pandas matplotlib
+      # Scout state (seen works + last-run date) lives on the unprotected `scout-state`
+      # branch, not in the draft PRs: drafts merge late or never, so state committed only
+      # to them never reached main, the fetch window stayed pinned at the last merge, and
+      # the same papers were re-proposed week after week (Sep–Nov 2026). Falls back to
+      # main's docs/scout-state.json if the branch does not exist yet.
+      - name: Load scout state
+        run: |
+          if git fetch --depth=1 origin scout-state 2>/dev/null; then
+            git show FETCH_HEAD:scout-state.json > docs/scout-state.json
+            echo "Loaded state from scout-state branch (last_run $(python -c 'import json;print(json.load(open("docs/scout-state.json"))["last_run"])'))"
+          else
+            echo "No scout-state branch yet; using main's docs/scout-state.json"
+          fi
       - name: Configure git author
         run: |
           git config user.name "paper-scout[bot]"
@@ -44,3 +57,11 @@ jobs:
           else
             python scripts/scout/run.py --open
           fi
+      - name: Save scout state
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git fetch --depth=1 origin scout-state 2>/dev/null && parent=(-p FETCH_HEAD) || parent=()
+          blob=$(git hash-object -w docs/scout-state.json)
+          tree=$(printf '100644 blob %s\tscout-state.json\n' "$blob" | git mktree)
+          commit=$(git commit-tree "$tree" "${parent[@]}" -m "Paper Scout state $(date -u +%F)")
+          git push origin "$commit:refs/heads/scout-state"

@@ -7,7 +7,7 @@ import datetime as dt
 import re
 import subprocess
 
-from config import PROJECT_ROOT, README_PATH, WEBSITE_GENERATOR
+from config import GROWTH_PLOT, PLOT_SCRIPT, PROJECT_ROOT, README_PATH, WEBSITE_GENERATOR
 from dedup import Entry
 from fetch import Candidate
 
@@ -98,6 +98,14 @@ def regenerate_index() -> None:
     subprocess.run(["python", str(WEBSITE_GENERATOR)], check=True, cwd=PROJECT_ROOT)
 
 
+def regenerate_plot() -> None:
+    """Redraw the README's paper-growth figure; best-effort (a plot failure never blocks a PR)."""
+    try:
+        subprocess.run(["python", str(PLOT_SCRIPT)], check=True, cwd=PROJECT_ROOT)
+    except (subprocess.CalledProcessError, OSError) as exc:
+        print(f"  growth plot not regenerated ({exc!r}); keeping the previous figure.")
+
+
 def build_pr_body(keeps, reviews, updates, rejects) -> str:
     """Assemble the markdown PR body from the four candidate buckets."""
     today = dt.date.today().isoformat()
@@ -132,7 +140,10 @@ def open_pr(branch: str, title: str, body: str) -> None:
     """Commit the working tree to a new branch and open a draft PR via gh."""
     run = lambda *a: subprocess.run(a, check=True, cwd=PROJECT_ROOT)
     run("git", "checkout", "-b", branch)
-    run("git", "add", "README.md", "index.html", "docs/scout-state.json")
+    # scout-state.json is deliberately NOT committed here: it lives on the `scout-state`
+    # branch (see paper-scout.yml). Committing it to every draft made drafts conflict and,
+    # since drafts are merged late or never, left main's copy (and the window) stale.
+    run("git", "add", "README.md", "index.html", str(GROWTH_PLOT.relative_to(PROJECT_ROOT)))
     run("git", "commit", "-m", title)
     run("git", "push", "-u", "origin", branch)
     run("gh", "pr", "create", "--draft", "--title", title, "--body", body)
