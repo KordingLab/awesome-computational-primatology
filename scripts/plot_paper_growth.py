@@ -15,6 +15,7 @@ Usage:
 
 from __future__ import annotations
 
+import datetime as dt
 import re
 import sys
 import urllib.parse
@@ -27,9 +28,10 @@ from matplotlib.ticker import MaxNLocator
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 README_PATH = PROJECT_ROOT / "README.md"
+CURRENT_YEAR = dt.date.today().year  # plotted as a partial (year-to-date) point
 OUTPUT_PATH = PROJECT_ROOT / "docs" / "assets" / "paper_growth_xkcd.png"
 
-# Cached OpenAlex counts (fetched 2026-05) used if the live request fails.
+# Cached OpenAlex counts (fetched 2026-05; complete years only) used if the live request fails.
 # NOTE: this is a *broad keyword* search ("primate + ML"), not a clean field
 # definition. It over-counts: it pulls in foundational CV (e.g. GoogLeNet),
 # surveys, and primate-visual-cortex-as-ML-model papers. We plot it precisely
@@ -73,10 +75,22 @@ def openalex_counts_by_year() -> dict[int, int]:
 
             groups = json.load(resp)["group_by"]
         counts = {int(g["key"]): g["count"] for g in groups if g["key"].isdigit()}
-        return {y: c for y, c in sorted(counts.items()) if 2011 <= y <= 2025}
+        return {y: c for y, c in sorted(counts.items()) if 2011 <= y <= CURRENT_YEAR}
     except Exception as exc:  # noqa: BLE001 - network is best-effort here
         print(f"OpenAlex fetch failed ({exc}); using cached fallback.", file=sys.stderr)
         return OPENALEX_FALLBACK
+
+
+def _plot_with_partial_year(ax, series: dict[int, int], color: str) -> None:
+    """Plot complete years solid; draw the current (incomplete) year hollow and dashed."""
+    full = {y: c for y, c in series.items() if y < CURRENT_YEAR}
+    ax.plot(list(full), list(full.values()), marker="o", color=color, zorder=3)
+    if CURRENT_YEAR in series and full:
+        last = max(full)
+        ax.plot([last, CURRENT_YEAR], [full[last], series[CURRENT_YEAR]],
+                linestyle="--", marker="o", markevery=[1], markerfacecolor="white", color=color, zorder=2)
+        ax.annotate(f"{CURRENT_YEAR}\n(so far)", xy=(CURRENT_YEAR, series[CURRENT_YEAR]),
+                    xytext=(-58, -30), textcoords="offset points", fontsize=9)
 
 
 def main() -> None:
@@ -89,14 +103,14 @@ def main() -> None:
     with plt.xkcd():
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
 
-        ax1.plot(list(curated), list(curated.values()), marker="o", color="#2b6cb0")
+        _plot_with_partial_year(ax1, curated, "#2b6cb0")
         ax1.set_title("Papers in THIS list\n(hand-curated)")
         ax1.set_xlabel("year")
         ax1.set_ylabel("# papers added")
         # No such thing as half a paper -> integer ticks only.
         ax1.yaxis.set_major_locator(MaxNLocator(integer=True))
 
-        ax2.plot(list(field), list(field.values()), marker="o", color="#c53030")
+        _plot_with_partial_year(ax2, field, "#c53030")
         ax2.set_title('"primate + ML" keyword firehose\n(OpenAlex, mostly tangential)')
         ax2.set_xlabel("year")
         ax2.set_ylabel("# keyword matches")
