@@ -13,6 +13,9 @@ exclude = [
     "www-sciencedirect-com.proxy.library.upenn.edu",
     "ieeexplore-ieee-org.proxy.library.upenn.edu",
     "onlinelibrary-wiley-com.proxy.library.upenn.edu",
+    # The site's own build outputs (figure, badge JSON) exist only once site.yml has
+    # deployed, so a PR introducing or moving them would fail on a chicken-and-egg 404.
+    "kordinglab\\.com/awesome-computational-primatology/(assets/|stats\\.json)",
     # IEEE Xplore answers automated clients with 418 "I'm a teapot" (bot wall)
     "ieeexplore.ieee.org",
     # Cert-only / flaky servers (resource exists; fails automated validation)
