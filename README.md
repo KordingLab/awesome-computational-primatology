@@ -84,7 +84,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2026 | [APG-DynaFFNet](https://doi.org/10.1016/j.array.2026.101079) | 2D BPE | Cross-species | N/A | N/A | N/A |
 | 2026 | [Beyond Humans](https://doi.org/10.48550/arXiv.2606.09353) | FR | Cross-species | N/A | N/A | N/A |
 | 2026 | [Schneider et al.](https://doi.org/10.48550/arXiv.2607.01396) | PD | Howler monkey | [Yes](https://github.com/Virtual-Humans-Lab/HowlerApp) | N/A | N/A |
-| 2026 | [TaxonRL](https://doi.org/10.1109/wacv61042.2026.00245) | FR, SI, RL | Cross-species | [Code only](https://github.com/max-vkl/TaxonRL) | [Yes](https://huggingface.co/maxvonk) | 184,070 primate pairs (198 individuals) |
+| 2026 | [TaxonRL](https://doi.org/10.1109/wacv61042.2026.00245) | FR, SI | Cross-species | [Code only](https://github.com/max-vkl/TaxonRL) | [Yes](https://huggingface.co/maxvonk) | 184,070 primate pairs (198 individuals) |
 | 2026 | [BigMaQ](https://doi.org/10.48550/arXiv.2602.19874) | BPE, BR, AM | Macaque | N/A | N/A | N/A |
 | 2026 | [TMacaque-FaceNet](https://doi.org/10.3390/ani16071107) | FD, FR | Tibetan macaques | N/A | N/A | 3,385 images |
 | 2026 | [Deep in the Jungle](https://doi.org/10.48550/arXiv.2601.22917) | PD, O | Chimpanzee | N/A | N/A | N/A |
