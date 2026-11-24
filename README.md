@@ -67,6 +67,7 @@ By sharing your datasets and models, you contribute to advancing primatology and
 ### Projects
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 |------|-----|-------|---------|------------|---------------|-------------|
+| 2026 | [GorillaWatch](https://doi.org/10.1109/wacv61042.2026.00807) | FD, FR | Gorilla | [Yes](https://huggingface.co/gorilla-watch) | [Yes](https://huggingface.co/datasets/gorilla-watch/Gorilla-SPAC-Wild) | 160,818 images (135 individuals) |
 | 2026 | [Freebie](https://doi.org/10.64898/2026.11.11.765959) | HPE | NHP | N/A | N/A | N/A |
 | 2026 | [Tracking Is Not Sensing](https://doi.org/10.48550/arXiv.2610.33661) | O | Marmoset | N/A | N/A | N/A |
 | 2026 | [Lewton et al.](https://doi.org/10.6084/m9.figshare.c.8812269) | PD, FR | Chimp | N/A | N/A | 4,294 images / 383 videos |
@@ -93,7 +94,6 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2025 | [Mueller et al.](https://doi.org/10.48550/arXiv.2509.12193) | BR | Ape | [Yes](https://github.com/ecker-lab/dap-behavior) | N/A | N/A |
 | 2025 | [SILVI](https://doi.org/10.48550/arXiv.2511.03819) | PD, BR | Any | N/A | N/A | N/A |
 | 2025 | [Luo et al.](https://doi.org/10.1080/10888705.2025.2542844) | PD, BR | Gibbon | N/A | N/A | N/A |
-| 2025 | [GorillaWatch](https://doi.org/10.48550/arXiv.2512.07776) | FD, FR | Gorilla | [Code only](https://github.com/gorilla-watch/gorillawatch) | [Yes](https://huggingface.co/datasets/gorilla-watch/Gorilla-SPAC-Wild) | 160,818 images (135 individuals) |
 | 2025 | [Lubetkin et al.](https://doi.org/10.1145/3768539.3768558) | FD, FR | Chimp | TBD | TBD | TBD |
 | 2025 | [PrimateFace](https://doi.org/10.1101/2025.08.12.669927) | FD, FLE, FR, FAC | Cross-genus | [Yes](https://github.com/KordingLab/PrimateFace) | [Yes](https://github.com/KordingLab/PrimateFace) | 200K+ images |
 | 2025 | [PanAf-FGBG](https://doi.org/10.1109/cvpr52734.2025.00511) | PD, BR | Chimp | N/A | [Yes](https://obrookes.github.io/panaf-fgbg.github.io/) | TBD |
