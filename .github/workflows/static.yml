@@ -1,6 +1,6 @@
 # Deploy the generated static site to GitHub Pages.
 # The public site is the self-contained index.html plus the docs/ it may link to;
-# backend/, scripts/, data/ and configs are intentionally excluded.
+# scripts/, data/ and configs are intentionally excluded.
 name: Deploy static content to Pages
 
 on:

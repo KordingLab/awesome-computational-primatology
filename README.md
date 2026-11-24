@@ -19,7 +19,6 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 - [Browse Interactive Website](https://kordinglab.com/awesome-computational-primatology/)
 - [Topic Categories](docs/TOPIC_LEGEND.md)
 - [How to Contribute](CONTRIBUTING.md)
-- [AI Chat Documentation](docs/HOW_THE_AI_CHAT_WORKS.md)
 
 ## Contribute to the List!
 We welcome contributions from the community! If you know of a relevant paper or project:
