@@ -7,7 +7,7 @@ import datetime as dt
 import re
 import subprocess
 
-from config import GROWTH_PLOT, PLOT_SCRIPT, PROJECT_ROOT, README_PATH, WEBSITE_GENERATOR
+from config import PENDING_BRANCH, PROJECT_ROOT, README_PATH  # noqa: F401  (README_PATH is used via propose.README_PATH in run.py)
 from dedup import Entry
 from fetch import Candidate
 
@@ -47,35 +47,39 @@ def make_row(candidate: Candidate) -> str:
     )
 
 
-def set_badge(readme_text: str, count: int) -> str:
-    """Update the "Papers-N" shields.io badge in the README to the given count."""
-    return re.sub(r"(badge/Papers-)\d+(-blue)", rf"\g<1>{count}\g<2>", readme_text)
+def _row_year(line: str) -> int | None:
+    m = re.match(r"^\|\s*(\d{4})\s*\|", line)
+    return int(m.group(1)) if m else None
+
+
+def insert_row(readme_text: str, row: str) -> str:
+    """Insert one row at the top of its year's block in the (newest-first) Projects table."""
+    year = _row_year(row) or 9999
+    lines = readme_text.splitlines()
+    try:
+        start = next(i for i, l in enumerate(lines) if l.strip() == "### Projects")
+        sep = next(i for i in range(start, len(lines)) if re.match(r"\|\s*-+", lines[i]))
+    except StopIteration:  # fail loud rather than silently drop proposals
+        raise ValueError("Could not locate the Projects table separator in README.md") from None
+    pos = sep + 1
+    while pos < len(lines) and lines[pos].startswith("|"):
+        row_year = _row_year(lines[pos])
+        if row_year is not None and row_year <= year:
+            break
+        pos += 1
+    lines.insert(pos, row)
+    return "\n".join(lines) + "\n"
 
 
 def insert_rows(readme_text: str, rows: list[str]) -> str:
-    """Insert new rows at the top of the Projects table (newest-first convention)."""
-    if not rows:
-        return readme_text
-    lines = readme_text.splitlines()
-    out: list[str] = []
-    inserted = False
-    in_projects = False
-    seen_separator = False
-    for line in lines:
-        out.append(line)
-        if line.strip() == "### Projects":
-            in_projects = True
-        elif in_projects and not seen_separator and re.match(r"\|\s*-+", line):
-            seen_separator = True
-            out.extend(rows)
-            inserted = True
-    if not inserted:  # fail loud rather than silently drop proposals
-        raise ValueError("Could not locate the Projects table separator in README.md")
-    return "\n".join(out) + "\n"
+    """Insert each row at the top of its year's block (newest-first convention)."""
+    for row in rows:
+        readme_text = insert_row(readme_text, row)
+    return readme_text
 
 
 def apply_update(readme_text: str, entry: Entry, candidate: Candidate) -> str:
-    """Swap a listed entry's link to the published version and bump its year."""
+    """Swap a listed entry's link to the published version, bump its year, and re-place the row."""
     old_paper_cell = entry.cells[1]
     new_year = candidate.date[:4] or entry.year
     new_paper_cell = f"[{entry.name}]({make_url(candidate)})"
@@ -84,26 +88,16 @@ def apply_update(readme_text: str, entry: Entry, candidate: Candidate) -> str:
     new_cells[1] = new_paper_cell
     new_line = "| " + " | ".join(new_cells) + " |"
 
-    out = []
-    for line in readme_text.splitlines():
-        if old_paper_cell in line and line.lstrip().startswith("|"):
-            out.append(new_line)
-        else:
-            out.append(line)
-    return "\n".join(out) + "\n"
-
-
-def regenerate_index() -> None:
-    """Regenerate index.html so website.yml's sync check passes."""
-    subprocess.run(["python", str(WEBSITE_GENERATOR)], check=True, cwd=PROJECT_ROOT)
-
-
-def regenerate_plot() -> None:
-    """Redraw the README's paper-growth figure; best-effort (a plot failure never blocks a PR)."""
-    try:
-        subprocess.run(["python", str(PLOT_SCRIPT)], check=True, cwd=PROJECT_ROOT)
-    except (subprocess.CalledProcessError, OSError) as exc:
-        print(f"  growth plot not regenerated ({exc!r}); keeping the previous figure.")
+    lines = readme_text.splitlines()
+    hits = [i for i, l in enumerate(lines) if old_paper_cell in l and l.lstrip().startswith("|")]
+    if not hits:
+        return readme_text  # entry not found; leave the README untouched
+    if "### Projects" not in readme_text:  # bare table fragment: update in place
+        for i in hits:
+            lines[i] = new_line
+        return "\n".join(lines) + "\n"
+    kept = [l for i, l in enumerate(lines) if i not in hits]
+    return insert_row("\n".join(kept) + "\n", new_line)
 
 
 def build_pr_body(keeps, reviews, updates, rejects, maybe_updates=()) -> str:
@@ -142,14 +136,47 @@ def build_pr_body(keeps, reviews, updates, rejects, maybe_updates=()) -> str:
     return "\n".join(parts)
 
 
-def open_pr(branch: str, title: str, body: str) -> None:
-    """Commit the working tree to a new branch and open a draft PR via gh."""
-    run = lambda *a: subprocess.run(a, check=True, cwd=PROJECT_ROOT)
-    run("git", "checkout", "-b", branch)
-    # scout-state.json is deliberately NOT committed here: it lives on the `scout-state`
-    # branch (see paper-scout.yml). Committing it to every draft made drafts conflict and,
-    # since drafts are merged late or never, left main's copy (and the window) stale.
-    run("git", "add", "README.md", "index.html", str(GROWTH_PLOT.relative_to(PROJECT_ROOT)))
-    run("git", "commit", "-m", title)
-    run("git", "push", "-u", "origin", branch)
-    run("gh", "pr", "create", "--draft", "--title", title, "--body", body)
+PENDING_TITLE = "Paper Scout: pending proposals"
+MAX_BODY_CHARS = 60_000  # GitHub caps PR bodies at 65,536
+
+
+def _git(*args: str, capture: bool = False) -> str:
+    res = subprocess.run(args, check=True, cwd=PROJECT_ROOT, capture_output=capture, text=True)
+    return res.stdout.strip() if capture else ""
+
+
+def checkout_pending() -> int | None:
+    """Switch to the rolling scout PR's branch if one is open; return its PR number.
+
+    Weekly proposals accumulate on one draft PR instead of one PR per week, so they
+    never conflict with each other. Call this before editing README.md. With no
+    open pending PR, a fresh branch is started from the current checkout (main).
+    """
+    number = _git("gh", "pr", "list", "--head", PENDING_BRANCH, "--state", "open",
+                  "--json", "number", "--jq", ".[0].number // empty", capture=True)
+    if number:
+        _git("git", "fetch", "--depth=1", "origin", PENDING_BRANCH)
+        _git("git", "checkout", "-B", PENDING_BRANCH, "FETCH_HEAD")
+        return int(number)
+    _git("git", "checkout", "-B", PENDING_BRANCH)
+    return None
+
+
+def publish(pr_number: int | None, title: str, body: str) -> None:
+    """Commit README.md to the pending branch and open or update the draft PR.
+
+    Only README.md is committed: the site, badge and growth figure are built from
+    it at deploy time, so proposals never collide on derived files.
+    """
+    _git("git", "add", "README.md")
+    _git("git", "commit", "-m", title)
+    if pr_number is None:
+        # A merged or closed pending PR can leave a stale branch behind; replace it.
+        _git("git", "push", "--force", "-u", "origin", PENDING_BRANCH)
+        _git("gh", "pr", "create", "--draft", "--head", PENDING_BRANCH,
+             "--title", PENDING_TITLE, "--body", body[:MAX_BODY_CHARS])
+        return
+    _git("git", "push", "origin", PENDING_BRANCH)
+    old = _git("gh", "pr", "view", str(pr_number), "--json", "body", "--jq", ".body", capture=True)
+    merged = (body + "\n\n---\n\n" + old)[:MAX_BODY_CHARS]
+    _git("gh", "pr", "edit", str(pr_number), "--body", merged)

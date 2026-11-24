@@ -1,7 +1,7 @@
 ## 📄 Paper/Project Addition
 
 <!-- 
-🎉 Thanks for contributing! A preview of your changes will be automatically generated below.
+🎉 Thanks for contributing! Edit README.md only; the site, badge and figure rebuild automatically.
 Need help? Check our [Contributing Guide](CONTRIBUTING.md)
 -->
 
@@ -9,13 +9,13 @@ Need help? Check our [Contributing Guide](CONTRIBUTING.md)
 - [ ] **Title:** 
 - [ ] **Year:** 
 - [ ] **Link:** 
-- [ ] **Topics:** (use PD, BPE, FD, FLE, FR, FAC, BR, AM, SI, RL, O)
+- [ ] **Topics:** (use PD, BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O)
 - [ ] **Animal Species:** 
 - [ ] **Model Available:** Yes/No/Code only/Upon request
 - [ ] **Data Available:** Yes/No/Upon request
 
 ### ✅ Pre-submission Checklist
-- [ ] Added paper in correct chronological position (newest first)
+- [ ] Added the row at the top of its year (table is newest first)
 - [ ] Verified all links are accessible and working
 - [ ] Used correct topic abbreviations from the legend
 - [ ] Confirmed model/data availability status is accurate
@@ -38,4 +38,4 @@ Need help? Check our [Contributing Guide](CONTRIBUTING.md)
 
 ---
 
-**Preview:** A preview link will be automatically posted below once the automation runs ⚡ 
+**Preview:** CI lints the table and attaches the built site as the `site` artifact on the run page ⚡ 

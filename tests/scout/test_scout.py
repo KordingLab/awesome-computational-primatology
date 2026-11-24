@@ -169,12 +169,6 @@ def test_make_row_format():
     assert row == "| 2026 | [X](https://doi.org/10.1/x) | FR | Macaque | N/A | N/A | 3,385 images |"
 
 
-def test_set_badge_updates_count():
-    text = "[![Papers](https://img.shields.io/badge/Papers-90-blue)](#projects)"
-    assert "Papers-96-blue" in propose.set_badge(text, 96)
-    assert "Papers-90" not in propose.set_badge(text, 96)
-
-
 def test_insert_rows_after_separator():
     readme = "### Projects\n\n| Year | Paper |\n|------|-------|\n| 2025 | old |\n"
     out = propose.insert_rows(readme, ["| 2026 | new |"])
@@ -182,6 +176,26 @@ def test_insert_rows_after_separator():
     sep = next(i for i, l in enumerate(lines) if l.startswith("|---") or l.startswith("|--"))
     assert lines[sep + 1] == "| 2026 | new |"
     assert lines[sep + 2] == "| 2025 | old |"
+
+
+def test_insert_row_goes_to_top_of_its_year_block():
+    readme = ("### Projects\n\n| Year | Paper |\n|------|-------|\n"
+              "| 2026 | a |\n| 2025 | b |\n| 2024 | c |\n")
+    out = propose.insert_rows(readme, ["| 2025 | new |", "| 2010 | oldest |"]).splitlines()
+    assert out[out.index("| 2026 | a |") + 1] == "| 2025 | new |"
+    assert out[out.index("| 2025 | new |") + 1] == "| 2025 | b |"
+    assert out[-1] == "| 2010 | oldest |"
+
+
+def test_apply_update_moves_row_to_new_year():
+    readme = ("### Projects\n\n| Year | Paper |\n|------|-------|\n"
+              "| 2026 | [X](a) |\n| 2024 | [Old](https://doi.org/10.48550/arXiv.1) |\n")
+    cells = ["2024", "[Old](https://doi.org/10.48550/arXiv.1)"]
+    entry = Entry(name="Old", year="2024", doi="", arxiv_id="1", tool_token="old", cells=cells)
+    c = _cand(title="Old journal", doi="10.1/j", date="2026-03-01")
+    lines = propose.apply_update(readme, entry, c).splitlines()
+    assert lines[4] == "| 2026 | [Old](https://doi.org/10.1/j) |"  # top of the 2026 block
+    assert not any("arXiv.1" in l for l in lines)
 
 
 def test_apply_update_swaps_link_and_year():

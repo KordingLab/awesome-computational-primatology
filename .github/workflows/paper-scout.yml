@@ -1,5 +1,6 @@
 # Weekly autonomous paper scout: finds hyper-relevant new computational-primatology
-# papers and opens a DRAFT PR with enriched table rows. Never merges by itself.
+# papers and adds enriched table rows to ONE rolling draft PR (branch scout/pending),
+# opening it if none is open. It commits README.md only. Never merges by itself.
 name: Paper Scout
 
 on:
@@ -33,33 +34,37 @@ jobs:
       - name: Mint Paper Scout App token
         id: app-token
         if: ${{ vars.SCOUT_APP_ID != '' }}
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.SCOUT_APP_ID }}
           private-key: ${{ secrets.SCOUT_APP_PRIVATE_KEY }}
       - name: Warn if PRs will be opened without the App
         if: ${{ vars.SCOUT_APP_ID == '' && inputs.dry_run != true }}
         run: echo "::warning::SCOUT_APP_ID is not set — the draft PR will be opened with GITHUB_TOKEN and its checks will not run."
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
       - name: Install dependencies
-        run: pip install scikit-learn numpy pandas matplotlib
+        run: pip install -r requirements.txt
       # Scout state (seen works + last-run date) lives on the unprotected `scout-state`
       # branch, not in the draft PRs: drafts merge late or never, so state committed only
       # to them never reached main, the fetch window stayed pinned at the last merge, and
       # the same papers were re-proposed week after week (Sep–Nov 2026). Falls back to
-      # main's docs/scout-state.json if the branch does not exist yet.
+      # a fresh state (default lookback) if the branch does not exist. The file lives
+      # outside the work tree so the scout can switch to the scout/pending branch freely.
       - name: Load scout state
         run: |
+          echo "SCOUT_STATE_PATH=$RUNNER_TEMP/scout-state.json" >> "$GITHUB_ENV"
           if git fetch --depth=1 origin scout-state 2>/dev/null; then
-            git show FETCH_HEAD:scout-state.json > docs/scout-state.json
-            echo "Loaded state from scout-state branch (last_run $(python -c 'import json;print(json.load(open("docs/scout-state.json"))["last_run"])'))"
+            git show FETCH_HEAD:scout-state.json > "$RUNNER_TEMP/scout-state.json"
+            echo "Loaded state from scout-state branch (last_run $(python -c 'import json,os;print(json.load(open(os.environ["RUNNER_TEMP"]+"/scout-state.json"))["last_run"])'))"
           else
-            echo "No scout-state branch yet; using main's docs/scout-state.json"
+            echo "::warning::No scout-state branch; starting from a fresh state."
           fi
       - name: Configure git author
         run: |
@@ -79,7 +84,7 @@ jobs:
         if: ${{ inputs.dry_run != true }}
         run: |
           git fetch --depth=1 origin scout-state 2>/dev/null && parent=(-p FETCH_HEAD) || parent=()
-          blob=$(git hash-object -w docs/scout-state.json)
+          blob=$(git hash-object -w "$SCOUT_STATE_PATH")
           tree=$(printf '100644 blob %s\tscout-state.json\n' "$blob" | git mktree)
           commit=$(git commit-tree "$tree" "${parent[@]}" -m "Paper Scout state $(date -u +%F)")
           git push origin "$commit:refs/heads/scout-state"

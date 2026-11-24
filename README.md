@@ -1,12 +1,12 @@
 # [Awesome Computational Primatology](https://kordinglab.com/awesome-computational-primatology/)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-[![Papers](https://img.shields.io/badge/Papers-113-blue)](https://github.com/KordingLab/awesome-computational-primatology#projects)
+[![Papers](https://img.shields.io/endpoint?url=https://kordinglab.com/awesome-computational-primatology/stats.json)](https://github.com/KordingLab/awesome-computational-primatology#projects)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/github/last-commit/KordingLab/awesome-computational-primatology?label=last%20updated)](https://github.com/KordingLab/awesome-computational-primatology/commits/main)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/KordingLab/awesome-computational-primatology/main/docs/assets/paper_growth_xkcd.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" width="680"><br>
+  <img src="https://kordinglab.com/awesome-computational-primatology/assets/paper_growth.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" width="680"><br>
   <sub><i>Papers per year — this hand-curated list (left) vs. the raw "primate + ML" literature on OpenAlex (right).</i></sub>
 </p>
 
@@ -24,15 +24,10 @@ By compiling and highlighting this growing literature, we hope it will inspire f
 We welcome contributions from the community! If you know of a relevant paper or project:
 
 1. **Fork** this repository
-2. **Add** your paper to the table in chronological order
-3. **Preview** your changes: `python scripts/dev-preview.py`
-4. **Submit** a pull request
+2. **Add** your paper as one row in the table, at the top of its year
+3. **Submit** a pull request that edits `README.md` only
 
-**Features for contributors:**
-- Automatic link checking
-- Live preview of your changes
-- Auto-generated website updates
-- Format validation
+The website, paper count and growth figure are rebuilt automatically. CI checks your row's format and links and attaches a preview of the site.
 
 Read our [Contributing Guidelines](CONTRIBUTING.md) for detailed instructions!
 

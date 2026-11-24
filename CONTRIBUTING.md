@@ -4,45 +4,26 @@ Thank you for your interest in contributing! This document explains how to add p
 
 ## 🚀 Quick Start
 
-### Preview Your Changes Locally
+**Edit `README.md` only.** Add one row per paper, at the top of its year in the Projects table, and open a pull request. Everything else is derived from the README and rebuilt by CI on every merge: the website, the paper-count badge, the stats and the growth figure. Don't commit generated files.
+
+When you open a PR, CI will:
+- lint the table (column count, year, link in the Paper cell; topic codes and Model?/Data? values against the legends)
+- check the links your PR adds
+- build the site and attach it as the `site` artifact on the run page (download it and open `index.html`)
+
+### Preview locally (optional)
 ```bash
-# 1. Fork and clone the repository
-git clone https://github.com/YOUR-USERNAME/awesome-computational-primatology.git
-cd awesome-computational-primatology
-
-# 2. Make your changes to README.md
-
-# 3. Preview the website (auto-generates index.html and opens browser)
-python scripts/dev-preview.py
-
-# 4. Commit BOTH README.md and index.html, then create a pull request
+uv run --no-project --with-requirements requirements.txt python scripts/dev-preview.py
+# or: pip install -r requirements.txt && python scripts/dev-preview.py
 ```
+This lints the README, builds into `_site/`, and serves it at http://localhost:8000.
 
-**Important:** Always commit `index.html` along with your `README.md` changes. The CI will fail if they're out of sync.
+### Pull requests
+- Title: "Add: YYYY AuthorName" or "Update: brief description"
+- Fill out the PR template
 
-### Automatic PR Previews
-When you submit a PR, our automation will:
-- ✅ Generate a preview website with your changes
-- ✅ Post a comment with the preview link
-- ✅ Validate table formatting and links
-- ✅ Check that `index.html` is in sync with `README.md`
-
-### 1. Branch Protocol
-- Fork the repository
-- Create a branch with format: `add-paper/YYYY-AuthorName` (e.g., `add-paper/2024-Smith`)
-- For multiple papers or other changes: `update/brief-description`
-- Add your paper in the correct section following the format below
-- Verify all links are working
-
-### 2. Pull Request Process
-1. Create a draft PR first
-2. Use title format: "Add: YYYY AuthorName paper" or "Update: brief description"
-3. Fill out the PR template
-4. Mark as ready for review when complete
-
-### 3. Review Process
+### Review Process
 - Maintainers will review within 1-2 weeks
-- Automated checks will verify table formatting and links
 - Reviews focus on:
   - Correct formatting
   - Working links
@@ -60,8 +41,8 @@ Add your paper to the appropriate table section using this format:
 | Year | Paper | Topic | Animal | Model? | Data? | Image/Video Count |
 
 Where:
-- **Year**: Publication year
-- **Paper**: `[Title](link)` or just Title if preprint
+- **Year**: Publication year (of the published version, if there is one)
+- **Paper**: `[Short name](link)`; prefer a DOI link (`https://doi.org/...`), arXiv DOIs for preprints
 - **Topic**: Use abbreviations from Topic Legend (PD, BPE, FD, etc.)
 - **Animal**: Specific primate species or "Cross-species"
 - **Model?**:
