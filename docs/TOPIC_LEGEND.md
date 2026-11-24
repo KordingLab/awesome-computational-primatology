@@ -8,6 +8,7 @@ This document defines the topic categories used to classify papers in the Awesom
 |--------------|-----------|-------------|
 | **PD** | Primate Detection | Detecting and localizing primates in images/video |
 | **BPE** | Body Pose Estimation | Estimating body keypoints (2D or 3D) |
+| **2D BPE** / **3D BPE** | 2D / 3D Body Pose Estimation | BPE, when the paper is specifically 2D or 3D |
 | **FD** | Face Detection | Detecting and localizing primate faces |
 | **FLE** | Facial Landmark Estimation | Detecting facial keypoints (eyes, nose, mouth, etc.) |
 | **FR** | Face Recognition / Re-Identification | Identifying individual primates from facial features |
@@ -32,7 +33,6 @@ The "Model?" column in paper tables uses these values:
 | `[No](link)` | Repository with information, but no functional code |
 | `N/A` | No repository or models provided |
 | `Upon request` | Available by contacting authors |
-| `TBD` | To be determined (recently published) |
 
 ## Data Availability Legend
 
@@ -41,6 +41,8 @@ The "Data?" column uses similar conventions:
 | Value | Meaning |
 |-------|---------|
 | `[Yes](link)` | Dataset publicly available |
+| `[Name](link)` | Data is (part of) a named dataset released elsewhere |
 | `Upon request` | Available by contacting authors |
 | `N/A` | No dataset provided |
-| `TBD` | To be determined |
+
+Use `N/A` rather than `TBD` when availability is unknown; CI rejects other values (`python scripts/lint_readme.py --strict`).
