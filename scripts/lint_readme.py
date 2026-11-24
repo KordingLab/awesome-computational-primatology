@@ -22,7 +22,9 @@ from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-MD_LINK = re.compile(r"\[([^\]]*)\]\(((?:[^()\s]|\([^()\s]*\))+)\)")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from website_generator import MD_LINK, iter_paper_rows  # noqa: E402  (one row parser for site + lint)
+
 SEPARATOR = re.compile(r"^\|(\s*:?-+:?\s*\|)+\s*$")
 # Model?/Data? values the legends allow, matched on the visible (link) text.
 MODEL_VALUES = {"Yes", "Code only", "No", "N/A", "Upon request"}
@@ -57,27 +59,15 @@ def lint(path: Path) -> tuple[list[tuple[int, str]], list[tuple[int, str]]]:
     warnings: list[tuple[int, str]] = []
     links: dict[str, list[int]] = defaultdict(list)
 
-    in_projects, prev_year = False, None
-    for n, line in enumerate(lines, 1):
-        stripped = line.strip()
-        if stripped == "### Projects":
-            in_projects = True
+    prev_year, prev_line = None, 0
+    for n, cells, raw in iter_paper_rows(lines):
+        if cells is None:
+            errors.append((n, "not a 7-column '| ... |' row (check for a stray, missing or outer '|'); "
+                              "the site would drop it"))
             continue
-        if not in_projects:
-            continue
-        if stripped.startswith("#"):
-            if "Reviews" in stripped or not stripped.startswith("####"):
-                break  # the 4-column "Reviews & Related" table and later sections are not papers
-            prev_year = None  # the dataset sub-table restarts the ordering
-            continue
-        if not stripped.startswith("|") or SEPARATOR.match(stripped):
-            continue
-        cells = [c.strip() for c in stripped.strip("|").split("|")]
-        if cells[0] == "Year":
-            continue
-        if stripped.count("|") != 8:
-            errors.append((n, f"expected 7 columns, found {len(cells)} (check for a stray or missing '|')"))
-            continue
+        if n != prev_line + 1:
+            prev_year = None  # a new table (the dataset sub-table) restarts the ordering
+        prev_line = n
         year, paper, topic, _animal, model, data, _count = cells
         if not re.fullmatch(r"\d{4}", year):
             errors.append((n, f"year must be four digits, got {year!r}"))

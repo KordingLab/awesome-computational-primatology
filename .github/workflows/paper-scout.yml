@@ -44,6 +44,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # prepare_pending() needs the merge base of main and scout/pending
       - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
@@ -60,11 +61,18 @@ jobs:
       - name: Load scout state
         run: |
           echo "SCOUT_STATE_PATH=$RUNNER_TEMP/scout-state.json" >> "$GITHUB_ENV"
-          if git fetch --depth=1 origin scout-state 2>/dev/null; then
+          # ls-remote exits 2 only when the branch is absent. Any other failure (network,
+          # auth) must stop the run: a silently empty seen-set would be saved over the
+          # real one and re-propose weeks of papers.
+          set +e; git ls-remote --exit-code --heads origin scout-state >/dev/null; rc=$?; set -e
+          if [ "$rc" = 0 ]; then
+            git fetch --depth=1 origin scout-state
             git show FETCH_HEAD:scout-state.json > "$RUNNER_TEMP/scout-state.json"
             echo "Loaded state from scout-state branch (last_run $(python -c 'import json,os;print(json.load(open(os.environ["RUNNER_TEMP"]+"/scout-state.json"))["last_run"])'))"
-          else
+          elif [ "$rc" = 2 ]; then
             echo "::warning::No scout-state branch; starting from a fresh state."
+          else
+            echo "::error::Could not query origin for the scout-state branch (exit $rc)."; exit 1
           fi
       - name: Configure git author
         run: |
@@ -83,7 +91,8 @@ jobs:
       - name: Save scout state
         if: ${{ inputs.dry_run != true }}
         run: |
-          git fetch --depth=1 origin scout-state 2>/dev/null && parent=(-p FETCH_HEAD) || parent=()
+          if [ ! -f "$SCOUT_STATE_PATH" ]; then echo "Scout wrote no state (e.g. no API key); nothing to save."; exit 0; fi
+          git fetch origin scout-state 2>/dev/null && parent=(-p FETCH_HEAD) || parent=()
           blob=$(git hash-object -w "$SCOUT_STATE_PATH")
           tree=$(printf '100644 blob %s\tscout-state.json\n' "$blob" | git mktree)
           commit=$(git commit-tree "$tree" "${parent[@]}" -m "Paper Scout state $(date -u +%F)")

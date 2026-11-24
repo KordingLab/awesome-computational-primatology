@@ -61,10 +61,25 @@ def test_lint_flags_malformed_row_and_unknown_topic(tmp_path):
         + "| 2025 | [B](https://doi.org/2) | XYZ | Macaque | N/A | N/A | N/A |\n"
     )
     errors, warnings = lint_readme.lint(readme)
-    assert len(errors) == 1 and "7 columns" in errors[0][1]
+    assert len(errors) == 1 and "7-column" in errors[0][1]
     assert any("XYZ" in msg for _, msg in warnings)
 
 
 def test_repo_readme_has_no_lint_errors():
     errors, _ = lint_readme.lint(Path(__file__).resolve().parents[1] / "README.md")
     assert errors == []
+
+
+def test_lint_rejects_rows_the_site_would_drop(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        README_HEAD
+        + "| 2026 | [A](https://doi.org/1) | PD | M | N/A | N/A | N/A |x\n"      # trailing junk
+        + "2026 | [B](https://doi.org/2) | PD | M | N/A | N/A | N/A\n"         # no outer pipes
+        + "| 2026 | [C](https://doi.org/3) | PD | M | N/A | N/A | N/A |\n"
+        + "\n#### Reviews & Related\n| Year | Tag | Topic | Animal |\n|---|---|---|---|\n"
+        + "| 2025 | [R](r) | Review | All |\n"
+    )
+    errors, _ = lint_readme.lint(readme)
+    assert sorted(n for n, _ in errors) == [10, 11]
+    assert list(gen.extract_table_from_readme(str(readme))["Paper"]) == ["[C](https://doi.org/3)"]

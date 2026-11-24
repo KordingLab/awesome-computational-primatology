@@ -20,8 +20,11 @@ import json
 import re
 import subprocess
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-import pandas as pd
+if TYPE_CHECKING:
+    import pandas as pd
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -46,55 +49,57 @@ def link_text(cell_text: str) -> str:
     """Return a cell's visible text: "[Yes](url)" -> "Yes"."""
     return MD_LINK.sub(lambda m: m.group(1), cell_text).strip()
 
+COLUMNS = ["Year", "Paper", "Topic", "Animal", "Model?", "Data?", "Image/Video Count"]
+_SEPARATOR = re.compile(r"^\|(\s*:?-+:?\s*\|)+$")
+
+
+def iter_paper_rows(lines: list[str]):
+    """Yield (line_number, cells or None, raw_line) for every table line of the paper tables.
+
+    The paper tables are the "### Projects" table and its "#### Dataset ..."
+    sub-table; scanning stops at "#### Reviews & Related" or the next "##"/"###"
+    heading. Header and separator lines are skipped. cells is None when a
+    table-like line is not a well-formed 7-column "| ... |" row; the linter
+    reports those and the site skips them. Shared by the generator, the linter
+    and the growth plot so all three agree on what counts as a paper.
+    """
+    inside = False
+    for n, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if stripped == "### Projects":
+            inside = True
+            continue
+        if not inside:
+            continue
+        if stripped.startswith("#"):
+            if "Reviews" in stripped or not stripped.startswith("####"):
+                return
+            continue
+        if "|" not in stripped or _SEPARATOR.match(stripped):
+            continue
+        if not (stripped.startswith("|") and stripped.endswith("|")):
+            yield n, None, stripped
+            continue
+        cells = [c.strip() for c in stripped[1:-1].split("|")]
+        if cells[0] == "Year":
+            continue
+        yield n, (cells if len(cells) == len(COLUMNS) else None), stripped
+
+
 def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
-    """Extract the 7-column paper/dataset rows from README.md.
-
-    Captures rows under "### Projects" plus the cross-species
-    "#### Dataset ..." sub-table (same 7-column schema). Every sub-table's
-    header and separator row is skipped explicitly, so no markdown scaffolding
-    leaks in as a fake paper. The 4-column "Reviews & Related" table is
-    naturally excluded by the column-count filter.
-
-    Args:
-        readme_path: Path to README.md.
-
-    Returns:
-        DataFrame of the raw markdown cells of each paper/dataset row.
+    """Return the well-formed paper rows of README.md as raw markdown cells.
 
     Raises:
-        ValueError: If no valid table is found.
+        ValueError: If no rows are found.
     """
-    with open(readme_path, "r", encoding='utf-8') as f:
-        lines = f.readlines()
+    import pandas as pd  # lazy: the linter shares this module and needs only the stdlib
 
-    header: list[str] | None = None
-    data: list[list[str]] = []
-    in_projects_section = False
-
-    for line in lines:
-        if line.strip() == "### Projects":
-            in_projects_section = True
-            continue
-        if not in_projects_section:
-            continue
-        # Only 7-column rows (8 pipe characters) are paper/dataset rows.
-        if line.count("|") != 8:
-            continue
-        cells = [cell.strip() for cell in line.split("|")[1:-1]]
-        # Skip separator rows like |---|---|...
-        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
-            continue
-        # Skip (repeated) header rows; keep the first as the column names.
-        if cells[0] == "Year":
-            if header is None:
-                header = cells
-            continue
-        data.append(cells)
-
-    if header is None or not data:
+    lines = Path(readme_path).read_text(encoding="utf-8").splitlines()
+    data = [cells for _, cells, _ in iter_paper_rows(lines) if cells is not None]
+    if not data:
         raise ValueError("Could not find valid table in README.md")
+    return pd.DataFrame(data, columns=COLUMNS)
 
-    return pd.DataFrame(data, columns=header)
 
 def get_enhanced_html_template() -> str:
     """Return the enhanced HTML template"""

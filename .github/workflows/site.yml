@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: site-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'main' }}
+  group: site-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -41,7 +41,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install -y --no-install-recommends fonts-humor-sans
+          # xkcd-style font for the figure; cosmetic, so never let it block a deploy.
+          (sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends fonts-humor-sans) \
+            || echo "::warning::fonts-humor-sans not installed; the figure will use a fallback font."
           pip install -r requirements.txt
 
       - name: Lint README tables

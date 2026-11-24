@@ -57,6 +57,12 @@ def main() -> None:
     ap.add_argument("--open", action="store_true", help="open a draft PR (default: dry-run)")
     args = ap.parse_args()
 
+    pr_number, pending_tip = None, ""
+    if args.open:
+        # Rebuild scout/pending on main first, so the dedup index below already
+        # contains rows proposed in earlier, still-unmerged weeks.
+        pr_number, pending_tip = propose.prepare_pending()
+
     state = state_mod.load_state()
     since = resolve_since(args.since, state)
     index = dedup.load_index()
@@ -129,7 +135,6 @@ def main() -> None:
         print("Nothing to propose — no PR opened.")
         return
 
-    pr_number = propose.checkout_pending()  # accumulate on the open scout PR, if any
     readme = propose.README_PATH.read_text(encoding="utf-8")
     readme = propose.insert_rows(readme, [propose.make_row(c) for c in keeps])
     # Names repeat ("Yang et al." x3), so preprint-check updates carry their exact entry.
@@ -144,7 +149,7 @@ def main() -> None:
     title = f"Paper Scout {dt.date.today().isoformat()}: {len(keeps)} additions, {len(updates)} updates"
     if pub_maybe:
         title += f", {len(pub_maybe)} to check"
-    propose.publish(pr_number, title, body)
+    propose.publish(pr_number, pending_tip, title, body)
     print(f"{'Updated' if pr_number else 'Opened'} the pending scout PR on {propose.PENDING_BRANCH}.")
 
 
