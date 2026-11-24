@@ -9,7 +9,7 @@ Need help? Check our [Contributing Guide](CONTRIBUTING.md)
 - [ ] **Title:** 
 - [ ] **Year:** 
 - [ ] **Link:** 
-- [ ] **Topics:** (use PD, BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O)
+- [ ] **Topics:** (use PD, BPE / 2D BPE / 3D BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O)
 - [ ] **Animal Species:** 
 - [ ] **Model Available:** Yes/No/Code only/Upon request
 - [ ] **Data Available:** Yes/No/Upon request

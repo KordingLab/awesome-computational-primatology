@@ -47,7 +47,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Lint README tables
-        run: python scripts/lint_readme.py
+        run: python scripts/lint_readme.py --strict
 
       - name: Test
         run: pytest tests -q

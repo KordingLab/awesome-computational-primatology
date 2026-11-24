@@ -57,7 +57,7 @@ Where:
 - **Image/Video Count**: Number or "N/A" if not applicable
 
 ### Topic Legend
-See the full [Topic Categories](docs/TOPIC_LEGEND.md) for abbreviations (PD, BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O).
+See the full [Topic Categories](docs/TOPIC_LEGEND.md) for abbreviations (PD, BPE / 2D BPE / 3D BPE, FD, FLE, FR, FAC, HD, HPE, BR, AM, SI, RL, AV, O).
 
 ## Verification Steps
 Before submitting your PR:

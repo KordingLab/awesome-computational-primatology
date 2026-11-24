@@ -26,7 +26,7 @@ def main() -> None:
     args = ap.parse_args()
 
     run = lambda *cmd: subprocess.run([sys.executable, *cmd], check=True, cwd=ROOT)  # noqa: E731
-    run("scripts/lint_readme.py")
+    run("scripts/lint_readme.py", "--strict")
     run("scripts/website_generator.py", "--out", str(SITE))
     if not args.no_plot:
         run("scripts/plot_paper_growth.py", "--out", str(SITE / "assets" / "paper_growth.png"))
