@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Awesome Computational Primatology</title>
+<meta name="description" content="A curated list of {{total_papers}} machine-learning papers, datasets and tools for non-human primates: pose, faces, behavior, detection and more.">
+<meta property="og:title" content="Awesome Computational Primatology">
+<meta property="og:description" content="{{total_papers}} curated ML papers on non-human primates.">
+<meta property="og:image" content="https://kordinglab.com/awesome-computational-primatology/assets/paper_growth.png">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%92%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f5f8f4;
+    --surface: #ffffff;
+    --surface-2: #eef4ee;
+    --text: #18221b;
+    --muted: #5f6f63;
+    --faint: #8b998e;
+    --line: #dde6dd;
+    --accent: #2f7a52;
+    --accent-strong: #22603f;
+    --accent-soft: #e2f0e6;
+    --chip: #edf3ee;
+    --shadow: 0 1px 2px rgba(24, 34, 27, .04), 0 4px 16px rgba(24, 34, 27, .04);
+    --radius: 14px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1310;
+      --surface: #151c17;
+      --surface-2: #1b241e;
+      --text: #e5ece6;
+      --muted: #a2b0a5;
+      --faint: #74827a;
+      --line: #263029;
+      --accent: #7fcb9c;
+      --accent-strong: #a3dcb8;
+      --accent-soft: #1d3326;
+      --chip: #1d261f;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 var(--font); -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 16px; top: 12px; background: var(--surface); padding: 8px 12px; border-radius: 8px; z-index: 10; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 5;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .brand { font-weight: 600; color: var(--text); letter-spacing: -.01em; white-space: nowrap; }
+  .brand:hover { text-decoration: none; color: var(--text); }
+  .nav-links { display: flex; gap: 20px; font-size: 14px; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* Hero */
+  .hero { text-align: center; padding: 72px 0 40px; }
+  .hero h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.05; letter-spacing: -.035em; margin: 0 0 14px; font-weight: 700; }
+  .hero p { font-size: clamp(17px, 2.4vw, 21px); color: var(--muted); margin: 0 auto; max-width: 620px; }
+  .stats { display: flex; justify-content: center; gap: clamp(20px, 6vw, 56px); margin-top: 36px; flex-wrap: wrap; }
+  .stat b { display: block; font-size: clamp(28px, 4.5vw, 40px); font-weight: 650; letter-spacing: -.03em; line-height: 1.1; }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  /* Figure */
+  .figure { margin: 4px auto 56px; max-width: 640px; }
+  .figure img { width: 100%; height: auto; display: block; border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .figure figcaption { font-size: 13px; color: var(--faint); text-align: center; margin-top: 10px; }
+
+  /* Controls */
+  .controls { position: sticky; top: 52px; z-index: 4; background: var(--bg); padding: 14px 0 12px; }
+  .search { position: relative; }
+  .search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--faint); }
+  .search input {
+    width: 100%; font: inherit; font-size: 17px; color: var(--text);
+    padding: 13px 44px 13px 46px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--surface); box-shadow: var(--shadow); -webkit-appearance: none; appearance: none;
+  }
+  .search input::placeholder { color: var(--faint); }
+  .search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .search kbd {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    font: 12px var(--font); color: var(--faint); border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px;
+  }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 12px 2px 2px; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; font: inherit; font-size: 14px; color: var(--text); background: var(--chip);
+    border: 1px solid transparent; border-radius: 999px; padding: 6px 13px; cursor: pointer; white-space: nowrap;
+    transition: background .15s, color .15s;
+  }
+  .chip:hover { background: var(--accent-soft); }
+  .chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { .chip[aria-pressed="true"] { color: #0e1310; } }
+  .filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .filters select {
+    font: inherit; font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 30px 6px 13px; -webkit-appearance: none; appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238b998e' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+  }
+  .toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+  .toggle input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+  .spacer { flex: 1; }
+  .count { color: var(--faint); font-variant-numeric: tabular-nums; }
+  .clear { font: inherit; font-size: 14px; color: var(--accent); background: none; border: 0; cursor: pointer; padding: 0; }
+  .clear[hidden] { display: none; }
+
+  /* Lists */
+  section.list { margin: 18px 0 48px; }
+  section.list h2 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 4px; }
+  section.list .sub { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+  ul.papers { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .paper { display: grid; grid-template-columns: 52px 1fr auto; gap: 4px 16px; padding: 14px 18px; border-top: 1px solid var(--line); align-items: start; }
+  .paper:first-child { border-top: 0; }
+  .paper[hidden] { display: none; }
+  .p-year { color: var(--faint); font-size: 14px; font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .p-title { font-weight: 600; font-size: 16px; color: var(--text); }
+  .p-title:hover { color: var(--accent); }
+  .p-meta { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 5px; font-size: 13px; color: var(--muted); align-items: center; }
+  .tag { background: var(--chip); border-radius: 6px; padding: 1px 7px; color: var(--muted); }
+  .dot::before { content: "·"; margin-right: 8px; color: var(--faint); }
+  .p-links { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; padding-top: 1px; }
+  .res { font-size: 13px; border-radius: 999px; padding: 3px 10px; background: var(--accent-soft); color: var(--accent-strong); white-space: nowrap; }
+  .res:hover { text-decoration: none; filter: brightness(.97); }
+  .res.muted { background: transparent; color: var(--faint); padding-left: 0; padding-right: 0; }
+  .empty { padding: 40px 18px; text-align: center; color: var(--muted); }
+  .empty[hidden] { display: none; }
+  @media (max-width: 640px) {
+    .paper { grid-template-columns: 1fr; padding: 14px 16px; }
+    .p-year { order: -1; font-size: 12px; padding: 0; }
+    .p-links { justify-content: flex-start; margin-top: 6px; }
+    .search kbd { display: none; }
+    .nav-links { gap: 16px; }
+    .nav-links a.hide-sm { display: none; }
+    .hero { padding: 48px 0 28px; }
+    .controls { position: static; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 12px; }
+    .p-meta .count { flex-basis: 100%; }
+    .p-meta .count::before { content: none; }
+  }
+
+  /* Reviews */
+  ul.reviews { list-style: none; padding: 0; margin: 0; }
+  ul.reviews li { padding: 8px 0; border-top: 1px solid var(--line); font-size: 15px; display: flex; gap: 14px; }
+  ul.reviews li:first-child { border-top: 0; }
+  ul.reviews .p-year { width: 40px; flex: none; }
+  ul.reviews .what { color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); margin-top: 24px; padding: 28px 0 48px; font-size: 14px; color: var(--muted); }
+  footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer p { margin: 4px 0; }
+</style>
+</head>
+<body>
+<a class="skip" href="#papers">Skip to papers</a>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#">Computational Primatology</a>
+    <div class="nav-links">
+      <a class="hide-sm" href="#papers">Papers</a>
+      <a class="hide-sm" href="#datasets">Datasets</a>
+      <a href="https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md">Contribute</a>
+      <a href="https://github.com/KordingLab/awesome-computational-primatology">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <h1>Awesome Computational<br>Primatology</h1>
+    <p>Machine learning for the study of non-human primates. Pose, faces, behavior, detection and more, curated in one place.</p>
+    <div class="stats" aria-label="Collection statistics">
+      <div class="stat"><b>{{total_papers}}</b><span>papers</span></div>
+      <div class="stat"><b>{{with_code}}</b><span>with code</span></div>
+      <div class="stat"><b>{{with_data}}</b><span>with data</span></div>
+      <div class="stat"><b>{{first_year}}–{{last_year}}</b><span>years covered</span></div>
+    </div>
+  </header>
+
+  <figure class="figure">
+    <img src="assets/paper_growth.png" width="1660" height="697" loading="lazy" alt="Papers per year: this curated list (left) vs. the broad 'primate + ML' keyword search on OpenAlex (right).">
+    <figcaption>Papers per year in this list, against the raw "primate + ML" literature.</figcaption>
+  </figure>
+
+  <div class="controls" role="search">
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search papers, species, methods" autocomplete="off" aria-label="Search papers">
+      <kbd>/</kbd>
+    </label>
+    <div class="chips" id="topics" role="group" aria-label="Filter by topic">
+      <button class="chip" data-topic="" aria-pressed="true">All topics</button>
+      {{topic_chips}}
+    </div>
+    <div class="filters">
+      <select id="species" aria-label="Filter by species">
+        <option value="">All species</option>
+        {{species_options}}
+      </select>
+      <label class="toggle"><input type="checkbox" id="code"> Has code</label>
+      <label class="toggle"><input type="checkbox" id="data"> Has data</label>
+      <select id="sort" aria-label="Sort order">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+      </select>
+      <span class="spacer"></span>
+      <button class="clear" id="clear" hidden>Clear filters</button>
+      <span class="count" id="count" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <section class="list" id="papers" aria-label="Papers">
+    <h2>Papers</h2>
+    <p class="sub">Methods, models and datasets focused on non-human primates.</p>
+    <ul class="papers" data-list>
+      {{papers}}
+    </ul>
+    <p class="empty" hidden>No papers match. <button class="clear" data-clear>Clear filters</button></p>
+  </section>
+
+  <section class="list" id="datasets" aria-label="Cross-species datasets">
+    <h2>Cross-species datasets</h2>
+    <p class="sub">Animal datasets that include primates alongside other species.</p>
+    <ul class="papers" data-list>
+      {{datasets}}
+    </ul>
+    <p class="empty" hidden>No datasets match.</p>
+  </section>
+
+  <section class="list" id="reviews" aria-label="Reviews and related work">
+    <h2>Reviews &amp; related</h2>
+    <p class="sub">Surveys and adjacent work worth reading first.</p>
+    <ul class="reviews">
+      {{reviews}}
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div>
+      <p>Maintained by <a href="mailto:fparodi@upenn.edu">Felipe Parodi</a> · <a href="https://kordinglab.com">Kording Lab</a>, University of Pennsylvania</p>
+      <p>Missing a paper? <a href="https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md">Add it on GitHub</a>.</p>
+    </div>
+    <div>
+      <p><a href="papers.csv" download>Download as CSV</a></p>
+      <p>Updated {{last_updated}}</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const q = $("#q"), species = $("#species"), code = $("#code"), data = $("#data"), sort = $("#sort");
+  const chips = [...document.querySelectorAll("#topics .chip")];
+  const lists = [...document.querySelectorAll("[data-list]")];
+  lists.forEach(ul => [...ul.children].forEach((li, i) => (li.dataset.i = i)));
+  const total = lists.reduce((n, ul) => n + ul.children.length, 0);
+  let topic = "";
+
+  const state = () => ({ q: q.value.trim(), topic, species: species.value, code: code.checked, data: data.checked, sort: sort.value });
+
+  function apply() {
+    const s = state();
+    const terms = s.q.toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const ul of lists) {
+      const items = [...ul.children];
+      let visible = 0;
+      for (const li of items) {
+        const d = li.dataset;
+        const ok =
+          (!s.topic || d.topics.split(" ").includes(s.topic)) &&
+          (!s.species || d.species.split(" ").includes(s.species)) &&
+          (!s.code || d.code === "1") &&
+          (!s.data || d.data === "1") &&
+          terms.every(t => d.text.includes(t));
+        li.hidden = !ok;
+        if (ok) visible++;
+      }
+      items.sort((a, b) => (s.sort === "old" ? a.dataset.year - b.dataset.year : b.dataset.year - a.dataset.year) || a.dataset.i - b.dataset.i)
+           .forEach(li => ul.appendChild(li));
+      ul.hidden = visible === 0;
+      ul.nextElementSibling.hidden = visible !== 0;
+      shown += visible;
+    }
+    const filtered = s.q || s.topic || s.species || s.code || s.data;
+    $("#count").textContent = filtered ? `${shown} of ${total}` : `${total} entries`;
+    $("#clear").hidden = !filtered;
+    const p = new URLSearchParams();
+    if (s.q) p.set("q", s.q);
+    if (s.topic) p.set("topic", s.topic);
+    if (s.species) p.set("species", s.species);
+    if (s.code) p.set("code", "1");
+    if (s.data) p.set("data", "1");
+    if (s.sort !== "new") p.set("sort", s.sort);
+    history.replaceState(null, "", p.toString() ? `?${p}` : location.pathname);
+  }
+
+  function setTopic(t) {
+    topic = t;
+    chips.forEach(c => c.setAttribute("aria-pressed", String(c.dataset.topic === t)));
+  }
+
+  function clear() {
+    q.value = ""; species.value = ""; code.checked = data.checked = false; setTopic(""); apply();
+  }
+
+  chips.forEach(c => c.addEventListener("click", () => { setTopic(c.dataset.topic === topic ? "" : c.dataset.topic); apply(); }));
+  [q].forEach(el => el.addEventListener("input", apply));
+  [species, code, data, sort].forEach(el => el.addEventListener("change", apply));
+  document.querySelectorAll("#clear, [data-clear]").forEach(b => b.addEventListener("click", clear));
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+    else if (e.key === "Escape" && document.activeElement === q) { q.value = ""; apply(); }
+  });
+
+  const p = new URLSearchParams(location.search);
+  q.value = p.get("q") || "";
+  if (p.get("species")) species.value = p.get("species");
+  code.checked = p.get("code") === "1";
+  data.checked = p.get("data") === "1";
+  if (p.get("sort") === "old") sort.value = "old";
+  setTopic(chips.some(c => c.dataset.topic === p.get("topic")) ? p.get("topic") : "");
+  apply();
+})();
+</script>
+</body>
+</html>

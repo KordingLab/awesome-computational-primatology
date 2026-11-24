@@ -133,14 +133,14 @@ def main() -> None:
             plt.rcParams["font.family"] = [font]
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
 
-        _plot_with_partial_year(ax1, curated, "#2b6cb0")
+        _plot_with_partial_year(ax1, curated, "#2f7a52")
         ax1.set_title("Papers in THIS list\n(hand-curated)")
         ax1.set_xlabel("year")
         ax1.set_ylabel("# papers (by publication year)")
         # No such thing as half a paper -> integer ticks only.
         ax1.yaxis.set_major_locator(MaxNLocator(integer=True))
 
-        _plot_with_partial_year(ax2, field, "#c53030")
+        _plot_with_partial_year(ax2, field, "#b8654a")
         ax2.set_title('"primate + ML" keyword firehose\n(OpenAlex, mostly tangential)')
         ax2.set_xlabel("year")
         ax2.set_ylabel("# keyword matches")
