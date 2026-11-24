@@ -1,72 +1,105 @@
 #!/usr/bin/env python3
+"""Build the static site from the README table.
+
+Writes, into the output directory (default: ``_site/``):
+  index.html  the searchable table
+  stats.json  a shields.io endpoint for the README's paper-count badge
+
+The growth figure is drawn separately by ``scripts/plot_paper_growth.py`` into
+``<out>/assets/``. None of these are committed; CI builds and deploys them.
+
+Usage:
+    python scripts/website_generator.py [--out _site]
 """
-Generate enhanced HTML website from README.md table
-"""
-import pandas as pd
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import html
+import json
 import re
-import os
+import subprocess
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import pandas as pd
+
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# [text](url), where url may contain one level of balanced parentheses (e.g. Wikipedia-style).
+MD_LINK = re.compile(r"\[([^\]]*)\]\(((?:[^()\s]|\([^()\s]*\))+)\)")
+
 
 def to_link_if_markdown(cell_text: str) -> str:
-    """Convert markdown links [text](url) to HTML <a> tags"""
+    """Convert a README cell to HTML: escape text, turn markdown links into <a> tags."""
     if not isinstance(cell_text, str):
-        return str(cell_text)
-    cell_text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', cell_text)
-    return cell_text.strip()
+        cell_text = str(cell_text)
+    out, pos = [], 0
+    for m in MD_LINK.finditer(cell_text):
+        out.append(html.escape(cell_text[pos:m.start()]))
+        out.append(f'<a href="{html.escape(m.group(2), quote=True)}">{html.escape(m.group(1))}</a>')
+        pos = m.end()
+    out.append(html.escape(cell_text[pos:]))
+    return "".join(out).strip()
+
+
+def link_text(cell_text: str) -> str:
+    """Return a cell's visible text: "[Yes](url)" -> "Yes"."""
+    return MD_LINK.sub(lambda m: m.group(1), cell_text).strip()
+
+COLUMNS = ["Year", "Paper", "Topic", "Animal", "Model?", "Data?", "Image/Video Count"]
+_SEPARATOR = re.compile(r"^\|(\s*:?-+:?\s*\|)+$")
+
+
+def iter_paper_rows(lines: list[str]):
+    """Yield (line_number, cells or None, raw_line) for every table line of the paper tables.
+
+    The paper tables are the "### Projects" table and its "#### Dataset ..."
+    sub-table; scanning stops at "#### Reviews & Related" or the next "##"/"###"
+    heading. Header and separator lines are skipped. cells is None when a
+    table-like line is not a well-formed 7-column "| ... |" row; the linter
+    reports those and the site skips them. Shared by the generator, the linter
+    and the growth plot so all three agree on what counts as a paper.
+    """
+    inside = False
+    for n, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if stripped == "### Projects":
+            inside = True
+            continue
+        if not inside:
+            continue
+        if stripped.startswith("#"):
+            if "Reviews" in stripped or not stripped.startswith("####"):
+                return
+            continue
+        if "|" not in stripped or _SEPARATOR.match(stripped):
+            continue
+        if not (stripped.startswith("|") and stripped.endswith("|")):
+            yield n, None, stripped
+            continue
+        cells = [c.strip() for c in stripped[1:-1].split("|")]
+        if cells[0] == "Year":
+            continue
+        yield n, (cells if len(cells) == len(COLUMNS) else None), stripped
+
 
 def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
-    """Extract the 7-column paper/dataset rows from README.md.
-
-    Captures rows under "### Projects" plus the cross-species
-    "#### Dataset ..." sub-table (same 7-column schema). Every sub-table's
-    header and separator row is skipped explicitly, so no markdown scaffolding
-    leaks in as a fake paper. The 4-column "Reviews & Related" table is
-    naturally excluded by the column-count filter.
-
-    Args:
-        readme_path: Path to README.md.
-
-    Returns:
-        DataFrame of paper/dataset rows with markdown links converted to HTML.
+    """Return the well-formed paper rows of README.md as raw markdown cells.
 
     Raises:
-        ValueError: If no valid table is found.
+        ValueError: If no rows are found.
     """
-    with open(readme_path, "r", encoding='utf-8') as f:
-        lines = f.readlines()
+    import pandas as pd  # lazy: the linter shares this module and needs only the stdlib
 
-    header: list[str] | None = None
-    data: list[list[str]] = []
-    in_projects_section = False
-
-    for line in lines:
-        if line.strip() == "### Projects":
-            in_projects_section = True
-            continue
-        if not in_projects_section:
-            continue
-        # Only 7-column rows (8 pipe characters) are paper/dataset rows.
-        if line.count("|") != 8:
-            continue
-        cells = [cell.strip() for cell in line.split("|")[1:-1]]
-        # Skip separator rows like |---|---|...
-        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
-            continue
-        # Skip (repeated) header rows; keep the first as the column names.
-        if cells[0] == "Year":
-            if header is None:
-                header = cells
-            continue
-        data.append(cells)
-
-    if header is None or not data:
+    lines = Path(readme_path).read_text(encoding="utf-8").splitlines()
+    data = [cells for _, cells, _ in iter_paper_rows(lines) if cells is not None]
+    if not data:
         raise ValueError("Could not find valid table in README.md")
+    return pd.DataFrame(data, columns=COLUMNS)
 
-    df = pd.DataFrame(data, columns=header)
-    # Apply markdown -> HTML conversion. (applymap was removed in pandas 3.0;
-    # apply + Series.map works across all pandas versions.)
-    df = df.apply(lambda col: col.map(to_link_if_markdown))
-
-    return df
 
 def get_enhanced_html_template() -> str:
     """Return the enhanced HTML template"""
@@ -576,7 +609,7 @@ def get_enhanced_html_template() -> str:
                     <span><strong id="with-code">{with_code}</strong> with code</span>
                     <span><strong id="with-data">{with_data}</strong> with data</span>
                 </div>
-                <img class="growth-plot" src="https://raw.githubusercontent.com/KordingLab/awesome-computational-primatology/main/docs/assets/paper_growth_xkcd.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" style="max-width: 720px; width: 100%; margin: 1.25rem auto 0; display: block;">
+                <img class="growth-plot" src="assets/paper_growth.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" style="max-width: 720px; width: 100%; margin: 1.25rem auto 0; display: block;">
             </div>
 
             <details class="legend">
@@ -654,7 +687,7 @@ def get_enhanced_html_template() -> str:
                 <p class="footer-note">
                     Found a paper we missed?
                     <a href="https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contribute on GitHub</a>
-                    · Last updated <span id="last-updated"></span>
+                    · Last updated {last_updated}
                 </p>
             </div>
         </div>
@@ -762,104 +795,71 @@ def get_enhanced_html_template() -> str:
                     processing: '<i class="fas fa-spinner fa-spin"></i> Loading...'
                 }
             });
-            
-            // Set last updated date
-            const lastUpdated = new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('last-updated').textContent = lastUpdated;
+
         });
         </script>
     </body>
 </html>'''
 
 def calculate_stats(df: pd.DataFrame) -> dict:
-    """Calculate statistics from the dataframe"""
-    total_papers = len(df)
-    
-    # Count years
-    years = set()
-    for year in df.iloc[:, 0]:  # First column is year
-        if str(year).isdigit():
-            years.add(int(year))
-    years_span = len(years)
-    
-    # Count papers with code (Model column)
-    with_code = 0
-    model_col = df.iloc[:, 4] if len(df.columns) > 4 else pd.Series()  # Model column
-    for value in model_col:
-        if isinstance(value, str) and ('Yes' in value or 'Code only' in value):
-            with_code += 1
-    
-    # Count papers with data (Data column)  
-    with_data = 0
-    data_col = df.iloc[:, 5] if len(df.columns) > 5 else pd.Series()  # Data column
-    for value in data_col:
-        if isinstance(value, str) and 'Yes' in value:
-            with_data += 1
-    
+    """Headline numbers for the stat strip and badge, from the raw markdown cells.
+
+    "with code" counts Model? = Yes or Code only; "with data" counts Data? = Yes,
+    matched on the link text so URLs containing "Yes" cannot inflate counts.
+    """
+    years = sorted({int(y) for y in df.iloc[:, 0] if str(y).isdigit()})
+    model = df.iloc[:, 4].map(link_text)
+    data = df.iloc[:, 5].map(link_text)
     return {
-        'total_papers': total_papers,
-        'years_span': years_span,
-        'with_code': with_code,
-        'with_data': with_data
+        "total_papers": len(df),
+        "years_span": years[-1] - years[0] + 1 if years else 0,
+        "with_code": int(model.isin(["Yes", "Code only"]).sum()),
+        "with_data": int((data == "Yes").sum()),
     }
 
-def main():
-    """Main function to generate the website"""
-    # Determine if running in GitHub Actions or locally
-    if os.path.exists("/home/runner/work"):
-        # GitHub Actions
-        base_path = "/home/runner/work/awesome-computational-primatology/awesome-computational-primatology"
-    else:
-        # Local development - go up 1 level from scripts/
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # scripts/
-        base_path = os.path.dirname(script_dir)  # repository root
-    
-    readme_path = os.path.join(base_path, "README.md")
-    output_path = os.path.join(base_path, "index.html")
-    
-    print(f"Script location: {os.path.abspath(__file__)}")
-    print(f"Base path: {base_path}")
-    print(f"README path: {readme_path}")
-    print(f"Output path: {output_path}")
-    
+
+def last_updated(readme_path: Path) -> str:
+    """Date of the last commit touching the README (falls back to today)."""
     try:
-        # Extract table from README
-        df = extract_table_from_readme(readme_path)
-        print(f"Extracted table with {len(df)} rows and {len(df.columns)} columns")
-        
-        # Calculate statistics
-        stats = calculate_stats(df)
-        print(f"Statistics: {stats}")
-        
-        # Generate table HTML
-        table_html = df.to_html(
-            table_id="table",
-            escape=False,
-            index=False,
-            classes="display"
-        )
-        
-        # Get template and format with data
-        template = get_enhanced_html_template()
-        html_content = template.replace('{table_html}', table_html)
-        html_content = html_content.replace('{total_papers}', str(stats['total_papers']))
-        html_content = html_content.replace('{years_span}', str(stats['years_span']))
-        html_content = html_content.replace('{with_code}', str(stats['with_code']))
-        html_content = html_content.replace('{with_data}', str(stats['with_data']))
-        
-        # Write output
-        with open(output_path, "w", encoding='utf-8') as f:
-            f.write(html_content)
-        
-        print(f"✅ Generated enhanced website: {output_path}")
-        
-    except Exception as e:
-        print(f"❌ Error generating website: {e}")
-        raise
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%cs", "--", readme_path.name],
+            cwd=readme_path.parent, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        day = dt.date.fromisoformat(out) if out else dt.date.today()
+    except (OSError, subprocess.CalledProcessError, ValueError):
+        day = dt.date.today()
+    return f"{day:%B} {day.day}, {day.year}"
+
+
+def build(readme_path: Path, out_dir: Path) -> dict:
+    """Render index.html and stats.json into out_dir; return the stats."""
+    raw = extract_table_from_readme(str(readme_path))
+    stats = calculate_stats(raw)
+    # applymap was removed in pandas 3.0; apply + Series.map works across versions.
+    table_html = raw.apply(lambda col: col.map(to_link_if_markdown)).to_html(
+        table_id="table", escape=False, index=False, classes="display"
+    )
+    page = get_enhanced_html_template().replace("{table_html}", table_html)
+    page = page.replace("{last_updated}", last_updated(readme_path))
+    for key, value in stats.items():
+        page = page.replace("{" + key + "}", str(value))
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "index.html").write_text(page, encoding="utf-8")
+    badge = {"schemaVersion": 1, "label": "Papers", "message": str(stats["total_papers"]), "color": "blue"}
+    (out_dir / "stats.json").write_text(json.dumps({**badge, "stats": stats}, indent=2) + "\n", encoding="utf-8")
+    return stats
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--readme", type=Path, default=REPO_ROOT / "README.md")
+    ap.add_argument("--out", type=Path, default=REPO_ROOT / "_site")
+    args = ap.parse_args()
+    stats = build(args.readme, args.out)
+    print(f"Rows: {stats['total_papers']}  stats: {stats}")
+    print(f"Wrote {args.out / 'index.html'} and {args.out / 'stats.json'}")
+
 
 if __name__ == "__main__":
     main()

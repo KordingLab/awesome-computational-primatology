@@ -16,8 +16,8 @@ credentials*.json
 *.json
 !package.json
 !package-lock.json
-# Paper Scout state is committed by the bot
-!docs/scout-state.json
+# Built site (CI builds and deploys it; never committed)
+_site/
 
 # Track only the small corpus the Paper Scout prefilter uses (scripts/scout/config.py).
 data/*

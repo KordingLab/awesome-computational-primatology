@@ -169,12 +169,6 @@ def test_make_row_format():
     assert row == "| 2026 | [X](https://doi.org/10.1/x) | FR | Macaque | N/A | N/A | 3,385 images |"
 
 
-def test_set_badge_updates_count():
-    text = "[![Papers](https://img.shields.io/badge/Papers-90-blue)](#projects)"
-    assert "Papers-96-blue" in propose.set_badge(text, 96)
-    assert "Papers-90" not in propose.set_badge(text, 96)
-
-
 def test_insert_rows_after_separator():
     readme = "### Projects\n\n| Year | Paper |\n|------|-------|\n| 2025 | old |\n"
     out = propose.insert_rows(readme, ["| 2026 | new |"])
@@ -182,6 +176,26 @@ def test_insert_rows_after_separator():
     sep = next(i for i, l in enumerate(lines) if l.startswith("|---") or l.startswith("|--"))
     assert lines[sep + 1] == "| 2026 | new |"
     assert lines[sep + 2] == "| 2025 | old |"
+
+
+def test_insert_row_goes_to_top_of_its_year_block():
+    readme = ("### Projects\n\n| Year | Paper |\n|------|-------|\n"
+              "| 2026 | a |\n| 2025 | b |\n| 2024 | c |\n")
+    out = propose.insert_rows(readme, ["| 2025 | new |", "| 2010 | oldest |"]).splitlines()
+    assert out[out.index("| 2026 | a |") + 1] == "| 2025 | new |"
+    assert out[out.index("| 2025 | new |") + 1] == "| 2025 | b |"
+    assert out[-1] == "| 2010 | oldest |"
+
+
+def test_apply_update_moves_row_to_new_year():
+    readme = ("### Projects\n\n| Year | Paper |\n|------|-------|\n"
+              "| 2026 | [X](a) |\n| 2024 | [Old](https://doi.org/10.48550/arXiv.1) |\n")
+    cells = ["2024", "[Old](https://doi.org/10.48550/arXiv.1)"]
+    entry = Entry(name="Old", year="2024", doi="", arxiv_id="1", tool_token="old", cells=cells)
+    c = _cand(title="Old journal", doi="10.1/j", date="2026-03-01")
+    lines = propose.apply_update(readme, entry, c).splitlines()
+    assert lines[4] == "| 2026 | [Old](https://doi.org/10.1/j) |"  # top of the 2026 block
+    assert not any("arXiv.1" in l for l in lines)
 
 
 def test_apply_update_swaps_link_and_year():
@@ -232,3 +246,53 @@ def test_pr_body_lists_unapplied_possible_updates():
               reason="author overlap 80%")
     body = propose.build_pr_body([], [], [], [], maybe_updates=[c])
     assert "NOT applied" in body and "Foo et al." in body and "10.1/pub" in body
+
+
+# ---- rolling pending PR ------------------------------------------------------
+_HEAD = "### Projects\n\n| Year | Paper |\n|------|-------|\n"
+_DS = "\n#### Dataset with both\n| Year | Paper |\n|------|-------|\n| 2023 | [MammalNet](m) |\n"
+
+
+def test_apply_update_keeps_row_in_dataset_table():
+    readme = _HEAD + "| 2026 | [A](a) |\n" + _DS
+    cells = ["2023", "[MammalNet](m)"]
+    entry = Entry(name="MammalNet", year="2023", doi="", arxiv_id="", tool_token="mammalnet", cells=cells)
+    out = propose.apply_update(readme, entry, _cand(title="MammalNet", doi="10.1/m", date="2024-01-01"))
+    lines = out.splitlines()
+    assert lines.index("| 2024 | [MammalNet](https://doi.org/10.1/m) |") > lines.index("#### Dataset with both")
+
+
+def test_carry_over_replays_pending_rows_onto_moved_main():
+    base = _HEAD + "| 2026 | [A](a) |\n| 2024 | [Old](arxiv) |\n"
+    pending = _HEAD + "| 2026 | [Scout](s) |\n| 2026 | [Old](pub) |\n| 2026 | [A](a) |\n"
+    main = _HEAD + "| 2026 | [Human](h) |\n| 2026 | [A](a) |\n| 2024 | [Old](arxiv) |\n"
+    out = propose.carry_over(main, base, pending).splitlines()
+    rows = [l for l in out if l.startswith("| 20")]
+    assert "| 2026 | [Human](h) |" in rows and "| 2026 | [Scout](s) |" in rows
+    assert "| 2026 | [Old](pub) |" in rows and "| 2024 | [Old](arxiv) |" not in rows
+    assert len(rows) == len(set(rows)) == 4
+    # idempotent: carrying the result over again changes nothing
+    assert propose.carry_over("\n".join(out) + "\n", base, pending) == "\n".join(out) + "\n"
+
+
+def _git_repo(tmp_path, monkeypatch):
+    import subprocess as sp
+    remote, work = tmp_path / "remote.git", tmp_path / "work"
+    sp.run(["git", "init", "-q", "--bare", "-b", "main", str(remote)], check=True)
+    sp.run(["git", "init", "-q", "-b", "main", str(work)], check=True)
+    run = lambda *a: sp.run(a, cwd=work, check=True, capture_output=True)  # noqa: E731
+    run("git", "config", "user.email", "t@t"); run("git", "config", "user.name", "t")
+    (work / "README.md").write_text(_HEAD + "| 2026 | [A](a) |\n")
+    run("git", "add", "README.md"); run("git", "commit", "-qm", "init")
+    run("git", "remote", "add", "origin", str(remote)); run("git", "push", "-q", "origin", "main")
+    run("git", "fetch", "-q", "origin")
+    run("git", "checkout", "-q", "-B", propose.PENDING_BRANCH, "origin/main")
+    monkeypatch.setattr(propose, "PROJECT_ROOT", work)
+    monkeypatch.setattr(propose, "README_PATH", work / "README.md")
+    return work
+
+
+def test_publish_without_changes_does_not_crash_or_open_pr(tmp_path, monkeypatch, capsys):
+    _git_repo(tmp_path, monkeypatch)
+    propose.publish(None, "", "Paper Scout: 0 additions", "report body")
+    assert "no PR opened" in capsys.readouterr().out

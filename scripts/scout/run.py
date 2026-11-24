@@ -57,6 +57,12 @@ def main() -> None:
     ap.add_argument("--open", action="store_true", help="open a draft PR (default: dry-run)")
     args = ap.parse_args()
 
+    pr_number, pending_tip = None, ""
+    if args.open:
+        # Rebuild scout/pending on main first, so the dedup index below already
+        # contains rows proposed in earlier, still-unmerged weeks.
+        pr_number, pending_tip = propose.prepare_pending()
+
     state = state_mod.load_state()
     since = resolve_since(args.since, state)
     index = dedup.load_index()
@@ -131,7 +137,6 @@ def main() -> None:
 
     readme = propose.README_PATH.read_text(encoding="utf-8")
     readme = propose.insert_rows(readme, [propose.make_row(c) for c in keeps])
-    readme = propose.set_badge(readme, len(index) + len(keeps))  # keep the count badge current
     # Names repeat ("Yang et al." x3), so preprint-check updates carry their exact entry.
     by_name = {e.name: e for e in index}
     entry_for = {p.doi: p.entry for p in published}
@@ -140,15 +145,12 @@ def main() -> None:
         if entry:
             readme = propose.apply_update(readme, entry, c)
     propose.README_PATH.write_text(readme, encoding="utf-8")
-    propose.regenerate_index()
-    propose.regenerate_plot()
 
-    branch = f"scout/{dt.date.today().isoformat()}"
-    title = f"Paper Scout: {len(keeps)} additions, {len(updates)} updates"
+    title = f"Paper Scout {dt.date.today().isoformat()}: {len(keeps)} additions, {len(updates)} updates"
     if pub_maybe:
         title += f", {len(pub_maybe)} to check"
-    propose.open_pr(branch, title, body)
-    print(f"Opened draft PR from branch {branch}.")
+    propose.publish(pr_number, pending_tip, title, body)
+    print(f"{'Updated' if pr_number else 'Opened'} the pending scout PR on {propose.PENDING_BRANCH}.")
 
 
 if __name__ == "__main__":

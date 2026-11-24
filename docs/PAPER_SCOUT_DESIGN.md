@@ -5,16 +5,18 @@ papers and proposes them as a **draft PR** to `README.md`. Human stays in the lo
 never merges, it only nominates.
 
 Status: **implemented** in `scripts/scout/` (tests in `tests/scout/`, workflow
-`.github/workflows/paper-scout.yml`). Goes live once the `GROQ_API_KEY` repo secret is set.
-Decisions locked (2026-05-27):
+`.github/workflows/paper-scout.yml`), running weekly since May 2026. Since Nov 2026 it keeps
+**one rolling draft PR** (branch `scout/pending`) and commits `README.md` only; the site,
+badge and growth figure are built from the README at deploy time (`.github/workflows/site.yml`).
+Decisions locked (2026-05-27; the prefilter shipped as TF-IDF rather than embeddings):
 
 | Decision | Choice |
 |---|---|
-| Delivery | Draft PR with ready-to-merge table rows |
-| Relevance gate | Embedding prefilter → LLM judge (two-stage) |
+| Delivery | One rolling draft PR with ready-to-merge table rows |
+| Relevance gate | TF-IDF + rules prefilter → LLM judge (two-stage) |
 | Runtime | GitHub Actions weekly cron |
-| Judge model | Free **open-weight** LLM via hosted API (Groq); Gemini-free fallback |
-| Embeddings | `all-MiniLM-L6-v2` run **locally in the Action** (no API) |
+| Judge model | Free **open-weight** LLM via hosted API (Groq), with a model fallback list |
+| Prefilter corpus | TF-IDF centroid of `data/papers_with_abstracts.json`, computed in the Action |
 | Human role | Review + merge/close the PR |
 
 ## Why two stages (the whole point)
@@ -22,8 +24,8 @@ Decisions locked (2026-05-27):
 A single keyword query is hopelessly noisy. Live proof from OpenAlex: searching
 `primate + deep learning + pose estimation` returns ~5,800 works whose top hits include
 *GoogLeNet*, *"Event-Based Vision: A Survey"*, and primate-**cortex**-as-ML-model papers — none
-are computational primatology of animals. See `scripts/plot_paper_growth.py` /
-`docs/assets/paper_growth_xkcd.png`. So:
+are computational primatology of animals. See `scripts/plot_paper_growth.py` (the
+figure is drawn at deploy time and shown in the README). So:
 
 1. **Cheap prefilter** kills the obvious tangents for free (embeddings + rules).
 2. **LLM judge** applies a written rubric to the survivors, with a justification per paper.
@@ -65,8 +67,8 @@ GitHub Actions (cron: weekly, Monday 08:00 UTC)
   │    • drop anything already proposed in a prior open/closed scout PR (state file)
   │
   3. PREFILTER (free, no LLM)
-  │    • embed title+abstract with all-MiniLM-L6-v2
-  │    • cosine vs the centroid of the existing corpus embeddings; keep top-N / >threshold
+  │    • TF-IDF of title+abstract
+  │    • cosine vs the centroid of the curated corpus; keep top-N / >threshold
   │    • hard rules: must mention a non-human primate term; drop pure-human / pure-cortex
   │
   4. JUDGE (free open-weight LLM, e.g. Groq Llama/Qwen)
@@ -84,9 +86,11 @@ GitHub Actions (cron: weekly, Monday 08:00 UTC)
   │    • low-confidence fields are flagged in the PR for human confirmation
   │
   6. DELIVER
-       • open a DRAFT PR: new rows inserted in README in chronological order
-       • PR body = table of kept papers (score + justification) AND rejected ones (for audit)
-       • regenerate index.html in the same PR (so website.yml passes)
+       • add rows to the rolling DRAFT PR on `scout/pending` (opened if none is open);
+         each row goes to the top of its year's block in the README
+       • the week's report (kept papers with score + justification, rejected ones for
+         audit) is prepended to the PR body
+       • README.md only: index.html, the badge and the figure are built at deploy time
 ```
 
 ## The relevance rubric (the actual product)
@@ -148,7 +152,7 @@ Not usable: Google Scholar (no API, scrape-only), Consensus / Elicit (products, 
   drop-in fallbacks (OpenAI-compatible).
 - OpenAlex needs no key; pass `mailto=parodifelipe07@gmail.com` for the polite pool.
 - `S2_API_KEY` — optional, only if we use the Recommendations API.
-- Embeddings need **no key** — `all-MiniLM-L6-v2` runs on the CPU runner.
+- The TF-IDF prefilter needs **no key** and runs on the CPU runner.
 - **Paper Scout GitHub App** — opens the draft PR and pushes the `scout-state` branch.
   Not optional in practice: PRs opened with `GITHUB_TOKEN` never get their checks run
   (#44–#72 all showed zero-job "failed" runs), and an App-authored PR is one Felipe can
@@ -173,15 +177,15 @@ for the LLM judge (CPU/embeddings-focused), so we use Groq/OpenRouter for that s
 ```
 scripts/scout/
   __init__.py
-  fetch.py        # OpenAlex + arXiv + S2 clients, date-windowed
+  fetch.py        # OpenAlex + arXiv clients, date-windowed
   dedup.py        # README DOI/arXiv-id index + prior-PR state
-  prefilter.py    # embeddings + hard rules (reuses sentence-transformers)
-  judge.py        # Gemini call + rubric prompt
-  propose.py      # build README rows + open draft PR (gh CLI / PyGithub)
+  prefilter.py    # TF-IDF ranking + hard rules
+  judge.py        # Groq call + rubric prompt
+  propose.py      # build README rows + update the rolling draft PR (gh CLI)
   run.py          # orchestrator
 .github/workflows/paper-scout.yml   # weekly cron + workflow_dispatch
-docs/scout-state.json               # seed copy only; the live seen-ids + last-run window live on the
-                                    # `scout-state` branch (read/written by paper-scout.yml, never in PRs)
+# State (seen ids + last-run window) lives only on the `scout-state` branch; the workflow
+# loads it to $RUNNER_TEMP (SCOUT_STATE_PATH) and saves it back. Never in main or PRs.
 ```
 
 ## Failure modes & guardrails

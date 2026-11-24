@@ -1,67 +1,43 @@
 #!/usr/bin/env python3
+"""Build the site into _site/ and serve it at http://localhost:8000.
+
+Run from anywhere:
+    uv run --no-project --with pandas --with matplotlib python scripts/dev-preview.py
+or, with pandas and matplotlib installed, plain `python scripts/dev-preview.py`.
+Add --no-plot to skip the growth figure (it needs network for the OpenAlex panel).
 """
-Development preview script for contributors
-Run this to generate and serve the website locally
-"""
-import os
-import sys
+from __future__ import annotations
+
+import argparse
+import functools
+import http.server
 import subprocess
-import webbrowser
+import sys
 from pathlib import Path
 
-def main():
-    print("🧠 Awesome Computational Primatology - Development Preview")
-    print("=" * 60)
-    
-    # Check if we're in the right directory
-    if not os.path.exists("README.md"):
-        print("❌ Error: README.md not found. Please run this from the repository root.")
-        sys.exit(1)
-    
-    # Check for required dependencies
+ROOT = Path(__file__).resolve().parent.parent
+SITE = ROOT / "_site"
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--port", type=int, default=8000)
+    ap.add_argument("--no-plot", action="store_true", help="skip drawing the growth figure")
+    args = ap.parse_args()
+
+    run = lambda *cmd: subprocess.run([sys.executable, *cmd], check=True, cwd=ROOT)  # noqa: E731
+    run("scripts/lint_readme.py")
+    run("scripts/website_generator.py", "--out", str(SITE))
+    if not args.no_plot:
+        run("scripts/plot_paper_growth.py", "--out", str(SITE / "assets" / "paper_growth.png"))
+
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE))
+    print(f"Serving {SITE} at http://localhost:{args.port}  (Ctrl+C to stop)")
     try:
-        import pandas
-        print("✅ Dependencies OK")
-    except ImportError:
-        print("📦 Installing pandas...")
-        subprocess.run([sys.executable, "-m", "pip", "install", "pandas"])
-    
-    # Generate website
-    print("🏗️  Generating website...")
-    try:
-        # Run the website_generator.py script
-        result = subprocess.run([
-            sys.executable, "scripts/website_generator.py"
-        ], capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            print("✅ Website generated successfully")
-            if result.stdout:
-                print(result.stdout)
-        else:
-            print(f"❌ Error generating website:")
-            print(result.stderr)
-            sys.exit(1)
-    except Exception as e:
-        print(f"❌ Error running website generator: {e}")
-        sys.exit(1)
-    
-    # Start server
-    print("🚀 Starting development server...")
-    print("📱 Website will open at: http://localhost:8000")
-    print("👀 Press Ctrl+C to stop the server")
-    print("-" * 60)
-    
-    try:
-        # Open browser
-        webbrowser.open("http://localhost:8000")
-        
-        # Start server
-        subprocess.run([
-            sys.executable, "-m", "http.server", "8000"
-        ])
+        http.server.ThreadingHTTPServer(("", args.port), handler).serve_forever()
     except KeyboardInterrupt:
-        print("\n👋 Development server stopped")
+        pass
+
 
 if __name__ == "__main__":
     main()
