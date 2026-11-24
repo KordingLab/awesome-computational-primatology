@@ -189,3 +189,6 @@ By sharing your datasets and models, you contribute to advancing primatology and
 | 2021 | [Hayden et al.](https://doi.org/10.1002/ajp.23348) | Review | All |
 | 2020 | [Siebert et al.](https://doi.org/10.1523/ENEURO.0524-19.2020) | Face avatar | Macaque |
 | 2019 | [Murphy & Leopold](https://doi.org/10.1016/j.jneumeth.2019.06.001) | Face avatar | Macaque |
+
+## Contact
+Maintained by [Felipe Parodi](mailto:fparodi@upenn.edu) at the [Kording Lab](https://kordinglab.com), University of Pennsylvania. Questions, corrections or a paper we missed: [open an issue](https://github.com/KordingLab/awesome-computational-primatology/issues) or email.

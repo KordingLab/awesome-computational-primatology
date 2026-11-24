@@ -2,7 +2,8 @@
 """Build the static site from the README table.
 
 Writes, into the output directory (default: ``_site/``):
-  index.html  the searchable table
+  index.html  the searchable list (template: scripts/site_template.html)
+  papers.csv  the table as CSV
   stats.json  a shields.io endpoint for the README's paper-count badge
 
 The growth figure is drawn separately by ``scripts/plot_paper_growth.py`` into
@@ -101,705 +102,139 @@ def extract_table_from_readme(readme_path: str) -> pd.DataFrame:
     return pd.DataFrame(data, columns=COLUMNS)
 
 
-def get_enhanced_html_template() -> str:
-    """Return the enhanced HTML template"""
-    return '''<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Awesome Computational Primatology</title>
-        
-        <!-- External Libraries -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.dataTables.css" />
+TEMPLATE = Path(__file__).resolve().parent / "site_template.html"
 
-        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.js"></script>
-        <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
-        
-        <!-- Icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+# Short, human labels for the topic codes (the README legend keeps the long names).
+TOPIC_SHORT = {
+    "PD": "Detection", "BPE": "Body pose", "FD": "Face detection", "FLE": "Face landmarks",
+    "FR": "Face ID", "FAC": "Facial action", "HD": "Hand detection", "HPE": "Hand pose",
+    "BR": "Behavior", "AM": "Avatar / mesh", "SI": "Species ID", "RL": "RL",
+    "AV": "Vocalization", "O": "Other",
+}
+# Species groups for the filter; a row can belong to several. Order = display priority.
+SPECIES_GROUPS = [
+    ("macaque", "Macaques", ("macaque", "rhesus")),
+    ("chimpanzee", "Chimpanzees", ("chimp",)),
+    ("gorilla", "Gorillas", ("gorilla",)),
+    ("bonobo", "Bonobos", ("bonobo",)),
+    ("orangutan", "Orangutans", ("orangutan",)),
+    ("ape", "Great apes (mixed)", ("ape",)),
+    ("marmoset", "Marmosets", ("marmoset",)),
+    ("lemur", "Lemurs", ("lemur",)),
+    ("gibbon", "Gibbons", ("gibbon",)),
+    ("baboon", "Baboons", ("baboon",)),
+    ("capuchin", "Capuchins", ("capuchin",)),
+    ("howler", "Howler monkeys", ("howler",)),
+    ("cross", "Many species", ("cross", "species", "nhp", "any", "multiple", "all")),
+]
+EMPTY = {"", "N/A", "TBD", "No"}
 
-        <style>
-            :root {
-                /* Base palette */
-                --primary-color: #1e3a5f;
-                --secondary-color: #2563eb;
-                --accent-color: #dc2626;
-                --success-color: #16a34a;
-                --warning-color: #ca8a04;
-                --background-color: #fafbfc;
-                --card-background: #ffffff;
-                --text-color: #1e293b;
-                --border-color: #e2e8f0;
 
-                /* Elevation system */
-                --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
-                --shadow-md: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-                --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+def topic_legend(lines: list[str]) -> dict[str, str]:
+    """Topic code -> long name, from the README's "### Topic Legend" table."""
+    legend, inside = {}, False
+    for line in lines:
+        if line.strip().startswith("### Topic Legend"):
+            inside = True
+            continue
+        if inside:
+            if line.startswith("#"):
+                break
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            if len(cells) == 2 and cells[0] not in ("Label", "") and not set(cells[0]) <= set("-: "):
+                legend[cells[0]] = cells[1]
+    return legend
 
-                /* Neutral text */
-                --muted-color: #64748b;
-                --subtle-bg: #f8fafc;
 
-                /* Topic colors */
-                --topic-pd: #ef4444;
-                --topic-bpe: #f97316;
-                --topic-fd: #eab308;
-                --topic-fle: #84cc16;
-                --topic-fr: #22c55e;
-                --topic-fac: #14b8a6;
-                --topic-hd: #06b6d4;
-                --topic-hpe: #0ea5e9;
-                --topic-br: #6366f1;
-                --topic-am: #8b5cf6;
-                --topic-si: #a855f7;
-                --topic-rl: #d946ef;
-                --topic-av: #ec4899;
-                --topic-o: #6b7280;
-            }
-            
-            * {
-                box-sizing: border-box;
-            }
-            
-            body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background-color: var(--background-color);
-                margin: 0;
-                padding: 0;
-                color: var(--text-color);
-                line-height: 1.6;
-                -webkit-font-smoothing: antialiased;
-            }
+def species_of(animal: str) -> list[str]:
+    a = animal.lower()
+    keys = [key for key, _, words in SPECIES_GROUPS if any(w in a for w in words)]
+    if "ape" in keys and len(keys) > 1:  # "Great Ape" is informative only when nothing more specific matched
+        keys.remove("ape")
+    return keys or ["other"]
 
-            /* Top header bar */
-            .topbar {
-                background: var(--card-background);
-                border-bottom: 1px solid var(--border-color);
-                padding: 14px 28px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .topbar-brand {
-                font-size: 1.05rem;
-                font-weight: 600;
-                color: var(--primary-color);
-                text-decoration: none;
-                letter-spacing: -0.01em;
-            }
-            .topbar-brand:hover { color: var(--secondary-color); }
-            .topbar-actions {
-                display: flex;
-                align-items: center;
-                gap: 18px;
-            }
-            .topbar-actions a {
-                color: var(--muted-color);
-                font-size: 1.35rem;
-                text-decoration: none;
-                line-height: 1;
-                transition: color 0.15s ease;
-            }
-            .topbar-actions a:hover {
-                color: var(--primary-color);
-            }
 
-            .container {
-                max-width: 1280px;
-                margin: 28px auto;
-                background: var(--card-background);
-                padding: 32px;
-                border-radius: 8px;
-                box-shadow: var(--shadow-sm);
-            }
+def _topic_families(topic: str) -> list[str]:
+    """ "2D BPE, FR" -> ["BPE", "FR"] (dimension prefixes fold into the base code)."""
+    fams = []
+    for t in (t.strip() for t in topic.split(",")):
+        if t:
+            base = t.split()[-1]
+            fams.append(base if base in TOPIC_SHORT else t)
+    return list(dict.fromkeys(fams))
 
-            .header {
-                text-align: center;
-                margin-bottom: 28px;
-            }
 
-            h1 {
-                color: var(--primary-color);
-                font-size: 2.25rem;
-                margin: 0 0 8px 0;
-                font-weight: 700;
-                letter-spacing: -0.02em;
-            }
+def _resource(cell: str, kind: str) -> str:
+    """Render a Model?/Data? cell as a quiet pill link (or muted text)."""
+    m = MD_LINK.search(cell)
+    text = link_text(cell)
+    if text in EMPTY and not (m and text == "No"):
+        return ""
+    if kind == "model":
+        label = {"Yes": "Code + models", "Code only": "Code", "No": "Repo"}.get(text, text)
+    else:
+        label = {"Yes": "Data"}.get(text, text)
+        if text == "Upon request":
+            label = "Data on request"
+    esc = html.escape(label)
+    if m:
+        return f'<a class="res" href="{html.escape(m.group(2), quote=True)}">{esc}</a>'
+    return f'<span class="res muted">{esc}</span>'
 
-            .subtitle {
-                color: var(--muted-color);
-                font-size: 1.05rem;
-                margin: 0 0 18px 0;
-            }
 
-            .stat-strip {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                color: var(--muted-color);
-                font-size: 0.95rem;
-            }
-            .stat-strip span { white-space: nowrap; }
-            .stat-strip span + span::before {
-                content: "·";
-                margin: 0 14px;
-                color: #cbd5e1;
-            }
-            .stat-strip strong {
-                color: var(--primary-color);
-                font-weight: 600;
-            }
-            
-            .legend {
-                background: var(--subtle-bg);
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                margin-bottom: 24px;
-            }
+def render_paper(cells: list[str], legend: dict[str, str]) -> str:
+    year, paper, topic, animal, model, data, count = cells
+    link = MD_LINK.search(paper)
+    name = link.group(1) if link else link_text(paper)
+    url = link.group(2) if link else ""
+    fams = _topic_families(topic)
+    tags = "".join(
+        f'<span class="tag" title="{html.escape(legend.get(f, f))}">{html.escape(TOPIC_SHORT.get(f, f))}</span>'
+        for f in fams
+    )
+    meta = tags + f'<span class="dot">{html.escape(animal)}</span>'
+    if link_text(count) not in EMPTY:
+        meta += f'<span class="dot count">{html.escape(link_text(count))}</span>'
+    resources = _resource(model, "model") + _resource(data, "data")
+    has_code = link_text(model) in ("Yes", "Code only")
+    has_data = link_text(data) == "Yes"
+    search = " ".join([year, name, topic, " ".join(TOPIC_SHORT.get(f, "") for f in fams),
+                       " ".join(legend.get(f, "") for f in fams), animal, link_text(count)]).lower()
+    title = (f'<a class="p-title" href="{html.escape(url, quote=True)}">{html.escape(name)}</a>'
+             if url else f'<span class="p-title">{html.escape(name)}</span>')
+    return (
+        f'<li class="paper" data-year="{html.escape(year)}" data-topics="{html.escape(" ".join(fams))}" '
+        f'data-species="{" ".join(species_of(animal))}" data-code="{int(has_code)}" data-data="{int(has_data)}" '
+        f'data-text="{html.escape(search, quote=True)}">'
+        f'<div class="p-year">{html.escape(year)}</div>'
+        f'<div class="p-main">{title}<div class="p-meta">{meta}</div></div>'
+        f'<div class="p-links">{resources}</div></li>'
+    )
 
-            .legend > summary {
-                padding: 12px 16px;
-                cursor: pointer;
-                font-weight: 600;
-                color: var(--primary-color);
-                list-style: none;
-                user-select: none;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .legend > summary::-webkit-details-marker { display: none; }
-            .legend > summary::before {
-                content: "";
-                display: inline-block;
-                width: 0;
-                height: 0;
-                border-left: 5px solid var(--muted-color);
-                border-top: 4px solid transparent;
-                border-bottom: 4px solid transparent;
-                transition: transform 0.15s ease;
-            }
-            .legend[open] > summary::before {
-                transform: rotate(90deg);
-            }
-            .legend > summary:hover { color: var(--secondary-color); }
 
-            .legend-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 10px;
-                padding: 0 16px 16px;
-            }
-            
-            .legend-item {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            
-            .legend-badge {
-                background: var(--secondary-color);
-                color: white;
-                padding: 2px 8px;
-                border-radius: 4px;
-                font-size: 0.8rem;
-                font-weight: bold;
-                min-width: 35px;
-                text-align: center;
-            }
-            
-            .table-container {
-                background: white;
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                overflow: hidden;
-            }
+def review_rows(lines: list[str]) -> list[list[str]]:
+    """Rows of the 4-column "#### Reviews & Related" table."""
+    rows, inside = [], False
+    for line in lines:
+        s = line.strip()
+        if s.startswith("#"):
+            inside = "Reviews" in s
+            continue
+        if inside and s.startswith("|") and s.endswith("|") and not _SEPARATOR.match(s):
+            cells = [c.strip() for c in s[1:-1].split("|")]
+            if len(cells) == 4 and cells[0] != "Year":
+                rows.append(cells)
+    return rows
 
-            table.dataTable {
-                border-collapse: separate;
-                border-spacing: 0;
-                width: 100% !important;
-                margin: 0 !important;
-            }
 
-            table.dataTable thead th {
-                background: var(--primary-color);
-                color: white;
-                padding: 13px 12px;
-                font-weight: 600;
-                font-size: 0.9rem;
-                letter-spacing: 0.01em;
-                text-align: left;
-                border: none;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-            }
-            
-            table.dataTable tbody td {
-                padding: 12px 10px;
-                border-bottom: 1px solid #eee;
-                vertical-align: middle;
-            }
+def render_review(cells: list[str]) -> str:
+    year, tag, what, animal = cells
+    m = MD_LINK.search(tag)
+    name = html.escape(m.group(1) if m else tag)
+    title = f'<a href="{html.escape(m.group(2), quote=True)}">{name}</a>' if m else name
+    return (f'<li><span class="p-year">{html.escape(year)}</span>'
+            f'<span>{title} <span class="what">· {html.escape(what)}</span></span></li>')
 
-            /* Zebra striping */
-            table.dataTable tbody tr:nth-child(even) {
-                background-color: #f8fafc;
-            }
-
-            table.dataTable tbody tr:nth-child(odd) {
-                background-color: #ffffff;
-            }
-
-            table.dataTable tbody tr:hover {
-                background-color: #e0f2fe;
-                transition: background-color 0.15s ease;
-            }
-            
-            .status-badge {
-                padding: 4px 8px;
-                border-radius: 20px;
-                font-size: 0.8rem;
-                font-weight: 600;
-                text-decoration: none !important;
-                display: inline-block;
-            }
-            
-            .status-yes {
-                background: #d4edda;
-                color: #155724;
-                border: 1px solid #c3e6cb;
-            }
-            
-            .status-no {
-                background: #f8d7da;
-                color: #721c24;
-                border: 1px solid #f5c6cb;
-            }
-            
-            .status-partial {
-                background: #fff3cd;
-                color: #856404;
-                border: 1px solid #ffeeba;
-            }
-            
-            .status-request {
-                background: #d1ecf1;
-                color: #0c5460;
-                border: 1px solid #bee5eb;
-            }
-            
-            .topic-tag {
-                background: #eef2f7;
-                color: #475569;
-                padding: 2px 7px;
-                border-radius: 4px;
-                font-size: 0.75rem;
-                font-weight: 500;
-                margin-right: 4px;
-                display: inline-block;
-                margin-bottom: 2px;
-                border: 1px solid #e2e8f0;
-            }
-
-            .year-cell {
-                font-weight: 600;
-                color: var(--primary-color);
-                text-align: center;
-            }
-            
-            .species-macaque { background-color: #e8f5e8; }
-            .species-chimp { background-color: #fff3e0; }
-            .species-gorilla { background-color: #f3e5f5; }
-            .species-marmoset { background-color: #e1f5fe; }
-            .species-cross { background-color: #f9f9f9; }
-            
-            .dt-button {
-                background: var(--secondary-color) !important;
-                color: white !important;
-                border: none !important;
-                padding: 8px 15px !important;
-                border-radius: 6px !important;
-                margin-left: 8px !important;
-                margin-right: 0 !important;
-                font-size: 0.9rem !important;
-                transition: all 0.3s ease !important;
-            }
-
-            .dt-button:hover {
-                background: #1d4ed8 !important;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
-            }
-
-            /* Search + Buttons toolbar layout */
-            .dt-toolbar {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 12px;
-                padding: 16px 20px;
-                background: #f8fafc;
-                border-radius: 8px 8px 0 0;
-                border-bottom: 1px solid var(--border-color);
-            }
-            div.dt-container .dt-search {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            div.dt-container .dt-search input {
-                padding: 10px 16px;
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                font-size: 0.95rem;
-                min-width: 280px;
-                transition: border-color 0.2s, box-shadow 0.2s;
-            }
-            div.dt-container .dt-search input:focus {
-                outline: none;
-                border-color: var(--secondary-color);
-                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-            }
-            div.dt-container .dt-buttons {
-                display: flex;
-                align-items: center;
-                gap: 0;
-            }
-
-            @media (max-width: 640px) {
-                .dt-toolbar {
-                    flex-direction: column;
-                    align-items: stretch;
-                }
-                div.dt-container .dt-search input {
-                    min-width: 100%;
-                    width: 100%;
-                }
-                div.dt-container .dt-buttons {
-                    justify-content: flex-end;
-                }
-            }
-            
-            /* Footer */
-            .footer {
-                margin-top: 32px;
-                padding: 24px 20px;
-                background: var(--subtle-bg);
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                text-align: center;
-            }
-
-            .footer p {
-                margin: 6px 0;
-                color: var(--muted-color);
-                font-size: 0.92rem;
-            }
-            
-            .footer a {
-                color: var(--secondary-color);
-                text-decoration: none;
-                font-weight: 500;
-                transition: color 0.3s ease;
-            }
-            
-            .footer a:hover {
-                color: var(--primary-color);
-                text-decoration: underline;
-            }
-            
-            .footer-note {
-                font-size: 0.9rem;
-                color: #888;
-            }
-            
-            #last-updated {
-                font-weight: 600;
-                color: var(--secondary-color);
-            }
-            
-            /* Accessibility - Focus states */
-            a:focus,
-            button:focus,
-            input:focus,
-            select:focus {
-                outline: 2px solid var(--secondary-color);
-                outline-offset: 2px;
-            }
-
-            /* Skip link for keyboard navigation */
-            .skip-link {
-                position: absolute;
-                top: -40px;
-                left: 0;
-                padding: 8px 16px;
-                background: var(--primary-color);
-                color: white;
-                z-index: 100;
-                transition: top 0.2s ease;
-            }
-            .skip-link:focus {
-                top: 0;
-            }
-
-            /* Tablets/small laptops */
-            @media (max-width: 1024px) {
-                .legend-grid { grid-template-columns: repeat(2, 1fr); }
-            }
-
-            /* Tablets */
-            @media (max-width: 768px) {
-                .container { margin: 16px; padding: 20px; }
-                .topbar { padding: 12px 16px; }
-                h1 { font-size: 1.85rem; }
-                table.dataTable thead th,
-                table.dataTable tbody td { padding: 8px 6px; font-size: 0.9rem; }
-                .legend-grid { grid-template-columns: 1fr; }
-                .footer { margin-top: 20px; padding: 20px 15px; }
-            }
-
-            /* Small phones */
-            @media (max-width: 480px) {
-                .container { margin: 12px; padding: 14px; }
-                h1 { font-size: 1.5rem; }
-                .subtitle { font-size: 0.95rem; }
-                .stat-strip { font-size: 0.85rem; }
-                .stat-strip span + span::before { margin: 0 8px; }
-                table.dataTable thead th,
-                table.dataTable tbody td { padding: 6px 4px; font-size: 0.8rem; }
-                .topic-tag { font-size: 0.65rem; padding: 1px 4px; }
-                .status-badge { font-size: 0.7rem; padding: 3px 6px; }
-                .legend-badge { font-size: 0.7rem; padding: 2px 6px; }
-            }
-        </style>
-    </head>
-    <body>
-        <a href="#table" class="skip-link">Skip to papers table</a>
-
-        <header class="topbar">
-            <a href="#" class="topbar-brand">Awesome Computational Primatology</a>
-            <div class="topbar-actions">
-                <a href="https://github.com/KordingLab/awesome-computational-primatology"
-                   target="_blank" rel="noopener"
-                   aria-label="View source on GitHub" title="View on GitHub">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-            </div>
-        </header>
-
-        <div class="container">
-            <div class="header">
-                <h1>Awesome Computational Primatology</h1>
-                <p class="subtitle">A curated list of machine learning research for non-human primatology</p>
-
-                <div class="stat-strip" aria-label="Collection statistics">
-                    <span><strong id="total-papers">{total_papers}</strong> papers</span>
-                    <span><strong id="years-span">{years_span}</strong> years</span>
-                    <span><strong id="with-code">{with_code}</strong> with code</span>
-                    <span><strong id="with-data">{with_data}</strong> with data</span>
-                </div>
-                <img class="growth-plot" src="assets/paper_growth.png" alt="Computational primatology papers per year: this curated list vs. the broader 'primate + ML' literature" style="max-width: 720px; width: 100%; margin: 1.25rem auto 0; display: block;">
-            </div>
-
-            <details class="legend">
-                <summary>Topic Legend</summary>
-                <div class="legend-grid">
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-pd);">PD</span>
-                        <span>Primate Detection</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-bpe);">BPE</span>
-                        <span>Body Pose Estimation</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-fd);">FD</span>
-                        <span>Face Detection</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-fle);">FLE</span>
-                        <span>Facial Landmark</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-fr);">FR</span>
-                        <span>Face Recognition</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-fac);">FAC</span>
-                        <span>Facial Action Coding</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-hd);">HD</span>
-                        <span>Hand Detection</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-hpe);">HPE</span>
-                        <span>Hand Pose Estimation</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-br);">BR</span>
-                        <span>Behavior Recognition</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-am);">AM</span>
-                        <span>Avatar/Mesh</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-si);">SI</span>
-                        <span>Species Identification</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-rl);">RL</span>
-                        <span>Reinforcement Learning</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-av);">AV</span>
-                        <span>Audio/Vocalization</span>
-                    </div>
-                    <div class="legend-item">
-                        <span class="legend-badge" style="background: var(--topic-o);">O</span>
-                        <span>Other</span>
-                    </div>
-                </div>
-            </details>
-
-            <div class="table-container">
-                {table_html}
-            </div>
-
-            <div class="footer">
-                <p>
-                    Maintained by
-                    <a href="https://kordinglab.com" target="_blank" rel="noopener">Kording Lab</a> ·
-                    <a href="mailto:fparodi@upenn.edu">Felipe Parodi</a>
-                </p>
-                <p class="footer-note">
-                    Found a paper we missed?
-                    <a href="https://github.com/KordingLab/awesome-computational-primatology/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contribute on GitHub</a>
-                    · Last updated {last_updated}
-                </p>
-            </div>
-        </div>
-        
-        <script>
-        $(document).ready(function() {
-            var table = $('#table').DataTable({
-                paging: true,
-                pageLength: 25,
-                lengthMenu: [10, 25, 50, 100, -1],
-                searching: true,
-                ordering: true,
-                info: true,
-                responsive: true,
-                
-                dom: '<"dt-toolbar"fB>rtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        text: '<i class="fas fa-copy"></i> Copy'
-                    },
-                    {
-                        extend: 'csv',
-                        text: '<i class="fas fa-file-csv"></i> CSV'
-                    },
-                    {
-                        text: '<i class="fas fa-times"></i> Clear',
-                        action: function(e, dt, node, config) {
-                            dt.search('').columns().search('').draw();
-                        }
-                    }
-                ],
-                
-                columnDefs: [
-                    {
-                        targets: 0,
-                        type: 'num',
-                        className: 'year-cell',
-                        width: '80px'
-                    },
-                    {
-                        targets: 2,
-                        width: '150px',
-                        render: function(data, type, row) {
-                            if (type === 'display') {
-                                const topics = data.split(', ');
-                                return topics.map(function(topic) {
-                                    const t = topic.trim();
-                                    return '<span class="topic-tag">' + t + '</span>';
-                                }).join(' ');
-                            }
-                            return data;
-                        }
-                    },
-                    {
-                        targets: 3,
-                        width: '120px',
-                        render: function(data, type, row) {
-                            if (type === 'display') {
-                                let className = 'species-cross';
-                                const lowerData = data.toLowerCase();
-                                if (lowerData.includes('macaque')) className = 'species-macaque';
-                                else if (lowerData.includes('chimp')) className = 'species-chimp';
-                                else if (lowerData.includes('gorilla')) className = 'species-gorilla';
-                                else if (lowerData.includes('marmoset')) className = 'species-marmoset';
-                                
-                                return '<span class="' + className + '" style="padding: 4px 8px; border-radius: 4px; display: inline-block;">' + data + '</span>';
-                            }
-                            return data;
-                        }
-                    },
-                    {
-                        targets: [4, 5],
-                        width: '100px',
-                        render: function(data, type, row) {
-                            if (type === 'display') {
-                                let className = 'status-no';
-                                let icon = '<i class="fas fa-times"></i> ';
-                                
-                                if (data.includes('Yes')) {
-                                    className = 'status-yes';
-                                    icon = '<i class="fas fa-check"></i> ';
-                                } else if (data.includes('Code only') || data.includes('Some')) {
-                                    className = 'status-partial';
-                                    icon = '<i class="fas fa-code"></i> ';
-                                } else if (data.includes('Upon request')) {
-                                    className = 'status-request';
-                                    icon = '<i class="fas fa-envelope"></i> ';
-                                }
-                                
-                                return '<span class="status-badge ' + className + '">' + icon + data + '</span>';
-                            }
-                            return data;
-                        }
-                    }
-                ],
-                
-                order: [[0, 'desc']],
-                
-                language: {
-                    search: '<i class="fas fa-search"></i>',
-                    searchPlaceholder: 'Search papers...',
-                    lengthMenu: 'Show _MENU_ papers per page',
-                    info: 'Showing _START_ to _END_ of _TOTAL_ papers',
-                    processing: '<i class="fas fa-spinner fa-spin"></i> Loading...'
-                }
-            });
-
-        });
-        </script>
-    </body>
-</html>'''
 
 def calculate_stats(df: pd.DataFrame) -> dict:
     """Headline numbers for the stat strip and badge, from the raw markdown cells.
@@ -832,21 +267,63 @@ def last_updated(readme_path: Path) -> str:
 
 
 def build(readme_path: Path, out_dir: Path) -> dict:
-    """Render index.html and stats.json into out_dir; return the stats."""
+    """Render index.html, papers.csv and stats.json into out_dir; return the stats."""
+    import csv
+
+    lines = readme_path.read_text(encoding="utf-8").splitlines()
     raw = extract_table_from_readme(str(readme_path))
     stats = calculate_stats(raw)
-    # applymap was removed in pandas 3.0; apply + Series.map works across versions.
-    table_html = raw.apply(lambda col: col.map(to_link_if_markdown)).to_html(
-        table_id="table", escape=False, index=False, classes="display"
+    legend = topic_legend(lines)
+
+    # Which rows belong to the cross-species dataset sub-table.
+    papers, datasets, in_datasets = [], [], False
+    rows = {n: cells for n, cells, _ in iter_paper_rows(lines) if cells is not None}
+    for n, line in enumerate(lines, 1):
+        if line.strip().startswith("####"):
+            in_datasets = "Dataset" in line
+        if n in rows:
+            (datasets if in_datasets else papers).append(rows[n])
+
+    fams = {f for cells in papers + datasets for f in _topic_families(cells[2])}
+    chips = "".join(
+        f'<button class="chip" data-topic="{code}" aria-pressed="false" title="{html.escape(legend.get(code, code))}">'
+        f"{html.escape(short)}</button>"
+        for code, short in TOPIC_SHORT.items() if code in fams
     )
-    page = get_enhanced_html_template().replace("{table_html}", table_html)
-    page = page.replace("{last_updated}", last_updated(readme_path))
-    for key, value in stats.items():
-        page = page.replace("{" + key + "}", str(value))
+    counts: dict[str, int] = {}
+    for cells in papers + datasets:
+        for key in species_of(cells[3]):
+            counts[key] = counts.get(key, 0) + 1
+    labels = {key: label for key, label, _ in SPECIES_GROUPS} | {"other": "Other primates"}
+    options = "".join(
+        f'<option value="{key}">{html.escape(labels[key])} ({n})</option>'
+        for key, n in sorted(counts.items(), key=lambda kv: (-kv[1], labels[kv[0]]))
+    )
+    years = sorted(int(c[0]) for c in papers + datasets if c[0].isdigit())
+    values = {
+        **{k: str(v) for k, v in stats.items()},
+        "first_year": str(years[0]) if years else "",
+        "last_year": str(years[-1]) if years else "",
+        "topic_chips": chips,
+        "species_options": options,
+        "papers": "\n".join(render_paper(c, legend) for c in papers),
+        "datasets": "\n".join(render_paper(c, legend) for c in datasets),
+        "reviews": "\n".join(render_review(c) for c in review_rows(lines)),
+        "last_updated": last_updated(readme_path),
+    }
+    page = re.sub(r"\{\{(\w+)\}\}", lambda m: values[m.group(1)], TEMPLATE.read_text(encoding="utf-8"))
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "index.html").write_text(page, encoding="utf-8")
-    badge = {"schemaVersion": 1, "label": "Papers", "message": str(stats["total_papers"]), "color": "blue"}
+    with open(out_dir / "papers.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["year", "name", "url", "topics", "animal", "model", "model_url", "data", "data_url", "count"])
+        for c in papers + datasets:
+            link, ml, dl = MD_LINK.search(c[1]), MD_LINK.search(c[4]), MD_LINK.search(c[5])
+            w.writerow([c[0], link_text(c[1]), link.group(2) if link else "", c[2], c[3],
+                        link_text(c[4]), ml.group(2) if ml else "", link_text(c[5]), dl.group(2) if dl else "",
+                        link_text(c[6])])
+    badge = {"schemaVersion": 1, "label": "Papers", "message": str(stats["total_papers"]), "color": "2f7a52"}
     (out_dir / "stats.json").write_text(json.dumps({**badge, "stats": stats}, indent=2) + "\n", encoding="utf-8")
     return stats
 
