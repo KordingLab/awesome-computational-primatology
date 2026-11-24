@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prompts for the Paper Scout LLM judge (mirrors backend/prompts.py style)."""
+"""Prompts for the Paper Scout LLM judge."""
 
 from __future__ import annotations
 

@@ -65,7 +65,7 @@ GitHub Actions (cron: weekly, Monday 08:00 UTC)
   │    • drop anything already proposed in a prior open/closed scout PR (state file)
   │
   3. PREFILTER (free, no LLM)
-  │    • embed title+abstract with all-MiniLM-L6-v2 (already used by the RAG backend)
+  │    • embed title+abstract with all-MiniLM-L6-v2
   │    • cosine vs the centroid of the existing corpus embeddings; keep top-N / >threshold
   │    • hard rules: must mention a non-human primate term; drop pure-human / pure-cortex
   │
@@ -176,9 +176,9 @@ scripts/scout/
   fetch.py        # OpenAlex + arXiv + S2 clients, date-windowed
   dedup.py        # README DOI/arXiv-id index + prior-PR state
   prefilter.py    # embeddings + hard rules (reuses sentence-transformers)
-  judge.py        # Gemini call + rubric prompt (mirror backend/prompts.py style)
+  judge.py        # Gemini call + rubric prompt
   propose.py      # build README rows + open draft PR (gh CLI / PyGithub)
-  run.py          # orchestrator (mirrors scripts/rag/build_chunk_index.py)
+  run.py          # orchestrator
 .github/workflows/paper-scout.yml   # weekly cron + workflow_dispatch
 docs/scout-state.json               # seed copy only; the live seen-ids + last-run window live on the
                                     # `scout-state` branch (read/written by paper-scout.yml, never in PRs)
@@ -197,6 +197,6 @@ docs/scout-state.json               # seed copy only; the live seen-ids + last-r
 1. Auto-add high-confidence (>0.8) rows vs. always leave PR fully manual? (Default: insert all
    kept rows, mark borderline as REVIEW; human merges.)
 2. Include the 6-dataset and Reviews tables as nomination targets, or papers only?
-3. Re-run the RAG embedding pipeline on newly-merged papers automatically? (ties into the
-   existing TODO: 37 papers still need full-text download.)
+3. ~~Re-run the RAG embedding pipeline on newly-merged papers automatically?~~ Moot: the
+   AI chat and its RAG pipeline were removed in Nov 2026.
 4. Notification: comment-only PR, or also an email/Slack ping?
